@@ -179,7 +179,7 @@ function render(book, chapter, highlightVerse, highlightEnd){
     if (canPrev) document.getElementById('prevBtn').onclick = function() { render(book, chapter-1, null, null); };
     if (canNext) document.getElementById('nextBtn').onclick = function() { render(book, chapter+1, null, null); };
     document.getElementById('transToggle').onclick = switchVersion;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if(hv!==null&&hv>0){setTimeout(function(){var ps=document.getElementById('verseContent').querySelectorAll('.verse-text p');for(var i=0;i<ps.length;i++){var sp=ps[i].querySelector('.vn');if(sp&&parseInt(sp.textContent)===hv){ps[i].scrollIntoView({behavior:'smooth',block:'center'});break;}}},100);}else{window.scrollTo({top:0,behavior:'smooth'});}
 
     var params = new URLSearchParams();
     params.set('ref', book + ' ' + chapter + (highlightVerse ? ':' + highlightVerse : ''));
