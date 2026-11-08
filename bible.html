@@ -45,7 +45,7 @@ select:focus{outline:none;border-color:var(--highlight);box-shadow:0 0 0 3px rgb
 footer{margin-top:40px;text-align:center;font-size:.8rem;color:var(--btn-text);border-top:1px solid var(--border);padding-top:20px;font-family:system-ui,sans-serif}
 footer a{color:var(--highlight);text-decoration:none;margin:0 8px}
 @media (max-width:600px){body{padding:16px}.card{padding:20px}h1{font-size:1.3rem}.verse-text{font-size:1.05rem}}
-</style>
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}.skeleton{height:1.4em;background:var(--border);border-radius:6px;margin:12px 0;animation:pulse 1.2s ease-in-out infinite}</style>
 </head>
 <body>
 <div class="container">
@@ -72,7 +72,7 @@ footer a{color:var(--highlight);text-decoration:none;margin:0 8px}
 <button class="go-btn" id="goBtn">Go →</button>
 </div>
 <div class="card">
-<div id="verseContent"></div>
+<div id="verseContent"><div class="skeleton" style="width:40%"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton" style="width:75%"></div><div class="skeleton"></div><div class="skeleton" style="width:60%"></div></div>
 </div>
 <footer>
 Safari Reference Bible — World English Bible &amp; King James Version, public domain<br>
