@@ -70,7 +70,7 @@ header, .selector-bar, .searchbar{box-shadow:0 2px 6px rgba(0,0,0,0.06)}
 <select id="versionSelect">
 <option value="web">WEB</option>
 <option value="kjv">KJV</option>
-</select>
+</select><span id="verseIndicator" style="font-family:system-ui,sans-serif;font-size:.95rem;color:var(--highlight);font-weight:600;margin-left:auto;padding:6px 14px;background:var(--highlight-light);border-radius:30px;white-space:nowrap"></span>
 </div>
 <div class="chapter-grid" id="chapterGrid"></div>
 <div class="searchbar">
@@ -283,5 +283,52 @@ populateBookSelect();
 })();
 </script>
 <!-- AUTOSCROLL_VERSE_ON_LOAD_END -->
+
+<!-- VERSE_INDICATOR_START -->
+<script>
+(function(){
+    function updateIndicator() {
+        var el = document.getElementById('verseIndicator');
+        if (!el) return;
+        
+        var text = '';
+        try {
+            // First preference: current URL ?ref= param
+            var params = new URLSearchParams(window.location.search);
+            var ref = params.get('ref');
+            if (ref) {
+                text = ref;
+            } else {
+                // Fallback: derive from the displayed chapter title
+                var titleEl = document.querySelector('.verse-ref-title');
+                if (titleEl) {
+                    text = titleEl.textContent.trim();
+                }
+            }
+        } catch(e){}
+        
+        if (text && text !== el.textContent) {
+            el.textContent = text;
+        }
+    }
+    
+    // Initial update
+    updateIndicator();
+    
+    // Watch for URL changes (translation toggle, chapter nav)
+    window.addEventListener('popstate', updateIndicator);
+    
+    // Watch the DOM for content updates (render() re-runs)
+    var observer = new MutationObserver(updateIndicator);
+    var target = document.getElementById('verseContent');
+    if (target) {
+        observer.observe(target, { childList: true, subtree: true });
+    }
+    
+    // Also poll as fallback (safer, catches all cases)
+    setInterval(updateIndicator, 300);
+})();
+</script>
+<!-- VERSE_INDICATOR_END -->
 </body>
 </html>
