@@ -179,7 +179,7 @@ function render(book, chapter, highlightVerse, highlightEnd){
     if (canPrev) document.getElementById('prevBtn').onclick = function() { render(book, chapter-1, null, null); };
     if (canNext) document.getElementById('nextBtn').onclick = function() { render(book, chapter+1, null, null); };
     document.getElementById('transToggle').onclick = switchVersion;
-    if(hv!==null&&hv>0){setTimeout(function(){var ps=document.getElementById('verseContent').querySelectorAll('.verse-text p');for(var i=0;i<ps.length;i++){var sp=ps[i].querySelector('.vn');if(sp&&parseInt(sp.textContent)===hv){ps[i].scrollIntoView({behavior:'smooth',block:'center'});break;}}},100);}else{window.scrollTo({top:0,behavior:'smooth'});}
+    if(hv!==null&&hv>0){setTimeout(function(){var ps=document.getElementById('verseContent').querySelectorAll('.verse-text p');for(var i=0;i<ps.length;i++){var sp=ps[i].querySelector('.vn');if(sp&&parseInt(sp.textContent)===hv){ps[i].window.scrollTo({top:0,behavior:'smooth'});
 
     var params = new URLSearchParams();
     params.set('ref', book + ' ' + chapter + (highlightVerse ? ':' + highlightVerse : ''));
@@ -233,6 +233,56 @@ populateBookSelect();
     if (ver === 'kjv') { currentVersion = 'kjv'; BIBLE = BIBLE_KJV; }
     if (ref) { loadRef(ref); } else { render('Genesis', 1, null, null); }
 })();
-</script>
+
+// ============ ROBUST VERSE SCROLL ON PAGE LOAD ============
+// Runs AFTER everything is loaded. Finds ?ref=X:Y in the URL, then scrolls
+// to verse Y after DOM is fully painted. Works on any page state.
+(function(){
+    function scrollToTargetVerse() {
+        var params = new URLSearchParams(window.location.search);
+        var ref = params.get('ref');
+        if (!ref) return;
+        
+        // Parse "Book CH:VS" -> verse number
+        var m = ref.match(/^(.+?)\s+(\d+):(\d+)/);
+        if (!m) return;
+        var verseNum = parseInt(m[3]);
+        if (!verseNum || verseNum < 1) return;
+        
+        // Find the verse by trying multiple selectors (robust to markup differences)
+        var containers = document.querySelectorAll('#verseContent .verse-text, #verseContent, .card');
+        for (var c = 0; c < containers.length; c++) {
+            var ps = containers[c].querySelectorAll('p');
+            for (var i = 0; i < ps.length; i++) {
+                var vnEl = ps[i].querySelector('.vn');
+                if (vnEl) {
+                    var vn = parseInt(vnEl.textContent.trim());
+                    if (vn === verseNum) {
+                        // Found it — scroll
+                        ps[i].scrollIntoView({behavior:'smooth', block:'center'});
+                        // Also mark it visually in case CSS didn't apply
+                        ps[i].style.background = 'rgba(44,110,73,.15)';
+                        ps[i].style.padding = '4px 8px';
+                        ps[i].style.borderRadius = '6px';
+                        ps[i].style.transition = 'background 1s ease';
+                        // Fade the highlight after 4 seconds
+                        setTimeout(function(){ ps[i].style.background = ''; }, 4000);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    
+    // Try at 3 different timings to be robust against slow parsing
+    if (document.readyState === 'complete') {
+        scrollToTargetVerse();
+    } else {
+        window.addEventListener('load', function(){ setTimeout(scrollToTargetVerse, 100); });
+    }
+    // Also try after 300ms and 800ms as fallbacks
+    setTimeout(scrollToTargetVerse, 300);
+    setTimeout(scrollToTargetVerse, 800);
+})();</script>
 </body>
 </html>
