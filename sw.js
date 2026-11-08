@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = 'sermon-assistant-v1';
+const CACHE_NAME = 'sermon-assistant-v4';
 const urlsToCache = [
   './',
   './index.html',

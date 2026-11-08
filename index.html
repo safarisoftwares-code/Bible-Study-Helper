@@ -2244,7 +2244,7 @@ function getVerseText(ref) { return verseTexts[ref] || "Verse text not available
     e.stopPropagation();
     var verse = el.getAttribute('data-verse');
     if(!verse) return;
-    var url = 'https://www.biblegateway.com/passage/?search=' + encodeURIComponent(verse) + '&version=KJV';
+    var url = 'bible.html?ref=' + encodeURIComponent(verse);
     window.open(url, '_blank', 'noopener,noreferrer');
 });
         // Save to history
