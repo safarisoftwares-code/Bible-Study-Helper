@@ -72,7 +72,7 @@ header, .selector-bar, .searchbar{box-shadow:0 2px 6px rgba(0,0,0,0.06)}
 <option value="kjv">KJV</option>
 </select><span id="verseIndicator" style="font-family:system-ui,sans-serif;font-size:.95rem;color:var(--highlight);font-weight:600;margin-left:auto;padding:6px 14px;background:var(--highlight-light);border-radius:30px;white-space:nowrap"></span>
 </div>
-<div class="chapter-grid" id="chapterGrid" style="display:none"></div>
+<div class="chapter-grid" id="chapterGrid"></div>
 <div class="searchbar">
 <input type="text" id="refInput" placeholder="Or type reference: John 3:16, Psalm 23..." autocomplete="off">
 <button class="go-btn" id="goBtn">Go →</button>
@@ -241,49 +241,6 @@ populateBookSelect();
 })();
 </script>
 
-
-<script>
-(function(){
-    // Wait for DOM
-    document.addEventListener('DOMContentLoaded', function() {
-        var btn = document.getElementById('toggleChaptersBtn');
-        var grid = document.getElementById('chapterGrid');
-        if(!btn || !grid) return;
-
-        // Show the button now that JS is running
-        btn.style.display = 'inline-block';
-
-        // Toggle open/close on click
-        btn.onclick = function(){
-            if (grid.style.display === 'none') {
-                grid.style.display = 'flex';
-                btn.innerHTML = '✖ Hide Chapters';
-                btn.style.background = 'var(--btn-bg)';
-                btn.style.color = 'var(--btn-text)';
-            } else {
-                grid.style.display = 'none';
-                btn.innerHTML = '📑 Show Chapters';
-                btn.style.background = 'var(--highlight)';
-                btn.style.color = '#fff';
-            }
-        };
-
-        // Auto-close the grid when a chapter is selected
-        // We use a MutationObserver on the grid to catch when a chapter is clicked
-        grid.addEventListener('click', function(e){
-            if (e.target.classList.contains('chapter-chip')) {
-                // Close after a tiny delay so the user sees their tap register
-                setTimeout(function(){
-                    grid.style.display = 'none';
-                    btn.innerHTML = '📑 Show Chapters';
-                    btn.style.background = 'var(--highlight)';
-                    btn.style.color = '#fff';
-                }, 150);
-            }
-        });
-    });
-})();
-</script>
 <!-- AUTOSCROLL_VERSE_ON_LOAD_START -->
 <script>
 (function(){
@@ -303,10 +260,10 @@ populateBookSelect();
             var vnSpan = allP[i].querySelector('.vn');
             if (vnSpan && parseInt(vnSpan.textContent.trim(), 10) === verseNum) {
                 allP[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                allP[i].style.background = 'rgba(44,110,73,0.15)'; allP[i].style.borderLeft = '4px solid var(--highlight)'; allP[i].style.paddingLeft = '10px';
+                allP[i].style.background = 'rgba(44,110,73,0.22)';
                 allP[i].style.padding = '6px 10px';
                 allP[i].style.borderRadius = '8px';
-                el.style.background = 'rgba(44,110,73,0.2)'; el.style.borderLeft = '4px solid var(--highlight)';
+                (function(el){ setTimeout(function(){ el.style.background = ''; }, 5000); })(allP[i]);
                 return true;
             }
         }
@@ -374,117 +331,319 @@ populateBookSelect();
 </script>
 <!-- VERSE_INDICATOR_END -->
 
-<!-- PERSISTENT_HIGHLIGHT_FIX -->
+<!-- FORCE UI LAYOUT -->
+<style>
+/* Hide the old messy search bar and chapter grid */
+.searchbar { display: none !important; }
+.chapter-grid { display: none !important; }
+
+/* Fix the top bar */
+.selector-bar { 
+    display: flex !important; 
+    align-items: center !important; 
+    justify-content: flex-start !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 10px !important;
+    padding: 10px 0 !important;
+}
+#topSearchWrap { display: inline-flex !important; margin-left: 10px !important; }
+#topSearchInput { width: 140px !important; padding: 8px 12px !important; border-radius: 20px !important; }
+#topSearchBtn { padding: 8px 14px !important; border-radius: 20px !important; }
+#verseIndicator { margin-left: auto !important; flex-shrink: 0 !important; }
+</style>
+
+<!-- REBUILD THE UI WITH JAVASCRIPT -->
 <script>
-(function(){
-    // Wait for the page to load completely
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            // 1. Grab the original functions before we wrap them
-            var originalRender = window.render;
-            var originalSwitch = window.switchVersion;
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Fix the Search Bar in the top bar
+    var bar = document.querySelector('.selector-bar');
+    if(bar) {
+        // Remove any duplicate search wraps that got tangled
+        var wraps = bar.querySelectorAll('#topSearchWrap');
+        for(var i=1; i<wraps.length; i++) { wraps[i].remove(); }
+        
+        // If the search wrap isn't there, add it
+        if(bar.querySelectorAll('#topSearchWrap').length === 0) {
+            var searchHtml = '<div id="topSearchWrap"><input type="text" id="topSearchInput" placeholder="🔍 Search..." autocomplete="off"><button id="topSearchBtn">Go</button></div>';
+            bar.insertAdjacentHTML('beforeend', searchHtml);
+        }
+    }
 
-            if (!originalRender || !originalSwitch) return;
-
-            // 2. Wrap the render function to ensure the highlight is applied
-            window.render = function(book, chapter, hv, he) {
-                // Call the original render
-                originalRender(book, chapter, hv, he);
-
-                // If a verse was requested, force the highlight styling on it
-                if (hv) {
-                    var ps = document.querySelectorAll('#verseContent p');
-                    for (var i = 0; i < ps.length; i++) {
-                        var vnSpan = ps[i].querySelector('.vn');
-                        if (vnSpan && parseInt(vnSpan.textContent.trim(), 10) === hv) {
-                            ps[i].style.background = 'rgba(44,110,73,0.15)';
-                            ps[i].style.padding = '6px 10px';
-                            ps[i].style.borderRadius = '8px';
-                            ps[i].style.transition = 'background 0.4s ease';
-                        }
-                    }
-                }
-            };
-
-            // 3. Wrap the switchVersion function to pass the verse from the URL
-            window.switchVersion = function() {
-                // Read the verse from the URL (e.g. "James 1:17")
-                var urlParams = new URLSearchParams(window.location.search);
-                var ref = urlParams.get('ref');
-                var hv = null;
-                
-                if (ref) {
-                    var match = ref.match(/:(\d+)/); // Find the part after the colon
-                    if (match) hv = parseInt(match[1], 10);
-                }
-
-                // Flip the version
-                currentVersion = currentVersion === 'web' ? 'kjv' : 'web';
-                BIBLE = currentVersion === 'web' ? BIBLE_WEB : BIBLE_KJV;
-                
-                // Re-render, passing the remembered verse
-                window.render(currentBook, currentChapter, hv, null);
-            };
-
-        }, 500); // Wait 500ms to ensure the main script has finished loading
-    });
-})();
-</script>
-
-<!-- MISSING_VERSES_RESTORE -->
-<script>
-(function(){
-    // Wait for the page and the BIBLE variables to be fully loaded
-    window.addEventListener('load', function() {
-        setTimeout(function() {
-            if (typeof BIBLE_WEB === 'undefined' || typeof BIBLE_KJV === 'undefined') return;
-
-            // The 16 missing verses: [Book, Chapter, Verse]
-            var missing = [
-                ["Matthew", "17", 21], ["Matthew", "18", 11], ["Matthew", "23", 14],
-                ["Mark", "7", 16], ["Mark", "9", 44], ["Mark", "9", 46],
-                ["Mark", "11", 26], ["Mark", "15", 28], ["Luke", "17", 36],
-                ["Luke", "23", 17], ["John", "5", 4], ["Acts", "8", 37],
-                ["Acts", "15", 34], ["Acts", "24", 7], ["Acts", "28", 29],
-                ["Romans", "16", 24]
-            ];
-
-            missing.forEach(function(item) {
-                var book = item[0], ch = item[1], v = item[2];
-                
-                // 1. Get the KJV text for this verse
-                var kjvText = BIBLE_KJV[book] && BIBLE_KJV[book][ch] && BIBLE_KJV[book][ch][v];
-                if (!kjvText) return;
-
-                // 2. Shift the WEB verses after this one up by 1
-                if (BIBLE_WEB[book] && BIBLE_WEB[book][ch]) {
-                    var chapterObj = BIBLE_WEB[book][ch];
-                    
-                    // Shift down from the end to avoid overwriting
-                    var keys = Object.keys(chapterObj).map(Number).sort(function(a,b){ return b - a; });
-                    keys.forEach(function(k) {
-                        if (k >= v) {
-                            chapterObj[(k + 1).toString()] = chapterObj[k.toString()];
-                        }
-                    });
-
-                    // 3. Insert the KJV text at the original verse number
-                    chapterObj[v.toString()] = kjvText;
-                }
-            });
-
-            // If the user is currently looking at one of these chapters, re-render it
-            if (typeof currentBook !== 'undefined' && typeof currentChapter !== 'undefined') {
-                var needsRerender = missing.some(function(item) {
-                    return item[0] === currentBook && item[1] === currentChapter.toString();
-                });
-                if (needsRerender && typeof render === 'function') {
-                    render(currentBook, currentChapter, window._savedVerse || null, null);
-                }
+    // 2. Fix the Chapter Grid (Put it behind a button)
+    var grid = document.getElementById('chapterGrid');
+    if(grid) {
+        // Hide the grid
+        grid.style.display = 'none';
+        
+        // Create the toggle button
+        var toggleBtn = document.createElement('button');
+        toggleBtn.innerHTML = '📑 Show Chapters';
+        toggleBtn.className = 'icon-btn';
+        toggleBtn.style.marginLeft = '10px';
+        
+        // Insert button next to the version select
+        var versionSel = document.getElementById('versionSelect');
+        if(versionSel && versionSel.parentNode) {
+            versionSel.parentNode.insertBefore(toggleBtn, versionSel.nextSibling);
+        }
+        
+        // Add click event to open/close grid
+        toggleBtn.onclick = function() {
+            if(grid.style.display === 'none') {
+                grid.style.display = 'flex';
+                toggleBtn.innerHTML = '✖ Hide Chapters';
+            } else {
+                grid.style.display = 'none';
+                toggleBtn.innerHTML = '📑 Show Chapters';
             }
-        }, 200);
-    });
-})();
+        };
+        
+        // Close grid when a chapter is clicked
+        grid.addEventListener('click', function(e){
+            if(e.target.classList.contains('chapter-chip')) {
+                setTimeout(function() {
+                    grid.style.display = 'none';
+                    toggleBtn.innerHTML = '📑 Show Chapters';
+                }, 100);
+            }
+        });
+    }
+});
 </script>
+
+<!-- INTERCHANGE SEARCH AND PILL + FIX CHAPTERS BUTTON -->
+<style>
+/* Ensure the top bar is a clean flex row */
+.selector-bar { 
+    display: flex !important; 
+    align-items: center !important; 
+    gap: 10px !important;
+    padding: 10px 0 !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+}
+/* Hide the old floating searchbar and grid */
+.searchbar { display: none !important; }
+.chapter-grid { display: none !important; }
+
+/* Make the search box look nice */
+#topSearchWrap { display: inline-flex !important; align-items: center; }
+#topSearchInput { width: 140px !important; padding: 8px 12px !important; border-radius: 20px !important; border: 1px solid var(--border) !important; }
+#topSearchBtn { padding: 8px 14px !important; border-radius: 20px !important; margin-left: 5px !important; }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var bar = document.querySelector('.selector-bar');
+    if (!bar) return;
+
+    // 1. GET THE THREE ELEMENTS (Search, Pill, Chapters Button)
+    var search = document.getElementById('topSearchWrap');
+    var pill = document.getElementById('verseIndicator');
+    
+    // If search is missing, create it
+    if (!search) {
+        search = document.createElement('div');
+        search.id = 'topSearchWrap';
+        search.innerHTML = '<input type="text" id="topSearchInput" placeholder="🔍 Search..." autocomplete="off"><button id="topSearchBtn">Go</button>';
+    }
+
+    // 2. CLEAN UP DUPLICATES (If any exist from previous scripts)
+    var allSearches = bar.querySelectorAll('#topSearchWrap');
+    for (var i = 1; i < allSearches.length; i++) { allSearches[i].remove(); }
+    var allPills = bar.querySelectorAll('#verseIndicator');
+    for (var i = 1; i < allPills.length; i++) { allPills[i].remove(); }
+
+    // 3. REORDER: Dropdowns -> Search -> Pill
+    if (pill) {
+        // Remove them from their current spots
+        search.remove();
+        pill.remove();
+        
+        // Put search back in
+        bar.appendChild(search);
+        
+        // Put pill at the very end
+        bar.appendChild(pill);
+        
+        // Force the pill to the far right
+        pill.style.marginLeft = 'auto'; 
+    }
+
+    // 4. REBUILD THE SHOW CHAPTERS BUTTON
+    var grid = document.getElementById('chapterGrid');
+    var versionSel = document.getElementById('versionSelect');
+    
+    // Remove old button if it exists
+    var oldBtn = document.getElementById('toggleChaptersBtn');
+    if (oldBtn) oldBtn.remove();
+    
+    if (grid && versionSel) {
+        var btn = document.createElement('button');
+        btn.id = 'toggleChaptersBtn';
+        btn.className = 'icon-btn';
+        btn.innerHTML = '📑 Show Chapters';
+        btn.style.marginLeft = '10px';
+        
+        // Insert button right after the WEB/KJV dropdown
+        versionSel.parentNode.insertBefore(btn, versionSel.nextSibling);
+        
+        // Make it work
+        btn.onclick = function() {
+            if (grid.style.display === 'none' || grid.style.display === '') {
+                grid.style.display = 'flex';
+                btn.innerHTML = '✖ Hide Chapters';
+                btn.style.background = 'var(--highlight)';
+                btn.style.color = '#fff';
+            } else {
+                grid.style.display = 'none';
+                btn.innerHTML = '📑 Show Chapters';
+                btn.style.background = 'var(--btn-bg)';
+                btn.style.color = 'var(--btn-text)';
+            }
+        };
+
+        // Auto-close when a chapter is clicked
+        grid.addEventListener('click', function(e) {
+            if (e.target.classList.contains('chapter-chip')) {
+                setTimeout(function() {
+                    grid.style.display = 'none';
+                    btn.innerHTML = '📑 Show Chapters';
+                    btn.style.background = 'var(--btn-bg)';
+                    btn.style.color = 'var(--btn-text)';
+                }, 150);
+            }
+        });
+    }
+});
+</script>
+
+<!-- DEDUPE BUTTONS -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Find all buttons with the text "Show Chapters"
+    var allButtons = document.querySelectorAll('button');
+    var chapterButtons = [];
+    
+    allButtons.forEach(function(btn) {
+        if (btn.innerHTML.includes('Show Chapters')) {
+            chapterButtons.push(btn);
+        }
+    });
+    
+    // If there are more than one, remove the extras
+    if (chapterButtons.length > 1) {
+        for (var i = 1; i < chapterButtons.length; i++) {
+            chapterButtons[i].remove();
+        }
+    }
+});
+</script>
+
+<!-- CLEAN UP THE TOP BAR -->
+<style>
+/* Add space around the search box */
+#topSearchWrap { 
+    margin-left: 20px !important; 
+    margin-right: 20px !important; 
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. REMOVE ALL "SHOW CHAPTERS" BUTTONS
+    var allButtons = document.querySelectorAll('button');
+    allButtons.forEach(function(btn) {
+        if (btn.innerHTML.includes('Show Chapters') || btn.innerHTML.includes('Hide Chapters')) {
+            btn.remove();
+        }
+    });
+
+    // 2. MAKE SURE SEARCH IS PUSHED RIGHT (BUT BEFORE THE PILL)
+    var search = document.getElementById('topSearchWrap');
+    var pill = document.getElementById('verseIndicator');
+    var bar = document.querySelector('.selector-bar');
+    
+    if (search && pill && bar) {
+        // Remove them from current position
+        search.remove();
+        pill.remove();
+        
+        // Re-insert: Search first, then Pill
+        bar.appendChild(search);
+        bar.appendChild(pill);
+        
+        // Push the pill to the absolute right
+        pill.style.marginLeft = 'auto';
+    }
+});
+</script>
+
+<!-- PUSH SEARCH TO THE RIGHT -->
+<style>
+/* Push the search box to the right, creating a gap between dropdowns and search */
+#topSearchWrap { 
+    margin-left: auto !important; 
+    margin-right: 15px !important; /* Space between search and pill */
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var search = document.getElementById('topSearchWrap');
+    var pill = document.getElementById('verseIndicator');
+    var bar = document.querySelector('.selector-bar');
+    
+    if (search && pill && bar) {
+        // Re-insert: Search first, then Pill
+        search.remove();
+        pill.remove();
+        bar.appendChild(search);
+        bar.appendChild(pill);
+    }
+});
+</script>
+
+<!-- PUSH SEARCH CLOSE TO PILL -->
+<style>
+/* Push search to the right, but snuggle it close to the pill */
+#topSearchWrap { 
+    margin-left: auto !important; 
+    margin-right: 10px !important; /* Small gap between search and pill */
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var search = document.getElementById('topSearchWrap');
+    var pill = document.getElementById('verseIndicator');
+    var bar = document.querySelector('.selector-bar');
+    
+    if (search && pill && bar) {
+        // Ensure the order is Search -> Pill
+        search.remove();
+        pill.remove();
+        bar.appendChild(search);
+        bar.appendChild(pill);
+        
+        // Keep pill pushed to the right edge
+        pill.style.marginLeft = '0'; 
+    }
+});
+</script>
+
+<!-- STRICT LAYOUT FIX -->
+<style>
+/* This forces the search box to the right, leaving the middle blank */
+#topSearchWrap { 
+    margin-left: auto !important; 
+    margin-right: 10px !important;
+}
+/* Ensures the green pill stays on the far right */
+#verseIndicator {
+    margin-left: 0 !important;
+}
+</style>
 </body>
 </html>
