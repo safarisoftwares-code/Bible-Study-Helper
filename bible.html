@@ -185,5 +185,304 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 <!-- /BSH-TOGGLE-CHIPS -->
+<!-- BSH-HIGHLIGHT-START -->
+<style>
+  .bsh-hl { border-radius: 4px; padding: 1px 3px; cursor: pointer; }
+  .bsh-hl-yellow { background: #fff2a8; }
+  .bsh-hl-green  { background: #c8f0c8; }
+  .bsh-hl-pink   { background: #ffd1e0; }
+  .bsh-hl-red    { background: #ffbdbd; }
+  .dark-mode .bsh-hl-yellow { background: #6b5d00; color: #fff; }
+  .dark-mode .bsh-hl-green  { background: #1f4d1f; color: #fff; }
+  .dark-mode .bsh-hl-pink   { background: #6b1f3a; color: #fff; }
+  .dark-mode .bsh-hl-red    { background: #6b1010; color: #fff; }
+
+  #bshHlPopup {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.2);
+    font-family: system-ui, sans-serif;
+    font-size: 0.9rem;
+    min-width: 220px;
+  }
+  #bshHlPopup.show { display: block; }
+  #bshHlPopup .bsh-hl-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  #bshHlPopup .bsh-hl-colors {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  #bshHlPopup .bsh-hl-swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  #bshHlPopup .bsh-hl-swatch:hover { transform: scale(1.15); }
+  #bshHlPopup .bsh-hl-swatch.sel { border-color: var(--highlight); border-width: 3px; }
+  #bshHlPopup .bsh-hl-action {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 8px 6px;
+    cursor: pointer;
+    color: var(--text);
+    font-size: 0.88rem;
+    border-radius: 6px;
+  }
+  #bshHlPopup .bsh-hl-action:hover { background: var(--btn-bg); }
+  #bshHlPopup .bsh-hl-remove { color: #c0392b; }
+
+  #bshClearAll {
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font: .82rem system-ui, sans-serif;
+    cursor: pointer;
+    margin: 8px 4px 0;
+  }
+</style>
+
+<div id="bshHlPopup">
+  <div class="bsh-hl-title">Highlight verse</div>
+  <div class="bsh-hl-colors">
+    <div class="bsh-hl-swatch" data-color="yellow" style="background:#fff2a8;" title="Yellow"></div>
+    <div class="bsh-hl-swatch" data-color="green"  style="background:#c8f0c8;" title="Green"></div>
+    <div class="bsh-hl-swatch" data-color="pink"   style="background:#ffd1e0;" title="Pink"></div>
+    <div class="bsh-hl-swatch" data-color="red"    style="background:#ffbdbd;" title="Red"></div>
+  </div>
+  <button class="bsh-hl-action bsh-hl-remove" id="bshHlRemove">❌ Remove highlight</button>
+  <button class="bsh-hl-action" id="bshHlCancel">Cancel</button>
+</div>
+
+<script>
+(function () {
+  var STORE_KEY = 'bsh_highlights';
+  var PALETTE = ['yellow', 'green', 'pink', 'red'];
+
+  // ---- Storage helpers ----
+  function loadAll() {
+    try { return JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); }
+    catch (e) { return {}; }
+  }
+  function saveAll(obj) {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(obj)); } catch (e) {}
+  }
+  function setOne(ref, color) {
+    var all = loadAll();
+    if (color) { all[ref] = color; } else { delete all[ref]; }
+    saveAll(all);
+  }
+  function getOne(ref) { return loadAll()[ref] || null; }
+
+  // ---- Verse reference extraction from a <p> element ----
+  // p looks like: <p><span class="vn">30</span> text …</p>
+  function refFromParagraph(p) {
+    var vn = p.querySelector('.vn');
+    if (!vn) return null;
+    var verse = vn.textContent.trim();
+    if (!verse) return null;
+    // book + chapter come from the current page state
+    var book = (typeof currentBook === 'string') ? currentBook : null;
+    var ch   = (typeof currentChapter !== 'undefined') ? currentChapter : null;
+    if (!book || !ch) return null;
+    return book + ' ' + ch + ':' + verse;
+  }
+
+  // ---- Apply stored highlights to all rendered paragraphs ----
+  function paintHighlights() {
+    var ps = document.querySelectorAll('#verseContent p');
+    for (var i = 0; i < ps.length; i++) {
+      var p = ps[i];
+      var ref = refFromParagraph(p);
+      if (!ref) continue;
+      var color = getOne(ref);
+      // Clear old classes
+      for (var c = 0; c < PALETTE.length; c++) {
+        p.classList.remove('bsh-hl-' + PALETTE[c]);
+      }
+      p.classList.remove('bsh-hl');
+      if (color && PALETTE.indexOf(color) !== -1) {
+        p.classList.add('bsh-hl', 'bsh-hl-' + color);
+      }
+    }
+  }
+
+  // ---- Popup positioning and state ----
+  var popup = document.getElementById('bshHlPopup');
+  var currentRef = null;
+
+  function showPopup(x, y, ref) {
+    currentRef = ref;
+
+    // Measure the popup so we know how tall/wide it actually is
+    popup.classList.add('show');
+    popup.style.left = '0px';
+    popup.style.top  = '0px';
+    var pw = popup.offsetWidth  || 240;
+    var ph = popup.offsetHeight || 170;
+
+    var GAP = 70; // push away from the pressed point so the verse stays visible
+    var left, top;
+
+    // Horizontal: center on touch point, clamp to viewport
+    left = x - pw / 2;
+    if (left < 8) left = 8;
+    if (left + pw > window.innerWidth - 8) left = window.innerWidth - pw - 8;
+
+    // Vertical: prefer ABOVE the touch point; if no room, go BELOW
+    top = y - ph - GAP;
+    if (top < 8) top = y + GAP;
+    if (top + ph > window.innerHeight - 8) top = window.innerHeight - ph - 8;
+
+    popup.style.left = left + 'px';
+    popup.style.top  = top  + 'px';
+
+    // Mark the currently-applied colour as selected
+    var applied = getOne(ref);
+    var swatches = popup.querySelectorAll('.bsh-hl-swatch');
+    for (var i = 0; i < swatches.length; i++) {
+      swatches[i].classList.toggle('sel', swatches[i].dataset.color === applied);
+    }
+  }
+  function hidePopup() {
+    popup.classList.remove('show');
+    currentRef = null;
+  }
+
+  // ---- Long-press (touch) and right-click (desktop) ----
+  var LONG_PRESS_MS = 500;
+  var pressTimer = null;
+  var suppressClick = false;
+
+  function attachGestureHandlers() {
+    var container = document.getElementById('verseContent');
+    if (!container) return;
+
+    container.addEventListener('touchstart', function (e) {
+      var p = e.target.closest('p');
+      if (!p) return;
+      var ref = refFromParagraph(p);
+      if (!ref) return;
+      pressTimer = setTimeout(function () {
+        suppressClick = true;
+        var touch = e.touches[0] || e.changedTouches[0];
+        showPopup(touch.clientX, touch.clientY, ref);
+      }, LONG_PRESS_MS);
+    }, { passive: true });
+
+    container.addEventListener('touchmove', function () {
+      if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }
+    }, { passive: true });
+
+    container.addEventListener('touchend', function () {
+      if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }
+      if (suppressClick) {
+        setTimeout(function () { suppressClick = false; }, 400);
+      }
+    });
+
+    container.addEventListener('contextmenu', function (e) {
+      var p = e.target.closest('p');
+      if (!p) return;
+      var ref = refFromParagraph(p);
+      if (!ref) return;
+      e.preventDefault();
+      showPopup(e.clientX, e.clientY, ref);
+    });
+  }
+
+  // ---- Swatch clicks ----
+  popup.querySelectorAll('.bsh-hl-swatch').forEach(function (sw) {
+    sw.addEventListener('click', function () {
+      if (!currentRef) return;
+      setOne(currentRef, sw.dataset.color);
+      paintHighlights();
+      hidePopup();
+    });
+  });
+
+  document.getElementById('bshHlRemove').addEventListener('click', function () {
+    if (!currentRef) return;
+    setOne(currentRef, null);
+    paintHighlights();
+    hidePopup();
+  });
+
+  document.getElementById('bshHlCancel').addEventListener('click', hidePopup);
+
+  // Click outside to close
+  document.addEventListener('click', function (e) {
+    if (!popup.classList.contains('show')) return;
+    if (popup.contains(e.target)) return;
+    hidePopup();
+  });
+
+  // ---- Wrap render (chains cleanly on top of existing wrap) ----
+  function installRenderWrap() {
+    if (typeof window.render !== 'function') {
+      setTimeout(installRenderWrap, 200);
+      return;
+    }
+    if (window.__bshHlWrapped) return; // avoid double wrap
+    window.__bshHlWrapped = true;
+
+    var priorRender = window.render;
+    window.render = function () {
+      var out = priorRender.apply(this, arguments);
+      try { paintHighlights(); } catch (e) {}
+      return out;
+    };
+  }
+
+  // ---- Add "Clear all highlights" to footer ----
+  function installClearAll() {
+    var footer = document.querySelector('footer');
+    if (!footer) return;
+    var btn = document.createElement('button');
+    btn.id = 'bshClearAll';
+    btn.textContent = '🧹 Clear all highlights';
+    btn.addEventListener('click', function () {
+      if (!confirm('Remove ALL verse highlights? This cannot be undone.')) return;
+      localStorage.removeItem(STORE_KEY);
+      paintHighlights();
+    });
+    footer.parentNode.insertBefore(btn, footer);
+  }
+
+  // ---- Boot ----
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+
+  function boot() {
+    installRenderWrap();
+    attachGestureHandlers();
+    installClearAll();
+    // First pass in case render already ran
+    paintHighlights();
+    // Second pass after render chain settles
+    setTimeout(paintHighlights, 200);
+  }
+})();
+</script>
+<!-- BSH-HIGHLIGHT-END -->
 </body>
 </html>
