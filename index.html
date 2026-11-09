@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pastors' Sermon Assistant | Safari Softwares</title>
+    <title>Bible Study Assistant | Safari Softwares</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2c6e49">
     <style>
@@ -84,7 +84,7 @@
 <body>
 <div class="container">
     <div class="app-header">
-        <div class="title-section"><h1>Pastors' Sermon Assistant</h1></div>
+        <div class="title-section"><h1>Bible Study Assistant</h1></div>
         <div class="header-actions">
             <button class="icon-btn" id="darkModeToggle" title="Toggle dark mode">🌙</button>
             <button class="icon-btn" id="fontDecBtn" title="Decrease font size">A-</button>
@@ -93,7 +93,7 @@
             <span class="glowing-orb">🕊️</span>
         </div>
     </div>
-    <div class="subhead">Generate expository sermon outlines from any Bible topic | Offline capable</div>
+    <div class="subhead">Generate expository study outlines from any Bible topic | Offline capable</div>
     <div class="card">
         <div class="input-row">
             <div class="input-group">
@@ -105,7 +105,7 @@
                 <div id="topicList" class="topic-list"></div>
             </div>
             <div class="mode-group">
-                <label>⚙️ Sermon structure</label>
+                <label>⚙️ Study structure</label>
                 <select id="modeSelect">
                     <option value="standard">Standard (7 subtopics)</option>
                     <option value="narrative">Narrative (5 story beats)</option>
@@ -113,11 +113,11 @@
                 </select>
             </div>
         </div>
-        <button class="generate-btn" id="generateBtn">✨ Generate Sermon Outline</button>
+        <button class="generate-btn" id="generateBtn">✨ Generate Study Outline</button>
     </div>
     <div class="two-columns">
         <div class="left-column"><div id="dynamicBox" class="dynamic-card"><div class="card-header"><h2>📖 Daily Verse</h2><button class="print-btn" id="printDynamicBtn">🖨️ Print</button></div><div id="dailyVerseContent"></div></div></div>
-        <div class="right-column"><div class="notes-card"><div class="card-header"><h3>📝 Pastor's Notes</h3><button class="print-btn" id="printNotesBtn">🖨️ Print Notes</button></div><textarea id="notesTextarea" class="notes-textarea" rows="5" placeholder="Write your notes here... (Resizable, expands after generating)"></textarea></div></div>
+        <div class="right-column"><div class="notes-card"><div class="card-header"><h3>📝 Study Notes</h3><button class="print-btn" id="printNotesBtn">🖨️ Print Notes</button></div><textarea id="notesTextarea" class="notes-textarea" rows="5" placeholder="Write your notes here... (Resizable, expands after generating)"></textarea></div></div>
     </div>
     <footer>© 2026 Safari Softwares | <a href="#" id="termsLink">Terms of Use</a> | <a href="#" id="privacyLink">Privacy Policy</a><br>Developer: Safari Softwares · 📧 <a href="mailto:safarisoftwares@gmail.com">safarisoftwares@gmail.com</a></footer>
 </div>
