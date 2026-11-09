@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safari Reference Bible (WEB) — Safari Softwares</title>
+<meta name="theme-color" content="#2c6e49">
+<style>
+:root{--bg:#f4f7f4;--card-bg:#fff;--text:#1e2f2e;--border:#e2ede4;--btn-bg:#edf3ef;--btn-text:#2c4d3e;--highlight:#2c6e49;--highlight-light:#eaf4ee;--font-size:1.1rem}
+.dark-mode{--bg:#1a2520;--card-bg:#25332b;--text:#dfe8e0;--border:#3b5143;--btn-bg:#2d3f33;--btn-text:#cbd7cf;--highlight:#4c9f70;--highlight-light:#2e4236}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);padding:24px 20px;line-height:1.75;font-size:var(--font-size);transition:background .3s,color .3s}
+.container{max-width:1000px;margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:16px;border-left:6px solid var(--highlight);padding-left:20px}
+h1{font-size:1.7rem;color:var(--highlight);font-family:system-ui,sans-serif}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.icon-btn{background:var(--btn-bg);border:1px solid var(--border);border-radius:30px;padding:8px 14px;cursor:pointer;font-size:.95rem;color:var(--btn-text);font-family:system-ui,sans-serif;transition:.2s}
+.icon-btn:hover{background:var(--highlight-light)}
+.selector-bar{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+select{padding:10px 16px;font-size:1rem;border:1px solid var(--border);border-radius:48px;background:var(--card-bg);color:var(--text);font-family:system-ui,sans-serif;cursor:pointer;min-width:180px}
+select:focus{outline:none;border-color:var(--highlight)}
+.chapter-grid{display:flex;flex-wrap:wrap;gap:6px;padding:14px 18px;background:var(--card-bg);border-radius:16px;border:1px solid var(--border);margin-bottom:20px;max-height:200px;overflow-y:auto}
+.chapter-chip{background:var(--btn-bg);color:var(--btn-text);padding:6px 12px;border-radius:20px;font-size:.85rem;cursor:pointer;font-family:system-ui,sans-serif;border:none;transition:.2s;min-width:32px;text-align:center}
+.chapter-chip:hover{background:var(--highlight-light);color:var(--highlight)}
+.chapter-chip.active{background:var(--highlight);color:#fff;font-weight:600}
+.searchbar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+#refInput{flex:1;min-width:200px;padding:12px 18px;font-size:1rem;border:1px solid var(--border);border-radius:48px;background:var(--card-bg);color:var(--text);font-family:system-ui,sans-serif}
+#refInput:focus{outline:none;border-color:var(--highlight);box-shadow:0 0 0 3px rgba(44,110,73,.15)}
+.go-btn{background:var(--highlight);color:#fff;border:none;border-radius:48px;padding:12px 24px;font-size:1rem;font-weight:600;cursor:pointer;font-family:system-ui,sans-serif}
+.go-btn:hover{background:#1f5236}
+.card{background:var(--card-bg);border-radius:24px;padding:32px 36px;box-shadow:0 8px 20px rgba(0,0,0,.05);border:1px solid var(--border);margin-bottom:20px}
+.verse-header{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;margin-bottom:20px;border-bottom:2px solid var(--highlight);padding-bottom:12px}
+.verse-ref-title{font-size:1.5rem;font-weight:700;color:var(--highlight);font-family:system-ui,sans-serif}
+.translation-tag{font-size:.85rem;color:var(--btn-text);font-family:system-ui,sans-serif;background:var(--highlight-light);padding:4px 12px;border-radius:30px}
+.verse-text{font-size:1.2rem;line-height:1.9}
+.verse-text p{margin-bottom:10px}
+.vn{color:var(--highlight);font-weight:700;font-size:.7em;vertical-align:super;margin-right:2px;font-family:system-ui,sans-serif}
+.nav{display:flex;justify-content:space-between;margin-top:24px;gap:12px}
+.nav button{background:var(--btn-bg);border:1px solid var(--border);border-radius:30px;padding:10px 20px;font-size:.9rem;cursor:pointer;color:var(--btn-text);font-family:system-ui,sans-serif}
+.nav button:hover:not(:disabled){background:var(--highlight-light)}
+.nav button:disabled{opacity:.4;cursor:not-allowed}
+.error{color:#c0392b;background:#fdeaea;padding:16px;border-radius:12px;border-left:4px solid #c0392b;font-family:system-ui,sans-serif}
+footer{margin-top:40px;text-align:center;font-size:.8rem;color:var(--btn-text);border-top:1px solid var(--border);padding-top:20px;font-family:system-ui,sans-serif}
+footer a{color:var(--highlight);text-decoration:none;margin:0 8px}
+@media (max-width:600px){body{padding:16px}.card{padding:20px}h1{font-size:1.3rem}.verse-text{font-size:1.05rem}}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>📖 Safari Reference Bible</h1>
+<div class="actions">
+<button class="icon-btn" id="darkToggle" title="Dark mode">🌙</button>
+<button class="icon-btn" id="fontDec" title="Smaller">A-</button>
+<button class="icon-btn" id="fontInc" title="Larger">A+</button>
+<button class="icon-btn" onclick="history.back()" title="Back">← Back</button>
+</div>
+</header>
+<div class="selector-bar">
+<select id="bookSelect"></select>
+<select id="chapterSelect" style="min-width:120px"></select>
+</div>
+<div class="chapter-grid" id="chapterGrid"></div>
+<div class="searchbar">
+<input type="text" id="refInput" placeholder="Or type reference: John 3:16, Psalm 23..." autocomplete="off">
+<button class="go-btn" id="goBtn">Go →</button>
+</div>
+<div class="card">
+<div id="verseContent"><p class="error">Loading…</p></div>
+</div>
+<footer>
+Safari Reference Bible (WEB) — World English Bible, public domain<br>
+© 2026 Safari Softwares · No ads, no tracking, no cookies · <a href="index.html">← Back to Sermon Assistant</a>
+</footer>
+</div>
+<script>
+var BIBLE = ;
+var currentBook = 'Genesis', currentChapter = 1;
+
+function esc(s){return String(s).replace(/[&<>]/g,function(m){return m==='&'?'&amp;':m==='<'?'&lt;':'&gt;';});}
+
+// Fix spacing artifacts from the raw WEB JSON: " ," -> ",", " ." -> ".", " ;" -> ";", etc.
+function fixSpacing(txt){
+    return txt
+        .replace(/ ,/g, ',')
+        .replace(/ \./g, '.')
+        .replace(/ ;/g, ';')
+        .replace(/ :/g, ':')
+        .replace(/ !/g, '!')
+        .replace(/ \?/g, '?')
+        .replace(/ "/g, '"')
+        .replace(/" /g, '"')
+        .replace(/ 's/g, "'s")
+        .replace(/' /g, "'")
+        .replace(/\s{2,}/g, ' ')
+        .trim();
+}
+
+// Capitalize first letter of sentence unless it starts with a quote/lowercase-continuation
+function tidyVerse(txt){
+    var t = fixSpacing(txt);
+    // If starts lowercase after we already capitalized the LORD, leave it (mid-sentence)
+    return t;
+}
+
+function findBook(name){
+    var keys = Object.keys(BIBLE);
+    if (BIBLE[name]) return name;
+    var lower = name.toLowerCase();
+    for (var i=0;i<keys.length;i++) if (keys[i].toLowerCase() === lower) return keys[i];
+    var aliases = {psalm:'Psalms',psalms:'Psalms',ps:'Psalms',gen:'Genesis',matt:'Matthew',mt:'Matthew',jn:'John',rev:'Revelation',isa:'Isaiah',prov:'Proverbs',eccl:'Ecclesiastes',deut:'Deuteronomy',phil:'Philippians',col:'Colossians',eph:'Ephesians',gal:'Galatians',heb:'Hebrews',jas:'James',zech:'Zechariah',mal:'Malachi',obad:'Obadiah',zeph:'Zephaniah',hab:'Habakkuk'};
+    if (aliases[lower] && BIBLE[aliases[lower]]) return aliases[lower];
+    return null;
+}
+
+function parseRef(ref){
+    ref = ref.trim();
+    var m = ref.match(/^(.+?)\s+(\d+)(?::(\d+)(?:\s*-\s*(\d+))?)?$/);
+    if (!m) return null;
+    return {book:m[1].trim(), chapter:+m[2], verse:m[3]?+m[3]:null, verseEnd:m[4]?+m[4]:null};
+}
+
+// ---------- Populate the two dropdowns ----------
+function populateBookSelect(){
+    var sel = document.getElementById('bookSelect');
+    var books = Object.keys(BIBLE);
+    sel.innerHTML = '';
+    books.forEach(function(b){
+        var opt = document.createElement('option');
+        opt.value = b; opt.textContent = b;
+        sel.appendChild(opt);
+    });
+}
+
+function populateChapterSelect(book){
+    var sel = document.getElementById('chapterSelect');
+    sel.innerHTML = '';
+    var chapters = Object.keys(BIBLE[book]).map(Number).sort(function(a,b){return a-b;});
+    chapters.forEach(function(c){
+        var opt = document.createElement('option');
+        opt.value = c; opt.textContent = 'Chapter ' + c;
+        sel.appendChild(opt);
+    });
+}
+
+function populateChapterGrid(book, activeChapter){
+    var grid = document.getElementById('chapterGrid');
+    grid.innerHTML = '';
+    var chapters = Object.keys(BIBLE[book]).map(Number).sort(function(a,b){return a-b;});
+    chapters.forEach(function(c){
+        var btn = document.createElement('button');
+        btn.className = 'chapter-chip' + (c === activeChapter ? ' active' : '');
+        btn.textContent = c;
+        btn.onclick = function(){ render(book, c, null, null); };
+        grid.appendChild(btn);
+    });
+}
+
+function showError(msg){ document.getElementById('verseContent').innerHTML = '<p class="error">' + msg + '</p>'; }
+
+function render(book, chapter, highlightVerse, highlightEnd){
+    var ch = BIBLE[book] && BIBLE[book][String(chapter)];
+    if (!ch) { showError('Chapter ' + chapter + ' not found in ' + book); return; }
+
+    currentBook = book; currentChapter = chapter;
+
+    // Sync UI
+    document.getElementById('bookSelect').value = book;
+    populateChapterSelect(book);
+    document.getElementById('chapterSelect').value = chapter;
+    populateChapterGrid(book, chapter);
+    document.getElementById('refInput').value = book + ' ' + chapter;
+
+    // Render verses as paragraphs
+    var html = '<div class="verse-header"><span class="verse-ref-title">' + book + ' ' + chapter + '</span><span class="translation-tag">World English Bible</span></div>';
+    html += '<div class="verse-text">';
+    var nums = Object.keys(ch).map(Number).sort(function(a,b){return a-b;});
+    nums.forEach(function(n){
+        var isHL = (highlightVerse !== null && n >= highlightVerse && n <= (highlightEnd || highlightVerse));
+        var styleAttr = isHL ? ' style="background:var(--highlight-light);padding:2px 4px;border-radius:4px"' : '';
+        html += '<p' + styleAttr + '><span class="vn">' + n + '</span>' + esc(tidyVerse(ch[String(n)])) + '</p>';
+    });
+    html += '</div>';
+    var canPrev = chapter > 1;
+    var canNext = BIBLE[book][String(chapter+1)] !== undefined;
+    html += '<div class="nav"><button id="prevBtn"' + (canPrev ? '' : ' disabled') + '>◀ Chapter ' + (chapter-1) + '</button>';
+    html += '<button id="nextBtn"' + (canNext ? '' : ' disabled') + '>Chapter ' + (chapter+1) + ' ▶</button></div>';
+    document.getElementById('verseContent').innerHTML = html;
+    if (canPrev) document.getElementById('prevBtn').onclick = function() { render(book, chapter-1, null, null); };
+    if (canNext) document.getElementById('nextBtn').onclick = function() { render(book, chapter+1, null, null); };
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Update URL so it's shareable
+    var params = new URLSearchParams();
+    params.set('ref', book + ' ' + chapter + (highlightVerse ? ':' + highlightVerse : ''));
+    history.replaceState({}, '', '?' + params.toString());
+}
+
+function loadRef(ref){
+    var p = parseRef(ref);
+    if (!p) { showError('Could not parse reference: "' + esc(ref) + '". Try "John 3:16" or "Psalm 23".'); return; }
+    var b = findBook(p.book);
+    if (!b) { showError('Book not found: "' + esc(p.book) + '".'); return; }
+    if (!BIBLE[b][String(p.chapter)]) { showError(b + ' chapter ' + p.chapter + ' not found.'); return; }
+    render(b, p.chapter, p.verse, p.verseEnd);
+}
+
+// ---------- Event handlers ----------
+document.getElementById('bookSelect').onchange = function(){
+    render(this.value, 1, null, null);
+};
+document.getElementById('chapterSelect').onchange = function(){
+    render(currentBook, +this.value, null, null);
+};
+document.getElementById('goBtn').onclick = function(){
+    var r = document.getElementById('refInput').value;
+    if (r.trim()) loadRef(r);
+};
+document.getElementById('refInput').addEventListener('keydown', function(e){
+    if (e.key === 'Enter') document.getElementById('goBtn').click();
+});
+document.getElementById('darkToggle').onclick = function(){
+    document.body.classList.toggle('dark-mode');
+    try { localStorage.setItem('bibleDark', document.body.classList.contains('dark-mode')); } catch(e){}
+};
+if (localStorage.getItem('bibleDark') === 'true') document.body.classList.add('dark-mode');
+document.getElementById('fontInc').onclick = function(){
+    var cur = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--font-size')) || 1.1;
+    document.documentElement.style.setProperty('--font-size', (cur + 0.1) + 'rem');
+};
+document.getElementById('fontDec').onclick = function(){
+    var cur = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--font-size')) || 1.1;
+    if (cur > 0.8) document.documentElement.style.setProperty('--font-size', (cur - 0.1) + 'rem');
+};
+
+// ---------- Initial load ----------
+populateBookSelect();
+(function(){
+    var params = new URLSearchParams(window.location.search);
+    var ref = params.get('ref');
+    if (ref) { loadRef(ref); }
+    else { render('Genesis', 1, null, null); }
+})();
+</script>
+</body>
+</html>
