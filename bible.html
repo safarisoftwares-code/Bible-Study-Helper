@@ -430,5 +430,61 @@ populateBookSelect();
     });
 })();
 </script>
+
+<!-- MISSING_VERSES_RESTORE -->
+<script>
+(function(){
+    // Wait for the page and the BIBLE variables to be fully loaded
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            if (typeof BIBLE_WEB === 'undefined' || typeof BIBLE_KJV === 'undefined') return;
+
+            // The 16 missing verses: [Book, Chapter, Verse]
+            var missing = [
+                ["Matthew", "17", 21], ["Matthew", "18", 11], ["Matthew", "23", 14],
+                ["Mark", "7", 16], ["Mark", "9", 44], ["Mark", "9", 46],
+                ["Mark", "11", 26], ["Mark", "15", 28], ["Luke", "17", 36],
+                ["Luke", "23", 17], ["John", "5", 4], ["Acts", "8", 37],
+                ["Acts", "15", 34], ["Acts", "24", 7], ["Acts", "28", 29],
+                ["Romans", "16", 24]
+            ];
+
+            missing.forEach(function(item) {
+                var book = item[0], ch = item[1], v = item[2];
+                
+                // 1. Get the KJV text for this verse
+                var kjvText = BIBLE_KJV[book] && BIBLE_KJV[book][ch] && BIBLE_KJV[book][ch][v];
+                if (!kjvText) return;
+
+                // 2. Shift the WEB verses after this one up by 1
+                if (BIBLE_WEB[book] && BIBLE_WEB[book][ch]) {
+                    var chapterObj = BIBLE_WEB[book][ch];
+                    
+                    // Shift down from the end to avoid overwriting
+                    var keys = Object.keys(chapterObj).map(Number).sort(function(a,b){ return b - a; });
+                    keys.forEach(function(k) {
+                        if (k >= v) {
+                            chapterObj[(k + 1).toString()] = chapterObj[k.toString()];
+                        }
+                    });
+
+                    // 3. Insert the KJV text at the original verse number
+                    chapterObj[v.toString()] = kjvText;
+                }
+            });
+
+            // If the user is currently looking at one of these chapters, re-render it
+            if (typeof currentBook !== 'undefined' && typeof currentChapter !== 'undefined') {
+                var needsRerender = missing.some(function(item) {
+                    return item[0] === currentBook && item[1] === currentChapter.toString();
+                });
+                if (needsRerender && typeof render === 'function') {
+                    render(currentBook, currentChapter, window._savedVerse || null, null);
+                }
+            }
+        }, 200);
+    });
+})();
+</script>
 </body>
 </html>
