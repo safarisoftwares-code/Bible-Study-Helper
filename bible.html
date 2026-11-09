@@ -303,10 +303,10 @@ populateBookSelect();
             var vnSpan = allP[i].querySelector('.vn');
             if (vnSpan && parseInt(vnSpan.textContent.trim(), 10) === verseNum) {
                 allP[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                allP[i].style.background = 'rgba(44,110,73,0.22)';
+                allP[i].style.background = 'rgba(44,110,73,0.15)'; allP[i].style.borderLeft = '4px solid var(--highlight)'; allP[i].style.paddingLeft = '10px';
                 allP[i].style.padding = '6px 10px';
                 allP[i].style.borderRadius = '8px';
-                (function(el){ setTimeout(function(){ el.style.background = ''; }, 5000); })(allP[i]);
+                el.style.background = 'rgba(44,110,73,0.2)'; el.style.borderLeft = '4px solid var(--highlight)';
                 return true;
             }
         }
@@ -373,5 +373,62 @@ populateBookSelect();
 })();
 </script>
 <!-- VERSE_INDICATOR_END -->
+
+<!-- PERSISTENT_HIGHLIGHT_FIX -->
+<script>
+(function(){
+    // Wait for the page to load completely
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            // 1. Grab the original functions before we wrap them
+            var originalRender = window.render;
+            var originalSwitch = window.switchVersion;
+
+            if (!originalRender || !originalSwitch) return;
+
+            // 2. Wrap the render function to ensure the highlight is applied
+            window.render = function(book, chapter, hv, he) {
+                // Call the original render
+                originalRender(book, chapter, hv, he);
+
+                // If a verse was requested, force the highlight styling on it
+                if (hv) {
+                    var ps = document.querySelectorAll('#verseContent p');
+                    for (var i = 0; i < ps.length; i++) {
+                        var vnSpan = ps[i].querySelector('.vn');
+                        if (vnSpan && parseInt(vnSpan.textContent.trim(), 10) === hv) {
+                            ps[i].style.background = 'rgba(44,110,73,0.15)';
+                            ps[i].style.padding = '6px 10px';
+                            ps[i].style.borderRadius = '8px';
+                            ps[i].style.transition = 'background 0.4s ease';
+                        }
+                    }
+                }
+            };
+
+            // 3. Wrap the switchVersion function to pass the verse from the URL
+            window.switchVersion = function() {
+                // Read the verse from the URL (e.g. "James 1:17")
+                var urlParams = new URLSearchParams(window.location.search);
+                var ref = urlParams.get('ref');
+                var hv = null;
+                
+                if (ref) {
+                    var match = ref.match(/:(\d+)/); // Find the part after the colon
+                    if (match) hv = parseInt(match[1], 10);
+                }
+
+                // Flip the version
+                currentVersion = currentVersion === 'web' ? 'kjv' : 'web';
+                BIBLE = currentVersion === 'web' ? BIBLE_WEB : BIBLE_KJV;
+                
+                // Re-render, passing the remembered verse
+                window.render(currentBook, currentChapter, hv, null);
+            };
+
+        }, 500); // Wait 500ms to ensure the main script has finished loading
+    });
+})();
+</script>
 </body>
 </html>
