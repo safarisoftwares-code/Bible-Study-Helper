@@ -72,7 +72,7 @@ header, .selector-bar, .searchbar{box-shadow:0 2px 6px rgba(0,0,0,0.06)}
 <option value="kjv">KJV</option>
 </select><span id="verseIndicator" style="font-family:system-ui,sans-serif;font-size:.95rem;color:var(--highlight);font-weight:600;margin-left:auto;padding:6px 14px;background:var(--highlight-light);border-radius:30px;white-space:nowrap"></span>
 </div>
-<div class="chapter-grid" id="chapterGrid"></div>
+<div class="chapter-grid" id="chapterGrid" style="display:none"></div>
 <div class="searchbar">
 <input type="text" id="refInput" placeholder="Or type reference: John 3:16, Psalm 23..." autocomplete="off">
 <button class="go-btn" id="goBtn">Go →</button>
@@ -241,6 +241,49 @@ populateBookSelect();
 })();
 </script>
 
+
+<script>
+(function(){
+    // Wait for DOM
+    document.addEventListener('DOMContentLoaded', function() {
+        var btn = document.getElementById('toggleChaptersBtn');
+        var grid = document.getElementById('chapterGrid');
+        if(!btn || !grid) return;
+
+        // Show the button now that JS is running
+        btn.style.display = 'inline-block';
+
+        // Toggle open/close on click
+        btn.onclick = function(){
+            if (grid.style.display === 'none') {
+                grid.style.display = 'flex';
+                btn.innerHTML = '✖ Hide Chapters';
+                btn.style.background = 'var(--btn-bg)';
+                btn.style.color = 'var(--btn-text)';
+            } else {
+                grid.style.display = 'none';
+                btn.innerHTML = '📑 Show Chapters';
+                btn.style.background = 'var(--highlight)';
+                btn.style.color = '#fff';
+            }
+        };
+
+        // Auto-close the grid when a chapter is selected
+        // We use a MutationObserver on the grid to catch when a chapter is clicked
+        grid.addEventListener('click', function(e){
+            if (e.target.classList.contains('chapter-chip')) {
+                // Close after a tiny delay so the user sees their tap register
+                setTimeout(function(){
+                    grid.style.display = 'none';
+                    btn.innerHTML = '📑 Show Chapters';
+                    btn.style.background = 'var(--highlight)';
+                    btn.style.color = '#fff';
+                }, 150);
+            }
+        });
+    });
+})();
+</script>
 <!-- AUTOSCROLL_VERSE_ON_LOAD_START -->
 <script>
 (function(){
