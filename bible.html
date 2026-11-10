@@ -484,5 +484,83 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 <!-- BSH-HIGHLIGHT-END -->
+<!-- BSH-SEARCH-HIT-START -->
+<style>
+  .bsh-search-hit {
+    background: #c8f0c8;
+    border-left: 4px solid #2c6e49;
+    padding-left: 8px;
+    margin-left: -8px;
+    border-radius: 3px;
+    transition: background 0.2s;
+  }
+  .dark-mode .bsh-search-hit {
+    background: #1f4d1f;
+    color: #fff;
+    border-left-color: #6ed47e;
+  }
+  .bsh-search-hit .vn {
+    color: #1a4d2a;
+    font-weight: 700;
+  }
+  .dark-mode .bsh-search-hit .vn {
+    color: #a8e8b8;
+  }
+</style>
+<script>
+(function () {
+  // ---- Wait for render to exist ----
+  function install() {
+    if (typeof window.render !== 'function') { setTimeout(install, 100); return; }
+    if (window.__bshSearchHitWrapped) return;
+    window.__bshSearchHitWrapped = true;
+
+    var priorRender = window.render;
+
+    window.render = function (book, ch, hv, he) {
+      var out = priorRender.apply(this, arguments);
+
+      // Clear previous search-hit marks
+      var prev = document.querySelectorAll('.bsh-search-hit');
+      for (var i = 0; i < prev.length; i++) {
+        prev[i].classList.remove('bsh-search-hit');
+      }
+
+      // If no highlight request, nothing else to do
+      if (hv === null || hv === undefined) return out;
+
+      // Determine range: hv .. (he || hv)
+      var startVerse = parseInt(hv, 10);
+      var endVerse = (he !== null && he !== undefined)
+        ? parseInt(he, 10)
+        : startVerse;
+      if (isNaN(startVerse)) return out;
+      if (isNaN(endVerse)) endVerse = startVerse;
+
+      // Find paragraphs whose .vn text is within [startVerse, endVerse]
+      var ps = document.querySelectorAll('#verseContent p');
+      for (var j = 0; j < ps.length; j++) {
+        var p = ps[j];
+        var vn = p.querySelector('.vn');
+        if (!vn) continue;
+        var vNum = parseInt(vn.textContent.trim(), 10);
+        if (isNaN(vNum)) continue;
+        if (vNum >= startVerse && vNum <= endVerse) {
+          p.classList.add('bsh-search-hit');
+        }
+      }
+
+      return out;
+    };
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', install);
+  } else {
+    install();
+  }
+})();
+</script>
+<!-- BSH-SEARCH-HIT-END -->
 </body>
 </html>
