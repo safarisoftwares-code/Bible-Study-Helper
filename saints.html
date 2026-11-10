@@ -3,37 +3,181 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⚔️ Saints & Martyrs — Bible Study Helper</title>
+<title>Saints &amp; Martyrs &mdash; Bible Study Helper</title>
 <style>
-  :root { --bg:#f4f7f4; --card:#fff; --text:#1e2f2e; --green:#3d9970; --green-hover:#34a870; --border:#e2ede4; }
-  .dark-mode { --bg:#1a2520; --card:#25332b; --text:#dfe8e0; --border:#3b5143; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg); color: var(--text);
-    padding: 24px 20px; line-height: 1.6;
-    min-height: 100vh; display: flex; flex-direction: column;
-  }
-  .container { max-width: 700px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .card { background: var(--card); border-radius: 24px; padding: 44px 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); border: 1px solid var(--border); text-align: center; }
-  .emoji { font-size: 3rem; margin-bottom: 12px; }
-  h1 { color: var(--green); margin-bottom: 16px; font-size: 1.9rem; font-weight: 700; }
-  p { margin-bottom: 14px; opacity: 0.88; font-size: 1.02rem; }
-  .coming-soon { display: inline-block; background: #fff4d6; color: #8a6d00; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; letter-spacing: 0.02em; }
-  .btn { display: inline-block; padding: 14px 28px; background: var(--green); color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; margin-top: 10px; transition: 0.15s; box-shadow: 0 3px 10px rgba(61,153,112,0.25); }
-  .btn:hover { background: var(--green-hover); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(61,153,112,0.35); }
+  :root { --bg:#f7f4ef; --card:#ffffff; --text:#2c2c2c; --btn-bg:#f0ece4; --btn-text:#3a3a3a; --border:#d8d1c4; --highlight:#6b4a2f; --highlight-light:#f0e6d8; --shadow:0 4px 14px rgba(0,0,0,.08); }
+  .dark-mode { --bg:#1a1a1a; --card:#242424; --text:#e8e8e8; --btn-bg:#2e2e2e; --btn-text:#d0d0d0; --border:#3a3a3a; --highlight:#d4a574; --highlight-light:#3a2e22; --shadow:0 4px 14px rgba(0,0,0,.4); }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height:1.65; transition: background .2s, color .2s; }
+  .container { max-width: 920px; margin: 0 auto; padding: 0 18px 60px; }
+  header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; padding:18px 0 14px; border-bottom:1px solid var(--border); margin-bottom:22px; }
+  header h1 { margin:0; font-size:1.15rem; font-weight:700; color:var(--highlight); }
+  .header-btns { display:flex; gap:6px; flex-wrap:wrap; }
+  .header-btns button { background:var(--btn-bg); color:var(--btn-text); border:1px solid var(--border); border-radius:8px; padding:6px 11px; cursor:pointer; font-size:.9rem; font-family:inherit; }
+  .header-btns button:hover { background:var(--highlight); color:#fff; }
+  .st-disclaimer { background:var(--highlight-light); border-left:4px solid var(--highlight); border-radius:10px; padding:16px 20px; margin-bottom:22px; font-size:.95rem; }
+  .st-disclaimer strong { color:var(--highlight); display:block; margin-bottom:6px; font-size:1rem; }
+  .st-scope { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 24px; margin-bottom:30px; box-shadow:var(--shadow); }
+  .st-scope h2 { margin:0 0 12px; font-size:1.1rem; color:var(--highlight); text-transform:uppercase; letter-spacing:.04em; }
+  .st-scope p { margin:0; font-size:.93rem; }
+  h2.section-h { margin:36px 0 14px; font-size:1.2rem; color:var(--highlight); border-bottom:2px solid var(--highlight-light); padding-bottom:6px; }
+  h3.group-h { margin:30px 0 12px; font-size:1.02rem; color:var(--text); text-transform:uppercase; letter-spacing:.05em; border-left:4px solid var(--highlight); padding-left:10px; }
+  p.st-note { background:var(--highlight-light); border-radius:8px; padding:12px 16px; font-size:.9rem; font-style:italic; margin:0 0 12px; }
+  .st-entry { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:12px; box-shadow:var(--shadow); }
+  .st-entry .st-head { display:flex; align-items:baseline; flex-wrap:wrap; gap:10px; margin-bottom:8px; }
+  .st-entry .st-name { font-weight:700; font-size:1.04rem; color:var(--highlight); }
+  .st-entry .st-ref { display:inline-block; background:var(--highlight-light); color:var(--highlight); padding:2px 10px; border-radius:12px; font-size:.78rem; font-weight:600; text-decoration:none; border:1px solid var(--highlight-light); }
+  .st-entry .st-ref:hover { background:var(--highlight); color:#fff; border-color:var(--highlight); }
+  .st-entry .st-body { font-size:.94rem; line-height:1.7; }
+  .st-entry .st-body p { margin:0 0 8px; }
+  .st-entry .st-app { margin-top:10px; padding:10px 14px; background:var(--highlight-light); border-left:3px solid var(--highlight); border-radius:6px; font-size:.9rem; font-style:italic; }
+  .st-entry .st-app strong { font-style:normal; color:var(--highlight); }
+  .st-entry .st-sup { margin-top:10px; font-size:.8rem; opacity:.75; font-style:italic; }
+  footer { margin-top:50px; padding-top:20px; border-top:1px solid var(--border); text-align:center; font-size:.85rem; color:var(--text); opacity:.75; }
+  footer a { color:var(--highlight); }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="card">
-    <div class="emoji">⚔️</div>
-    <h1>Saints & Martyrs</h1>
-    <div class="coming-soon">COMING SOON</div>
-    <p>Heroes of the faith through history — Stephen, Antipas, Polycarp, and the persecuted church.</p>
-    <p>This page is being prepared with the same care as Women of Faith.</p>
-    <a href="index.html" class="btn">← Back to Study Helper</a>
+<header>
+  <h1>&#128330; Saints &amp; Martyrs</h1>
+  <div class="header-btns">
+    <button id="darkToggle" type="button" title="Toggle dark mode">&#127769;</button>
+    <button id="fontDec" type="button" title="Smaller text">A&minus;</button>
+    <button id="fontInc" type="button" title="Larger text">A+</button>
+    <a href="index.html"><button type="button">&larr; Back</button></a>
   </div>
+</header>
+<div class="st-disclaimer">
+  <strong>&#128330; This is a study book, not the Bible.</strong>
+  This is a study aid, not the Bible. It is meant to help you notice patterns, ask better questions, and open the actual Scriptures for yourself. Every summary here is a signpost, not a substitute&mdash;read the verses, sit with them, and let the text speak in its own voice. Where my words fall short, the Word does not.
+  <br><a href="bible.html">&rarr; Open the Bible</a>
 </div>
+<section class="st-scope">
+  <h2>Disclaimer &amp; Scope</h2>
+  <p>This page is a devotional study of the heroes and martyrs of the Bible&mdash;the men and women whose faithfulness under trial the Scripture itself records. It is not a study of canonization, of church history beyond the Bible, or of the lives of the saints as later tradition tells them. We include only what Scripture records, and where Scripture is silent we say so rather than fill the gap. "Saints" here means what it means in the Bible: the holy ones, the set-apart people of God&mdash;not a special class of spiritual elites, but ordinary believers whose lives and deaths bear witness to the faithfulness of God.</p>
+</section>
+<!-- BSH-SAINTS-START -->
+<h2 class="section-h">Saints &amp; Martyrs &mdash; A Devotional Study</h2>
+<h3 class="group-h">1. The First Martyrs</h3>
+<div class="st-entry">
+  <div class="st-head"><span class="st-name">Stephen</span><a class="st-ref" href="bible.html?ref=Acts%206:5" target="_blank" rel="noopener">Acts 6:5-15 &nearr;</a></div>
+  <div class="st-body">
+    <p>Stephen was one of the seven men chosen to serve tables in the Jerusalem church, but Scripture calls him a man full of faith and of the Holy Spirit (Acts 6:5). He did great wonders and signs among the people, and when he was dragged before the council, his face was like the face of an angel (Acts 6:15). His speech in Acts 7 is the longest in the book&mdash;a retelling of Israel's history that ends with the charge that the people had resisted the Holy Spirit and betrayed and murdered the Righteous One (Acts 7:51-52). They were enraged and ground their teeth at him, and he was full of the Holy Spirit and saw the glory of God and Jesus standing at the right hand of God (Acts 7:55-56). They cast him out of the city and stoned him, and the witnesses laid their garments at the feet of a young man named Saul (Acts 7:58). As they stoned him Stephen prayed, "Lord Jesus, receive my spirit," and then he knelt down and cried with a loud voice, "Lord, do not hold this sin against them" (Acts 7:59-60). The first martyr died praying for his murderers, and one of the men who approved of his death would one day become the apostle of grace.</p>
+  </div>
+  <div class="st-app"><strong>Application:</strong> Forgive those who wrong you&mdash;mercy in suffering is the mark of Christ.</div>
+  <div class="st-sup">Supporting references: Acts 7:1-60; Acts 7:59-60</div>
+</div>
+<div class="st-entry">
+  <div class="st-head"><span class="st-name">James, son of Zebedee</span><a class="st-ref" href="bible.html?ref=Acts%2012:1" target="_blank" rel="noopener">Acts 12:1-2 &nearr;</a></div>
+  <div class="st-body">
+    <p>James was one of the sons of thunder, the fisherman who left his father's boat to follow Jesus (Matthew 4:21-22), and who asked to sit at Jesus's right hand in his glory (Mark 10:37). Jesus asked him whether he was able to drink the cup that Jesus would drink, and James said he was (Mark 10:38-39). He was. Herod Agrippa I, wanting to please the Jewish authorities, laid violent hands on some of the church and had James killed with the sword (Acts 12:2)&mdash;the first of the Twelve to die, and the only one whose martyrdom is recorded in Scripture. The son of thunder was the first to drink the cup, and the answer he gave at that table was proved true in a way he could not have imagined when he gave it.</p>
+  </div>
+  <div class="st-app"><strong>Application:</strong> Count the cost and follow anyway&mdash;the cup of Christ is worth drinking.</div>
+  <div class="st-sup">Supporting references: Matthew 4:21-22; Mark 10:35-40</div>
+</div>
+<div class="st-entry">
+  <div class="st-head"><span class="st-name">Antipas</span><a class="st-ref" href="bible.html?ref=Revelation%202:12" target="_blank" rel="noopener">Revelation 2:12-13 &nearr;</a></div>
+  <div class="st-body">
+    <p>Antipas is one of the most obscure saints in Scripture and one of the most honored. Jesus, speaking to the church in Pergamum, says that He knows where they dwell, where Satan's throne is, yet they hold fast His name and did not deny His faith even in the days of Antipas, His faithful witness, who was killed among them, where Satan dwells (Revelation 2:13). That is all we know of him&mdash;his name, his city, his faithfulness, and the fact that he was killed for it. He is called "my faithful witness," which in the Greek of Revelation is the word martys&mdash;martyr (Revelation 2:13). He is the only martyr named in the letters to the churches, and he stands for all the unnamed faithful who held fast the name of Jesus in places where Satan's throne was, and who died for it without a story that the world remembers. Jesus remembers.</p>
+  </div>
+  <div class="st-app"><strong>Application:</strong> Hold fast the name of Jesus wherever you are&mdash;even where Satan's throne is.</div>
+  <div class="st-sup">Supporting references: Revelation 2:13</div>
+</div>
+<h3 class="group-h">2. Faithful Through Trial</h3>
+<div class="st-entry">
+  <div class="st-head"><span class="st-name">Job</span><a class="st-ref" href="bible.html?ref=Job%201:1" target="_blank" rel="noopener">Job 1:1-2:13 &nearr;</a></div>
+  <div class="st-body">
+    <p>Job was a righteous man, blameless and upright, one who feared God and turned away from evil (Job 1:1)&mdash;and that is exactly why the book of Job exists: to show that faithfulness is not always rewarded with comfort in this life, and that suffering is not always a sign of sin. In a single day he lost his oxen, his sheep, his camels, his servants, and all ten of his children (Job 1:13-19). He tore his robe and shaved his head and fell to the ground and worshiped, saying that the Lord gave and the Lord has taken away; blessed be the name of the Lord (Job 1:21). He was covered with sores, his wife told him to curse God and die (Job 2:9), and his friends spent chapters accusing him of hidden sin. He argued with God, complained to God, and refused to let go of God. And when God finally answered him out of the whirlwind, he said that he had heard of God by the hearing of the ear, but now his eye saw him (Job 42:5). He was faithful through trial, and his faithfulness was not a formula for getting his life back&mdash;it was worship in the middle of the ruins.</p>
+  </div>
+  <div class="st-app"><strong>Application:</strong> Worship God in the ruins&mdash;faithfulness is not a formula, it is a trust.</div>
+  <div class="st-sup">Supporting references: Job 1:21; Job 42:1-6</div>
+</div>
+<div class="st-entry">
+  <div class="st-head"><span class="st-name">Jeremiah</span><a class="st-ref" href="bible.html?ref=Jeremiah%201:4" target="_blank" rel="noopener">Jeremiah 1:4-10 &nearr;</a></div>
+  <div class="st-body">
+    <p>Jeremiah was called to be a prophet before he was born, and he spent his whole ministry telling people a message they did not want to hear: repent, submit to Babylon, the city is going to fall (Jeremiah 1:4-10). He was mocked, put in stocks (Jeremiah 20:2), thrown into a cistern, and left to sink in the mud (Jeremiah 38:6). He is called the weeping prophet, and he wept because the people would not listen. But he did not stop. He said the word of the Lord was in his heart like a burning fire shut up in his bones, and he could not hold it in (Jeremiah 20:9). He is the picture of faithfulness that does not succeed&mdash;he never saw the city repent, he never saw the exile end, he was faithful through trial without the reward of visible results. And yet the words God gave him are still alive, and the new covenant he promised is the covenant we live under (Jeremiah 31:31-34).</p>
+  </div>
+  <div class="st-app"><strong>Application:</strong> Keep speaking the truth even when no one listens&mdash;God's word does not return empty.</div>
+  <div class="st-sup">Supporting references: Jeremiah 20:7-18; Jeremiah 38:1-13; Jeremiah 20:9</div>
+</div>
+<div class="st-entry">
+  <div class="st-head"><span class="st-name">Daniel</span><a class="st-ref" href="bible.html?ref=Daniel%206:1" target="_blank" rel="noopener">Daniel 6:1-28 &nearr;</a></div>
+  <div class="st-body">
+    <p>Daniel was taken to Babylon as a young man and spent his whole life in a foreign court, and he did not compromise. He refused the king's food, asked for vegetables and water, and God gave him and his friends favor and wisdom (Daniel 1:8-16). He interpreted dreams, served kings, and prayed three times a day at his window with the windows open toward Jerusalem, even after a law was passed making it illegal (Daniel 6:10). He was thrown into the lions' den and spent the night there, and in the morning the king found him alive, and Daniel said that his God sent his angel and shut the lions' mouths (Daniel 6:22). He is the picture of faithfulness in a hostile culture&mdash;not withdrawal from the world but faithful witness in the middle of it, serving the empire without worshiping it, and praying with the windows open even when praying was the thing that got him thrown in the den.</p>
+  </div>
+  <div class="st-app"><strong>Application:</strong> Pray with the windows open&mdash;faithful witness in a hostile culture begins on your knees.</div>
+  <div class="st-sup">Supporting references: Daniel 1:8-16; Daniel 6:10; Daniel 9:1-19</div>
+</div>
+<div class="st-entry">
+  <div class="st-head"><span class="st-name">Shadrach, Meshach, and Abednego</span><a class="st-ref" href="bible.html?ref=Daniel%203:1" target="_blank" rel="noopener">Daniel 3:1-30 &nearr;</a></div>
+  <div class="st-body">
+    <p>These three young men refused to bow to the golden image Nebuchadnezzar set up, and when they were brought before the king they gave one of the greatest confessions in Scripture: their God was able to deliver them from the burning fiery furnace, and he would deliver them out of the king's hand&mdash;but even if he did not, they would not serve his gods or worship the golden image he had set up (Daniel 3:17-18). That "even if he does not" is the heart of faithful suffering&mdash;they trusted God to deliver them, and they refused to make their obedience conditional on the deliverance. They were thrown into the furnace, and the king saw four men walking in the fire, and the fourth was like a son of the gods (Daniel 3:25). They came out without even the smell of smoke on their clothes (Daniel 3:27). Their faithfulness was not a bargain with God; it was obedience to God whether he delivered them or not, and he met them in the fire.</p>
+  </div>
+  <div class="st-app"><strong>Application:</strong> Obey God even if He does not rescue you&mdash;He meets His faithful ones in the fire.</div>
+  <div class="st-sup">Supporting references: Daniel 3:17-18; Daniel 3:25</div>
+</div>
+<h3 class="group-h">3. The Persecuted Church</h3>
+<div class="st-entry">
+  <div class="st-head"><span class="st-name">The Unnamed Believers of Hebrews 11</span><a class="st-ref" href="bible.html?ref=Hebrews%2011:35" target="_blank" rel="noopener">Hebrews 11:35-40 &nearr;</a></div>
+  <div class="st-body">
+    <p>Hebrews 11 lists the heroes of faith by name&mdash;Abel, Enoch, Noah, Abraham, Moses, Rahab, and others&mdash;and then it turns to the ones it does not name. Others were tortured, refusing to accept release, so that they might rise again to a better life; others suffered mocking and flogging, and even chains and imprisonment (Hebrews 11:35-36). They were stoned, they were sawn in two, they were killed with the sword; they went about in skins of sheep and goats, destitute, afflicted, mistreated&mdash;of whom the world was not worthy&mdash;wandering about in deserts and mountains, and in dens and caves of the earth (Hebrews 11:37-38). These are the saints whose names we do not know, and the text says the world was not worthy of them. They are the cloud of witnesses whose stories are written not in the records of the church but in the book of life, and the text says that God has provided something better for us, that apart from us they should not be made perfect (Hebrews 11:40)&mdash;we are joined to them, and they to us, in one body of the faithful.</p>
+  </div>
+  <div class="st-app"><strong>Application:</strong> Honor the unnamed faithful&mdash;faithfulness is measured by God, not by fame.</div>
+  <div class="st-sup">Supporting references: Hebrews 11:36-38; Hebrews 11:40</div>
+</div>
+<div class="st-entry">
+  <div class="st-head"><span class="st-name">The Faithful in Revelation</span><a class="st-ref" href="bible.html?ref=Revelation%206:9" target="_blank" rel="noopener">Revelation 6:9-11 &nearr;</a></div>
+  <div class="st-body">
+    <p>Revelation shows the persecuted church under the altar: the souls of those who had been slain for the word of God and for the witness they had borne, crying out how long the Sovereign Lord would wait before judging and avenging their blood on those who dwell on the earth (Revelation 6:9-10). They are given white robes and told to rest a little longer, until the number of their fellow servants and brothers should be complete (Revelation 6:11). Then the vision widens: a great multitude that no one could number, from every nation, from all tribes and peoples and languages, standing before the throne in white robes with palm branches in their hands (Revelation 7:9). And the voice from the throne says they have come out of the great tribulation and washed their robes in the blood of the Lamb, and the Lamb will be their shepherd and lead them to springs of living water, and God will wipe away every tear from their eyes (Revelation 7:14-17). And the victory is described in one verse: they conquered him by the blood of the Lamb and by the word of their testimony, for they loved not their lives even unto death (Revelation 12:11). That is the persecuted church&mdash;not a defeated remnant but a conquering multitude, and the way they conquered was by dying faithful.</p>
+  </div>
+  <div class="st-app"><strong>Application:</strong> Conquer by faithfulness&mdash;love not your life even unto death.</div>
+  <div class="st-sup">Supporting references: Revelation 7:9-17; Revelation 12:11; Revelation 20:4</div>
+</div>
+<h3 class="group-h">4. Modern-era Witnesses</h3>
+<p class="st-note">Scripture does not record the names of believers after the apostolic age, and this page does not invent them. What Scripture does give is a pattern and a promise that apply to every era: the same Spirit, the same gospel, the same faithfulness under trial, and the same Lord who said, "Be faithful unto death, and I will give you the crown of life" (Revelation 2:10). The modern-era witnesses are not named in the Bible, but they are the same body, the same faith, and the same promise. We honor them by name where history records them and by pattern where Scripture speaks&mdash;and we do not put words in the mouths of the faithful or stories in the record that God has not given.</p>
+<div class="st-entry">
+  <div class="st-head"><span class="st-name">The Faithful of Every Era</span><a class="st-ref" href="bible.html?ref=Revelation%202:10" target="_blank" rel="noopener">Revelation 2:10 &nearr;</a></div>
+  <div class="st-body">
+    <p>Jesus said, "Blessed are those who are persecuted for righteousness' sake, for theirs is the kingdom of heaven" (Matthew 5:10), and Paul said that all who desire to live a godly life in Christ Jesus will be persecuted (2 Timothy 3:12). That means the modern-era witnesses are not an exception to the biblical pattern&mdash;they are the continuation of it. The believers who have suffered in every century since the apostles have drunk the same cup and held fast the same name, and the promise to them is the same promise: be faithful unto death, and I will give you the crown of life (Revelation 2:10). Jesus told His disciples to rejoice and be glad when they were persecuted, for their reward in heaven is great (Matthew 5:12). We do not need to invent their stories to honor them; we need only to recognize that the body of Christ has always had its martyrs, and that the Lord who stood with Stephen and with Antipas stands with them.</p>
+  </div>
+  <div class="st-app"><strong>Application:</strong> Rejoice when you suffer for Christ&mdash;your reward in heaven is great.</div>
+  <div class="st-sup">Supporting references: 2 Timothy 3:12; Matthew 5:10-12</div>
+</div>
+<div class="st-entry">
+  <div class="st-head"><span class="st-name">The Promise to the Faithful</span><a class="st-ref" href="bible.html?ref=Revelation%2021:1" target="_blank" rel="noopener">Revelation 21:1-7 &nearr;</a></div>
+  <div class="st-body">
+    <p>The Bible ends with a promise that makes every martyr's faithfulness make sense: a new heaven and a new earth, the holy city coming down out of heaven from God, and a voice from the throne saying that the dwelling place of God is with man, and He will dwell with them, and they will be his people, and God himself will be with them as their God (Revelation 21:3). He will wipe away every tear from their eyes, and death shall be no more, neither shall there be mourning, nor crying, nor pain anymore, for the former things have passed away (Revelation 21:4). Paul said it another way: though our outer nature is wasting away, our inner nature is being renewed day by day, for this light momentary affliction is preparing for us an eternal weight of glory beyond all comparison (2 Corinthians 4:16-17). That is the end of the story of the saints and martyrs: not a sad ending, but a homecoming&mdash;and the faithfulness of every saint, named and unnamed, is a witness to that promise until the day it is fulfilled.</p>
+  </div>
+  <div class="st-app"><strong>Application:</strong> Fix your eyes on the coming glory&mdash;every tear will be wiped away.</div>
+  <div class="st-sup">Supporting references: 2 Corinthians 4:16-18; Revelation 21:3-4</div>
+</div>
+<!-- BSH-SAINTS-END -->
+<footer>
+  &copy; 2026 Safari Softwares &mdash; Bible Study Helper &mdash; Saints &amp; Martyrs<br>
+  This is a study aid, not the Bible. <a href="bible.html">Open the Bible &rarr;</a>
+</footer>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('darkToggle');
+  if (localStorage.getItem('bsh_theme') === 'dark') root.classList.add('dark-mode');
+  if (darkBtn) darkBtn.addEventListener('click', function () {
+    root.classList.toggle('dark-mode');
+    localStorage.setItem('bsh_theme', root.classList.contains('dark-mode') ? 'dark' : 'light');
+  });
+  var size = parseInt(localStorage.getItem('bsh_fontsize') || '100', 10);
+  function applySize() {
+    root.style.fontSize = size + '%';
+    localStorage.setItem('bsh_fontsize', String(size));
+  }
+  applySize();
+  var inc = document.getElementById('fontInc');
+  var dec = document.getElementById('fontDec');
+  if (inc) inc.addEventListener('click', function () { size = Math.min(140, size + 10); applySize(); });
+  if (dec) dec.addEventListener('click', function () { size = Math.max(70, size - 10); applySize(); });
+})();
+</script>
 </body>
 </html>
