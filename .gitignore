@@ -1,2 +1,6 @@
 *.bak_*
 *.bak
+
+*.bak_*
+*.bak
+cleanup_manifest_*.txt
