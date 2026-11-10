@@ -171,8 +171,9 @@
 
 .bsh-footer-nav {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 8px;
   max-width: 1000px;
   margin: 0 auto;
   padding: 0;
@@ -181,21 +182,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 12px 10px;
-  border-radius: 10px;
+  gap: 5px;
+  padding: 8px 10px;
+  border-radius: 8px;
   background: var(--fresh-green);
   color: #ffffff;
   border: 2px solid var(--fresh-green);
   text-decoration: none;
-  font-weight: 700;
-  font-size: 0.88rem;
+  font-weight: 600;
+  font-size: 0.82rem;
+  line-height: 1.2;
   text-align: center;
   letter-spacing: 0.01em;
   transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
-  box-shadow: 0 3px 8px rgba(61, 153, 112, 0.2);
+  box-shadow: 0 2px 6px rgba(61, 153, 112, 0.18);
   cursor: pointer;
-  min-height: 48px;
+  min-height: 44px;
 }
 .bsh-footer-tab:hover {
   transform: translateY(-2px);
@@ -277,8 +279,6 @@
     <div class="bsh-library-section">
       <h2 class="bsh-library-title">📚 Scripture Library</h2>
       <nav class="bsh-footer-nav" aria-label="Scripture library">
-        <a href="warfare.html" class="bsh-footer-tab" target="_blank" rel="noopener">🛡️ Spiritual Warfare</a>
-        <a href="money.html" class="bsh-footer-tab" target="_blank" rel="noopener">💰 Money, Work &amp; Contentment</a>
         <a href="bible.html" class="bsh-footer-tab" target="_blank" rel="noopener">📖 Bible</a>
         <a href="women.html" class="bsh-footer-tab" target="_blank" rel="noopener">👩 Women of Faith</a>
         <a href="leadership.html" class="bsh-footer-tab" target="_blank" rel="noopener">🎯 Leadership</a>
@@ -289,6 +289,8 @@
         <a href="covenants.html" class="bsh-footer-tab" target="_blank" rel="noopener">🤝 Covenants</a>
         <a href="spirit.html" class="bsh-footer-tab" target="_blank" rel="noopener">🕊️ Holy Spirit</a>
         <a href="prayer.html" class="bsh-footer-tab" target="_blank" rel="noopener">🙏 Prayer Warriors</a>
+        <a href="warfare.html" class="bsh-footer-tab" target="_blank" rel="noopener">🛡️ Spiritual Warfare</a>
+        <a href="money.html" class="bsh-footer-tab" target="_blank" rel="noopener">💰 Money, Work &amp; Contentment</a>
       </nav>
     </div>
     </footer>
