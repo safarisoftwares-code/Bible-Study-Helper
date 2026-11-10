@@ -3,37 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🤝 Covenants — Bible Study Helper</title>
+<title>Covenants &mdash; Bible Study Helper</title>
 <style>
-  :root { --bg:#f4f7f4; --card:#fff; --text:#1e2f2e; --green:#3d9970; --green-hover:#34a870; --border:#e2ede4; }
-  .dark-mode { --bg:#1a2520; --card:#25332b; --text:#dfe8e0; --border:#3b5143; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg); color: var(--text);
-    padding: 24px 20px; line-height: 1.6;
-    min-height: 100vh; display: flex; flex-direction: column;
-  }
-  .container { max-width: 700px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .card { background: var(--card); border-radius: 24px; padding: 44px 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); border: 1px solid var(--border); text-align: center; }
-  .emoji { font-size: 3rem; margin-bottom: 12px; }
-  h1 { color: var(--green); margin-bottom: 16px; font-size: 1.9rem; font-weight: 700; }
-  p { margin-bottom: 14px; opacity: 0.88; font-size: 1.02rem; }
-  .coming-soon { display: inline-block; background: #fff4d6; color: #8a6d00; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; letter-spacing: 0.02em; }
-  .btn { display: inline-block; padding: 14px 28px; background: var(--green); color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; margin-top: 10px; transition: 0.15s; box-shadow: 0 3px 10px rgba(61,153,112,0.25); }
-  .btn:hover { background: var(--green-hover); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(61,153,112,0.35); }
+  :root { --bg:#f7f4ef; --card:#ffffff; --text:#2c2c2c; --btn-bg:#f0ece4; --btn-text:#3a3a3a; --border:#d8d1c4; --highlight:#6b4a2f; --highlight-light:#f0e6d8; --shadow:0 4px 14px rgba(0,0,0,.08); }
+  .dark-mode { --bg:#1a1a1a; --card:#242424; --text:#e8e8e8; --btn-bg:#2e2e2e; --btn-text:#d0d0d0; --border:#3a3a3a; --highlight:#d4a574; --highlight-light:#3a2e22; --shadow:0 4px 14px rgba(0,0,0,.4); }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height:1.65; transition: background .2s, color .2s; }
+  .container { max-width: 920px; margin: 0 auto; padding: 0 18px 60px; }
+  header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; padding:18px 0 14px; border-bottom:1px solid var(--border); margin-bottom:22px; }
+  header h1 { margin:0; font-size:1.15rem; font-weight:700; color:var(--highlight); }
+  .header-btns { display:flex; gap:6px; flex-wrap:wrap; }
+  .header-btns button { background:var(--btn-bg); color:var(--btn-text); border:1px solid var(--border); border-radius:8px; padding:6px 11px; cursor:pointer; font-size:.9rem; font-family:inherit; }
+  .header-btns button:hover { background:var(--highlight); color:#fff; }
+  .cv-disclaimer { background:var(--highlight-light); border-left:4px solid var(--highlight); border-radius:10px; padding:16px 20px; margin-bottom:22px; font-size:.95rem; }
+  .cv-disclaimer strong { color:var(--highlight); display:block; margin-bottom:6px; font-size:1rem; }
+  .cv-scope { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 24px; margin-bottom:30px; box-shadow:var(--shadow); }
+  .cv-scope h2 { margin:0 0 12px; font-size:1.1rem; color:var(--highlight); text-transform:uppercase; letter-spacing:.04em; }
+  .cv-scope p { margin:0; font-size:.93rem; }
+  h2.section-h { margin:36px 0 14px; font-size:1.2rem; color:var(--highlight); border-bottom:2px solid var(--highlight-light); padding-bottom:6px; }
+  .cv-entry { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:12px; box-shadow:var(--shadow); }
+  .cv-entry .cv-head { display:flex; align-items:baseline; flex-wrap:wrap; gap:10px; margin-bottom:8px; }
+  .cv-entry .cv-name { font-weight:700; font-size:1.04rem; color:var(--highlight); }
+  .cv-entry .cv-ref { display:inline-block; background:var(--highlight-light); color:var(--highlight); padding:2px 10px; border-radius:12px; font-size:.78rem; font-weight:600; text-decoration:none; border:1px solid var(--highlight-light); }
+  .cv-entry .cv-ref:hover { background:var(--highlight); color:#fff; border-color:var(--highlight); }
+  .cv-entry .cv-body { font-size:.94rem; line-height:1.7; }
+  .cv-entry .cv-body p { margin:0 0 8px; }
+  .cv-entry .cv-app { margin-top:10px; padding:10px 14px; background:var(--highlight-light); border-left:3px solid var(--highlight); border-radius:6px; font-size:.9rem; font-style:italic; }
+  .cv-entry .cv-app strong { font-style:normal; color:var(--highlight); }
+  .cv-entry .cv-sup { margin-top:10px; font-size:.8rem; opacity:.75; font-style:italic; }
+  footer { margin-top:50px; padding-top:20px; border-top:1px solid var(--border); text-align:center; font-size:.85rem; color:var(--text); opacity:.75; }
+  footer a { color:var(--highlight); }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="card">
-    <div class="emoji">🤝</div>
-    <h1>Covenants</h1>
-    <div class="coming-soon">COMING SOON</div>
-    <p>Noahic, Abrahamic, Mosaic, Davidic, and New — God's promises across Scripture.</p>
-    <p>This page is being prepared with the same care as Women of Faith.</p>
-    <a href="index.html" class="btn">← Back to Study Helper</a>
+<header>
+  <h1>&#129309; Covenants</h1>
+  <div class="header-btns">
+    <button id="darkToggle" type="button" title="Toggle dark mode">&#127769;</button>
+    <button id="fontDec" type="button" title="Smaller text">A&minus;</button>
+    <button id="fontInc" type="button" title="Larger text">A+</button>
+    <a href="index.html"><button type="button">&larr; Back</button></a>
   </div>
+</header>
+<div class="cv-disclaimer">
+  <strong>&#129309; This is a study book, not the Bible.</strong>
+  This is a study aid, not the Bible. It is meant to help you notice patterns, ask better questions, and open the actual Scriptures for yourself. Every summary here is a signpost, not a substitute&mdash;read the verses, sit with them, and let the text speak in its own voice. Where my words fall short, the Word does not.
+  <br><a href="bible.html">&rarr; Open the Bible</a>
 </div>
+<section class="cv-scope">
+  <h2>A Note Before You Begin</h2>
+  <p>This page covers the five major covenants that shape the Bible's storyline&mdash;Noahic, Abrahamic, Mosaic, Davidic, and New. Other covenants appear in Scripture (such as the covenant with Phinehas in Numbers 25), but these five form the central spine of redemption history. Each entry offers a brief narrative overview with key references for your own study. Read prayerfully, and let these notes be a doorway rather than a destination.</p>
+</section>
+<!-- BSH-COVENANTS-START -->
+<h2 class="section-h">The Five Major Covenants</h2>
+<div class="cv-entry">
+  <div class="cv-head"><span class="cv-name">The Noahic Covenant</span><a class="cv-ref" href="bible.html?ref=Genesis%209:8" target="_blank" rel="noopener">Genesis 9:8-17 &nearr;</a></div>
+  <div class="cv-body">
+    <p>The world had become so violent that God looked upon it and grieved (Genesis 6:6). Into that ruin came a command to build an ark, and with it a promise that God had not abandoned His creation (Genesis 6:18). After the floodwaters receded and Noah stood on dry ground, God established a covenant not only with Noah but with every living creature (Genesis 9:12-13). The sign was a bow in the clouds&mdash;a rainbow&mdash;set in the sky as a reminder that God would never again destroy the earth by flood (Genesis 9:13-15). This first covenant is striking in its generosity: it binds God to a promise He will keep regardless of human faithfulness (Genesis 8:21-22). The rainbow is not a symbol of human goodness but of divine restraint. When you see one, you are looking at a pledge made before you were born.</p>
+  </div>
+  <div class="cv-app"><strong>Application:</strong> When you see a rainbow, pause and thank God for His covenant faithfulness that does not depend on your performance.</div>
+  <div class="cv-sup">Supporting references: Genesis 6:18; Genesis 8:21-22; Genesis 9:12-13</div>
+</div>
+<div class="cv-entry">
+  <div class="cv-head"><span class="cv-name">The Abrahamic Covenant</span><a class="cv-ref" href="bible.html?ref=Genesis%2015:1" target="_blank" rel="noopener">Genesis 15:1-21 &nearr;</a></div>
+  <div class="cv-body">
+    <p>God spoke to a man in a pagan city and told him to leave everything familiar for a land he had never seen, promising land, offspring, and blessing for all peoples on earth (Genesis 12:1-3). Abraham waited years without a son, until God took him outside and told him to count the stars (Genesis 15:5). When Abraham believed, it was credited to him as righteousness (Genesis 15:6), a verse Paul later built an entire gospel upon (Romans 4:3). The covenant was sealed with a solemn ceremony where God alone passed between the divided animals, binding Himself to the promise while Abraham slept (Genesis 15:17). Later God added the sign of circumcision (Genesis 17:10-11) and confirmed the covenant after the near-sacrifice of Isaac on Mount Moriah (Genesis 22:15-18). This covenant is the root from which the whole tree of redemption grows.</p>
+  </div>
+  <div class="cv-app"><strong>Application:</strong> Trust that God's promises rest on His faithfulness, not on your ability to earn them.</div>
+  <div class="cv-sup">Supporting references: Genesis 12:1-3; Genesis 17:1-14; Genesis 22:15-18; Romans 4:3</div>
+</div>
+<div class="cv-entry">
+  <div class="cv-head"><span class="cv-name">The Mosaic Covenant</span><a class="cv-ref" href="bible.html?ref=Exodus%2019:3" target="_blank" rel="noopener">Exodus 19:3-8 &nearr;</a></div>
+  <div class="cv-body">
+    <p>Three months after Israel walked out of Egypt, they camped at a mountain that shook with thunder and smoke (Exodus 19:16-18). God offered Israel a covenant: if they obeyed His voice, they would be His treasured possession among all nations (Exodus 19:5-6). The people answered in unison that everything the LORD had said they would do (Exodus 19:8). The law that followed&mdash;the Ten Commandments and the whole structure of worship and community life&mdash;was not a ladder to climb but a charter for a people already rescued (Exodus 20:1-17). Notice the order: God did not say obey and I will deliver you, but I delivered you, therefore obey. The covenant carried both blessing for faithfulness and curse for rebellion (Deuteronomy 28:1-2; 28:15), and Israel's history would be the long record of both. The law revealed God's heart and humanity's failure, preparing the way for a covenant that would not depend on human resolve.</p>
+  </div>
+  <div class="cv-app"><strong>Application:</strong> Read the law as a gift that shows you your need, and let it drive you to grace rather than to self-effort.</div>
+  <div class="cv-sup">Supporting references: Exodus 20:1-17; Exodus 24:1-8; Deuteronomy 28:1-2; Deuteronomy 28:15</div>
+</div>
+<div class="cv-entry">
+  <div class="cv-head"><span class="cv-name">The Davidic Covenant</span><a class="cv-ref" href="bible.html?ref=2%20Samuel%207:1" target="_blank" rel="noopener">2 Samuel 7:1-17 &nearr;</a></div>
+  <div class="cv-body">
+    <p>David wanted to build God a house&mdash;a grand temple to replace the tent&mdash;but God turned the tables through the prophet Nathan (2 Samuel 7:1-7). God told David that instead He would build David a house, and that a descendant from David's line would reign forever (2 Samuel 7:12-16). David responded with a prayer of astonished humility, asking who he was that God had brought him this far (2 Samuel 7:18). The promise echoed through the Psalms and the prophets, sustaining Israel through exile and disappointment (Psalm 89:3-4), and it found its yes and amen in a child born in Bethlehem (Luke 1:32-33). When the angel told Mary her son would reign on David's throne forever, every syllable of this covenant was in view. The throne promised to David was not a temporary seat but an eternal one.</p>
+  </div>
+  <div class="cv-app"><strong>Application:</strong> Rest in the certainty that God's promises to David are fulfilled in Jesus, whose kingdom will never end.</div>
+  <div class="cv-sup">Supporting references: 2 Samuel 7:18-29; Psalm 89:3-4; Luke 1:32-33</div>
+</div>
+<div class="cv-entry">
+  <div class="cv-head"><span class="cv-name">The New Covenant</span><a class="cv-ref" href="bible.html?ref=Jeremiah%2031:31" target="_blank" rel="noopener">Jeremiah 31:31-34 &nearr;</a></div>
+  <div class="cv-body">
+    <p>Through Jeremiah, God spoke of a day when He would make a new covenant&mdash;not like the one at Sinai, which the people broke (Jeremiah 31:31-32). This time the law would be written not on stone but on hearts, and He would be their God and they would be His people (Jeremiah 31:33). The most astonishing promise in it is the forgiveness: God declares He will forgive their wickedness and remember their sins no more (Jeremiah 31:34). On the night before He died, Jesus took a cup and said it was the new covenant in His blood, poured out for His disciples (Luke 22:20). The book of Hebrews explains why this covenant is superior&mdash;because it rests on a better sacrifice and a better priest, and because it actually does what the old one could only point toward (Hebrews 8:6-13). Every time you come to the Lord's Table, you are touching this covenant&mdash;heart, Spirit, forgiveness&mdash;sealed in blood and offered freely (Hebrews 10:16-18).</p>
+  </div>
+  <div class="cv-app"><strong>Application:</strong> Come to the Lord's Table with gratitude, knowing the new covenant is sealed in Christ's blood and secured forever.</div>
+  <div class="cv-sup">Supporting references: Luke 22:20; Hebrews 8:6-13; Hebrews 10:16-18</div>
+</div>
+<!-- BSH-COVENANTS-END -->
+<footer>
+  &copy; 2026 Safari Softwares &mdash; Bible Study Helper &mdash; Covenants<br>
+  This is a study aid, not the Bible. <a href="bible.html">Open the Bible &rarr;</a>
+</footer>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('darkToggle');
+  if (localStorage.getItem('bsh_theme') === 'dark') root.classList.add('dark-mode');
+  if (darkBtn) darkBtn.addEventListener('click', function () {
+    root.classList.toggle('dark-mode');
+    localStorage.setItem('bsh_theme', root.classList.contains('dark-mode') ? 'dark' : 'light');
+  });
+  var size = parseInt(localStorage.getItem('bsh_fontsize') || '100', 10);
+  function applySize() {
+    root.style.fontSize = size + '%';
+    localStorage.setItem('bsh_fontsize', String(size));
+  }
+  applySize();
+  var inc = document.getElementById('fontInc');
+  var dec = document.getElementById('fontDec');
+  if (inc) inc.addEventListener('click', function () { size = Math.min(140, size + 10); applySize(); });
+  if (dec) dec.addEventListener('click', function () { size = Math.max(70, size - 10); applySize(); });
+})();
+</script>
 </body>
 </html>
