@@ -4,3 +4,6 @@
 *.bak_*
 *.bak
 cleanup_manifest_*.txt
+
+*.pdf
+make_book.py
