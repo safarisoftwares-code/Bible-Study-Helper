@@ -3,37 +3,142 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🕊️ The Holy Spirit — Bible Study Helper</title>
+<title>Holy Spirit &mdash; Bible Study Helper</title>
 <style>
-  :root { --bg:#f4f7f4; --card:#fff; --text:#1e2f2e; --green:#3d9970; --green-hover:#34a870; --border:#e2ede4; }
-  .dark-mode { --bg:#1a2520; --card:#25332b; --text:#dfe8e0; --border:#3b5143; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg); color: var(--text);
-    padding: 24px 20px; line-height: 1.6;
-    min-height: 100vh; display: flex; flex-direction: column;
-  }
-  .container { max-width: 700px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .card { background: var(--card); border-radius: 24px; padding: 44px 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); border: 1px solid var(--border); text-align: center; }
-  .emoji { font-size: 3rem; margin-bottom: 12px; }
-  h1 { color: var(--green); margin-bottom: 16px; font-size: 1.9rem; font-weight: 700; }
-  p { margin-bottom: 14px; opacity: 0.88; font-size: 1.02rem; }
-  .coming-soon { display: inline-block; background: #fff4d6; color: #8a6d00; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; letter-spacing: 0.02em; }
-  .btn { display: inline-block; padding: 14px 28px; background: var(--green); color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; margin-top: 10px; transition: 0.15s; box-shadow: 0 3px 10px rgba(61,153,112,0.25); }
-  .btn:hover { background: var(--green-hover); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(61,153,112,0.35); }
+  :root { --bg:#f7f4ef; --card:#ffffff; --text:#2c2c2c; --btn-bg:#f0ece4; --btn-text:#3a3a3a; --border:#d8d1c4; --highlight:#6b4a2f; --highlight-light:#f0e6d8; --shadow:0 4px 14px rgba(0,0,0,.08); }
+  .dark-mode { --bg:#1a1a1a; --card:#242424; --text:#e8e8e8; --btn-bg:#2e2e2e; --btn-text:#d0d0d0; --border:#3a3a3a; --highlight:#d4a574; --highlight-light:#3a2e22; --shadow:0 4px 14px rgba(0,0,0,.4); }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height:1.65; transition: background .2s, color .2s; }
+  .container { max-width: 920px; margin: 0 auto; padding: 0 18px 60px; }
+  header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; padding:18px 0 14px; border-bottom:1px solid var(--border); margin-bottom:22px; }
+  header h1 { margin:0; font-size:1.15rem; font-weight:700; color:var(--highlight); }
+  .header-btns { display:flex; gap:6px; flex-wrap:wrap; }
+  .header-btns button { background:var(--btn-bg); color:var(--btn-text); border:1px solid var(--border); border-radius:8px; padding:6px 11px; cursor:pointer; font-size:.9rem; font-family:inherit; }
+  .header-btns button:hover { background:var(--highlight); color:#fff; }
+  .sp-disclaimer { background:var(--highlight-light); border-left:4px solid var(--highlight); border-radius:10px; padding:16px 20px; margin-bottom:22px; font-size:.95rem; }
+  .sp-disclaimer strong { color:var(--highlight); display:block; margin-bottom:6px; font-size:1rem; }
+  .sp-scope { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 24px; margin-bottom:30px; box-shadow:var(--shadow); }
+  .sp-scope h2 { margin:0 0 12px; font-size:1.1rem; color:var(--highlight); text-transform:uppercase; letter-spacing:.04em; }
+  .sp-scope p { margin:0; font-size:.93rem; }
+  h2.section-h { margin:36px 0 14px; font-size:1.2rem; color:var(--highlight); border-bottom:2px solid var(--highlight-light); padding-bottom:6px; }
+  .sp-entry { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:12px; box-shadow:var(--shadow); }
+  .sp-entry .sp-head { display:flex; align-items:baseline; flex-wrap:wrap; gap:10px; margin-bottom:8px; }
+  .sp-entry .sp-name { font-weight:700; font-size:1.04rem; color:var(--highlight); }
+  .sp-entry .sp-ref { display:inline-block; background:var(--highlight-light); color:var(--highlight); padding:2px 10px; border-radius:12px; font-size:.78rem; font-weight:600; text-decoration:none; border:1px solid var(--highlight-light); }
+  .sp-entry .sp-ref:hover { background:var(--highlight); color:#fff; border-color:var(--highlight); }
+  .sp-entry .sp-body { font-size:.94rem; line-height:1.7; }
+  .sp-entry .sp-body p { margin:0 0 8px; }
+  .sp-entry .sp-app { margin-top:10px; padding:10px 14px; background:var(--highlight-light); border-left:3px solid var(--highlight); border-radius:6px; font-size:.9rem; font-style:italic; }
+  .sp-entry .sp-app strong { font-style:normal; color:var(--highlight); }
+  .sp-entry .sp-sup { margin-top:10px; font-size:.8rem; opacity:.75; font-style:italic; }
+  footer { margin-top:50px; padding-top:20px; border-top:1px solid var(--border); text-align:center; font-size:.85rem; color:var(--text); opacity:.75; }
+  footer a { color:var(--highlight); }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="card">
-    <div class="emoji">🕊️</div>
-    <h1>The Holy Spirit</h1>
-    <div class="coming-soon">COMING SOON</div>
-    <p>Who He is, what He does, how He empowers — Acts, John 14–16, Romans 8.</p>
-    <p>This page is being prepared with the same care as Women of Faith.</p>
-    <a href="index.html" class="btn">← Back to Study Helper</a>
+<header>
+  <h1>&#128330; Holy Spirit</h1>
+  <div class="header-btns">
+    <button id="darkToggle" type="button" title="Toggle dark mode">&#127769;</button>
+    <button id="fontDec" type="button" title="Smaller text">A&minus;</button>
+    <button id="fontInc" type="button" title="Larger text">A+</button>
+    <a href="index.html"><button type="button">&larr; Back</button></a>
   </div>
+</header>
+<div class="sp-disclaimer">
+  <strong>&#128330; This is a study book, not the Bible.</strong>
+  This is a study aid, not the Bible. It is meant to help you notice patterns, ask better questions, and open the actual Scriptures for yourself. Every summary here is a signpost, not a substitute&mdash;read the verses, sit with them, and let the text speak in its own voice. Where my words fall short, the Word does not.
+  <br><a href="bible.html">&rarr; Open the Bible</a>
 </div>
+<section class="sp-scope">
+  <h2>A Note Before You Begin</h2>
+  <p>This page surveys seven foundational truths about the Holy Spirit: His personhood, His work in the Old Testament, His outpouring at Pentecost, the fruit and gifts He produces, His role as seal and guarantee, and what it means to be filled with Him. The Spirit is a person, not a topic, and no page can contain Him. It is introductory in nature and aims to spark further study, not settle every question. Read the verses for yourself, and stay in a posture of openness&mdash;the same Spirit who inspired these words is the one who illuminates them.</p>
+</section>
+<!-- BSH-SPIRIT-START -->
+<h2 class="section-h">The Holy Spirit &mdash; Seven Foundations</h2>
+<div class="sp-entry">
+  <div class="sp-head"><span class="sp-name">The Person of the Spirit (Not a Force)</span><a class="sp-ref" href="bible.html?ref=John%2016:13" target="_blank" rel="noopener">John 16:13-14 &nearr;</a></div>
+  <div class="sp-body">
+    <p>It is tempting to think of the Holy Spirit as an impersonal power&mdash;like electricity or wind&mdash;that God dispenses when needed. But the Bible speaks of the Spirit as a person, not an it. Jesus called Him the Counselor and said He will guide His people into all the truth (John 16:13). The Spirit grieves (Ephesians 4:30), teaches (John 14:26), intercedes (Romans 8:26), and distributes gifts as He wills (1 Corinthians 12:11). You cannot grieve a force or have a relationship with a power. The Spirit is a member of the Trinity&mdash;one in essence with the Father and the Son&mdash;who thinks, wills, loves, and speaks (John 16:14). When you pray, you are not merely sending signals into a machine; you are in the company of a living Person who knows you.</p>
+  </div>
+  <div class="sp-app"><strong>Application:</strong> Speak to the Holy Spirit as a person this week, and ask Him to guide you into truth.</div>
+  <div class="sp-sup">Supporting references: John 14:26; Ephesians 4:30; Romans 8:26; 1 Corinthians 12:11</div>
+</div>
+<div class="sp-entry">
+  <div class="sp-head"><span class="sp-name">The Spirit in the Old Testament</span><a class="sp-ref" href="bible.html?ref=Genesis%201:2" target="_blank" rel="noopener">Genesis 1:2 &nearr;</a></div>
+  <div class="sp-body">
+    <p>Before Pentecost, the Spirit was not absent&mdash;He was active, though differently. At creation, the Spirit of God hovered over the waters, present in the very beginning of all things (Genesis 1:2). He came upon judges, prophets, and kings&mdash;often selectively and sometimes temporarily (1 Samuel 16:14). When Saul disobeyed, the Spirit departed from him, a sobering sign that His filling was not permanent under the old covenant (1 Samuel 16:14). David pleaded that God would not take His Holy Spirit from him (Psalm 51:11). The prophets looked forward to a day when the Spirit would be poured out on all people, not just anointed leaders&mdash;Ezekiel promised hearts of flesh and a new spirit within (Ezekiel 36:26-27), and Joel foretold a day when sons and daughters would prophesy (Joel 2:28-29). The old-covenant work of the Spirit set the stage for the abundance to come.</p>
+  </div>
+  <div class="sp-app"><strong>Application:</strong> Thank God that under the new covenant His Spirit dwells in you permanently, not temporarily.</div>
+  <div class="sp-sup">Supporting references: 1 Samuel 16:14; Psalm 51:11; Ezekiel 36:26-27; Joel 2:28-29</div>
+</div>
+<div class="sp-entry">
+  <div class="sp-head"><span class="sp-name">The Spirit at Pentecost</span><a class="sp-ref" href="bible.html?ref=Acts%202:1" target="_blank" rel="noopener">Acts 2:1-4 &nearr;</a></div>
+  <div class="sp-body">
+    <p>The disciples were gathered in prayer when the day of Pentecost came, and suddenly the sound of a rushing wind filled the house (Acts 2:1-2). Tongues of fire appeared over each of them, and they were filled with the Holy Spirit, speaking in other languages as the Spirit gave utterance (Acts 2:4). This was not random noise&mdash;it was a sign. Babel had scattered languages in judgment; Pentecost gathered them in grace (Acts 2:6-11). Peter, who had denied Jesus weeks earlier, stood and preached with power, and three thousand were added to the church (Acts 2:14, 41). Pentecost marks the birth of the church and the fulfillment of Joel's prophecy&mdash;the Spirit is no longer only for prophets and kings but for all people (Acts 2:16-21; Joel 2:28-32). This moment changed everything about how God's people would live: not by external code alone, but by an internal power (John 14:16-17).</p>
+  </div>
+  <div class="sp-app"><strong>Application:</strong> Ask the Spirit to fill you afresh with boldness to speak of Christ to those around you.</div>
+  <div class="sp-sup">Supporting references: Acts 2:16-21; Joel 2:28-32; John 14:16-17</div>
+</div>
+<div class="sp-entry">
+  <div class="sp-head"><span class="sp-name">The Fruit of the Spirit</span><a class="sp-ref" href="bible.html?ref=Galatians%205:22" target="_blank" rel="noopener">Galatians 5:22-23 &nearr;</a></div>
+  <div class="sp-body">
+    <p>Paul lists nine qualities&mdash;love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness, and self-control&mdash;and calls them fruit, singular (Galatians 5:22-23). Fruit is not produced by straining; it grows from a healthy root (John 15:5). The Spirit works in a believer's life like sap in a vine, slowly and organically producing character that cannot be faked. Notice that the first three are inner qualities, the next three are relational, and the last three are habits of action (Galatians 5:22-23). No one grows all nine at once, and no one grows them alone. Paul tells believers to walk by the Spirit so they will not gratify the desires of the flesh (Galatians 5:16-18). If you want more fruit, don't attack the fruit; tend the root, stay connected to Christ, and let the Spirit do what only He can do.</p>
+  </div>
+  <div class="sp-app"><strong>Application:</strong> Examine your life for one fruit that needs growth, and ask the Spirit to produce it in you this season.</div>
+  <div class="sp-sup">Supporting references: John 15:5; Galatians 5:16-18</div>
+</div>
+<div class="sp-entry">
+  <div class="sp-head"><span class="sp-name">The Gifts of the Spirit</span><a class="sp-ref" href="bible.html?ref=1%20Corinthians%2012:4" target="_blank" rel="noopener">1 Corinthians 12:4-11 &nearr;</a></div>
+  <div class="sp-body">
+    <p>While the fruit of the Spirit is about character, the gifts of the Spirit are about function&mdash;abilities given for the building up of the church (1 Corinthians 12:7). Paul lists them: wisdom, knowledge, faith, healing, miraculous powers, prophecy, distinguishing between spirits, tongues, and interpretation of tongues (1 Corinthians 12:8-10). Notice the repeated phrase to each and as He determines&mdash;the Spirit distributes gifts sovereignly and individually, not uniformly (1 Corinthians 12:11). No one person has every gift, and no one is left out. Paul's great point is unity: the church is one body with many parts, and every gift matters (1 Corinthians 12:12-27). Gifts are not trophies but tools; they are meant for service, not self-display. If you are unsure of your gift, serve where there is need, love the person in front of you, and watch what the Spirit does (1 Corinthians 14:1).</p>
+  </div>
+  <div class="sp-app"><strong>Application:</strong> Identify one gift you see in another believer and encourage them to use it for the body of Christ.</div>
+  <div class="sp-sup">Supporting references: 1 Corinthians 12:12-27; 1 Corinthians 14:1</div>
+</div>
+<div class="sp-entry">
+  <div class="sp-head"><span class="sp-name">The Spirit as Sealer and Guarantee</span><a class="sp-ref" href="bible.html?ref=Ephesians%201:13" target="_blank" rel="noopener">Ephesians 1:13-14 &nearr;</a></div>
+  <div class="sp-body">
+    <p>When you believed, Paul writes, you were marked in Christ with a seal, the promised Holy Spirit, who is a deposit guaranteeing your inheritance (Ephesians 1:13-14). A seal in the ancient world was a mark of ownership and protection&mdash;it said this belongs to someone. The Spirit is God's seal on His people, and the down payment, the first installment of everything He has promised (2 Corinthians 1:21-22). He is not a fragile feeling that can be lost by a bad day; He is a guarantee, God's own pledge that He will finish what He started (Philippians 1:6). This is why the Spirit's presence in your life is assurance: the Spirit Himself testifies with our spirit that we are God's children (Romans 8:16). When you doubt your standing, the Spirit is not silent&mdash;He is the seal, the guarantee, and the voice that whispers Abba, Father.</p>
+  </div>
+  <div class="sp-app"><strong>Application:</strong> When doubt rises, remind yourself that the Spirit's presence in you is God's own guarantee of your salvation.</div>
+  <div class="sp-sup">Supporting references: Romans 8:16; Philippians 1:6; 2 Corinthians 1:21-22</div>
+</div>
+<div class="sp-entry">
+  <div class="sp-head"><span class="sp-name">Being Filled with the Spirit</span><a class="sp-ref" href="bible.html?ref=Ephesians%205:18" target="_blank" rel="noopener">Ephesians 5:18-20 &nearr;</a></div>
+  <div class="sp-body">
+    <p>The New Testament speaks of both being sealed by the Spirit once at conversion and being filled with the Spirit as an ongoing, repeatable experience. Paul tells believers not to get drunk on wine but instead to be filled with the Spirit&mdash;an imperative in the continuous tense, meaning keep being filled (Ephesians 5:18). The contrast is instructive: wine produces loss of control, but the Spirit produces a life that is controlled by God, overflowing in thanksgiving and praise (Ephesians 5:19-20). To be filled is not to get more of the Spirit as if He were a substance, but to yield more of ourselves&mdash;to clear out the clutter and let the Spirit have full access. It happens through prayer, Scripture, repentance, and obedience (Colossians 3:16). If you are already sealed, you are not asking for more of Him as much as you are giving Him more of you. The early church prayed and the place where they were meeting was shaken, and they were all filled with the Holy Spirit and spoke the word of God boldly (Acts 4:31).</p>
+  </div>
+  <div class="sp-app"><strong>Application:</strong> Yield one area of your life to the Spirit today, and ask Him to fill you with boldness and praise.</div>
+  <div class="sp-sup">Supporting references: Acts 4:31; Colossians 3:16; Galatians 5:16</div>
+</div>
+<!-- BSH-SPIRIT-END -->
+<footer>
+  &copy; 2026 Safari Softwares &mdash; Bible Study Helper &mdash; Holy Spirit<br>
+  This is a study aid, not the Bible. <a href="bible.html">Open the Bible &rarr;</a>
+</footer>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('darkToggle');
+  if (localStorage.getItem('bsh_theme') === 'dark') root.classList.add('dark-mode');
+  if (darkBtn) darkBtn.addEventListener('click', function () {
+    root.classList.toggle('dark-mode');
+    localStorage.setItem('bsh_theme', root.classList.contains('dark-mode') ? 'dark' : 'light');
+  });
+  var size = parseInt(localStorage.getItem('bsh_fontsize') || '100', 10);
+  function applySize() {
+    root.style.fontSize = size + '%';
+    localStorage.setItem('bsh_fontsize', String(size));
+  }
+  applySize();
+  var inc = document.getElementById('fontInc');
+  var dec = document.getElementById('fontDec');
+  if (inc) inc.addEventListener('click', function () { size = Math.min(140, size + 10); applySize(); });
+  if (dec) dec.addEventListener('click', function () { size = Math.max(70, size - 10); applySize(); });
+})();
+</script>
 </body>
 </html>
