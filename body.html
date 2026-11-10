@@ -3,37 +3,142 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🤝 The Body of Christ — Bible Study Helper</title>
+<title>The Body of Christ &mdash; Bible Study Helper</title>
 <style>
-  :root { --bg:#f4f7f4; --card:#fff; --text:#1e2f2e; --green:#3d9970; --green-hover:#34a870; --border:#e2ede4; }
-  .dark-mode { --bg:#1a2520; --card:#25332b; --text:#dfe8e0; --border:#3b5143; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg); color: var(--text);
-    padding: 24px 20px; line-height: 1.6;
-    min-height: 100vh; display: flex; flex-direction: column;
-  }
-  .container { max-width: 700px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .card { background: var(--card); border-radius: 24px; padding: 44px 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); border: 1px solid var(--border); text-align: center; }
-  .emoji { font-size: 3rem; margin-bottom: 12px; }
-  h1 { color: var(--green); margin-bottom: 16px; font-size: 1.9rem; font-weight: 700; }
-  p { margin-bottom: 14px; opacity: 0.88; font-size: 1.02rem; }
-  .coming-soon { display: inline-block; background: #fff4d6; color: #8a6d00; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; letter-spacing: 0.02em; }
-  .btn { display: inline-block; padding: 14px 28px; background: var(--green); color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; margin-top: 10px; transition: 0.15s; box-shadow: 0 3px 10px rgba(61,153,112,0.25); }
-  .btn:hover { background: var(--green-hover); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(61,153,112,0.35); }
+  :root { --bg:#f7f4ef; --card:#ffffff; --text:#2c2c2c; --btn-bg:#f0ece4; --btn-text:#3a3a3a; --border:#d8d1c4; --highlight:#6b4a2f; --highlight-light:#f0e6d8; --shadow:0 4px 14px rgba(0,0,0,.08); }
+  .dark-mode { --bg:#1a1a1a; --card:#242424; --text:#e8e8e8; --btn-bg:#2e2e2e; --btn-text:#d0d0d0; --border:#3a3a3a; --highlight:#d4a574; --highlight-light:#3a2e22; --shadow:0 4px 14px rgba(0,0,0,.4); }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height:1.65; transition: background .2s, color .2s; }
+  .container { max-width: 920px; margin: 0 auto; padding: 0 18px 60px; }
+  header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; padding:18px 0 14px; border-bottom:1px solid var(--border); margin-bottom:22px; }
+  header h1 { margin:0; font-size:1.15rem; font-weight:700; color:var(--highlight); }
+  .header-btns { display:flex; gap:6px; flex-wrap:wrap; }
+  .header-btns button { background:var(--btn-bg); color:var(--btn-text); border:1px solid var(--border); border-radius:8px; padding:6px 11px; cursor:pointer; font-size:.9rem; font-family:inherit; }
+  .header-btns button:hover { background:var(--highlight); color:#fff; }
+  .bd-disclaimer { background:var(--highlight-light); border-left:4px solid var(--highlight); border-radius:10px; padding:16px 20px; margin-bottom:22px; font-size:.95rem; }
+  .bd-disclaimer strong { color:var(--highlight); display:block; margin-bottom:6px; font-size:1rem; }
+  .bd-scope { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 24px; margin-bottom:30px; box-shadow:var(--shadow); }
+  .bd-scope h2 { margin:0 0 12px; font-size:1.1rem; color:var(--highlight); text-transform:uppercase; letter-spacing:.04em; }
+  .bd-scope p { margin:0; font-size:.93rem; }
+  h2.section-h { margin:36px 0 14px; font-size:1.2rem; color:var(--highlight); border-bottom:2px solid var(--highlight-light); padding-bottom:6px; }
+  .bd-entry { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:12px; box-shadow:var(--shadow); }
+  .bd-entry .bd-head { display:flex; align-items:baseline; flex-wrap:wrap; gap:10px; margin-bottom:8px; }
+  .bd-entry .bd-name { font-weight:700; font-size:1.04rem; color:var(--highlight); }
+  .bd-entry .bd-ref { display:inline-block; background:var(--highlight-light); color:var(--highlight); padding:2px 10px; border-radius:12px; font-size:.78rem; font-weight:600; text-decoration:none; border:1px solid var(--highlight-light); }
+  .bd-entry .bd-ref:hover { background:var(--highlight); color:#fff; border-color:var(--highlight); }
+  .bd-entry .bd-body { font-size:.94rem; line-height:1.7; }
+  .bd-entry .bd-body p { margin:0 0 8px; }
+  .bd-entry .bd-app { margin-top:10px; padding:10px 14px; background:var(--highlight-light); border-left:3px solid var(--highlight); border-radius:6px; font-size:.9rem; font-style:italic; }
+  .bd-entry .bd-app strong { font-style:normal; color:var(--highlight); }
+  .bd-entry .bd-sup { margin-top:10px; font-size:.8rem; opacity:.75; font-style:italic; }
+  footer { margin-top:50px; padding-top:20px; border-top:1px solid var(--border); text-align:center; font-size:.85rem; color:var(--text); opacity:.75; }
+  footer a { color:var(--highlight); }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="card">
-    <div class="emoji">🤝</div>
-    <h1>The Body of Christ</h1>
-    <div class="coming-soon">COMING SOON</div>
-    <p>Every member matters — 1 Corinthians 12, unity in diversity, spiritual gifts, mutual honour.</p>
-    <p>This page is being prepared with the same care as Women of Faith.</p>
-    <a href="index.html" class="btn">← Back to Study Helper</a>
+<header>
+  <h1>&#129747;&#127863; The Body of Christ</h1>
+  <div class="header-btns">
+    <button id="darkToggle" type="button" title="Toggle dark mode">&#127769;</button>
+    <button id="fontDec" type="button" title="Smaller text">A&minus;</button>
+    <button id="fontInc" type="button" title="Larger text">A+</button>
+    <a href="index.html"><button type="button">&larr; Back</button></a>
   </div>
+</header>
+<div class="bd-disclaimer">
+  <strong>&#129747;&#127863; This is a study book, not the Bible.</strong>
+  This is a study aid, not the Bible. It is meant to help you notice patterns, ask better questions, and open the actual Scriptures for yourself. Every summary here is a signpost, not a substitute&mdash;read the verses, sit with them, and let the text speak in its own voice. Where my words fall short, the Word does not.
+  <br><a href="bible.html">&rarr; Open the Bible</a>
 </div>
+<section class="bd-scope">
+  <h2>Disclaimer &amp; Scope</h2>
+  <p>This page is a thematic devotional study of the body of Christ, not a biographical study and not a position paper on church government, ordination, or the finer points of spiritual-gifts theology. It follows the shape of 1 Corinthians 12, Acts 2, and the passages that speak of believers as one body in Christ. The aim is not to settle debates but to help you see yourself in the body&mdash;to see how members belong to one another, how unity works with difference, how gifts are given for the good of all, and how every member is needed.</p>
+</section>
+<!-- BSH-BODY-START -->
+<h2 class="section-h">The Body of Christ &mdash; A Thematic Study</h2>
+<div class="bd-entry">
+  <div class="bd-head"><span class="bd-name">The Body Defined</span><a class="bd-ref" href="bible.html?ref=1%20Corinthians%2012:12" target="_blank" rel="noopener">1 Corinthians 12:12-13 &nearr;</a></div>
+  <div class="bd-body">
+    <p>Paul defines the body in a single sentence: in one Spirit we were all baptized into one body&mdash;Jews or Greeks, slaves or free&mdash;and all were made to drink of one Spirit (1 Corinthians 12:13). The body is not an organization you join or a club you attend; it is a living organism created by the Holy Spirit, and every believer is a member of it by baptism in the Spirit and by faith in Christ. Paul says that as the body is one and has many members, and all the members, though many, are one body, so it is with Christ (1 Corinthians 12:12). In Romans he writes that we, though many, are one body in Christ, and individually members one of another (Romans 12:5). That is the definition, and everything else on this page flows from it: if the Spirit put you in the body, then the body is where you live, and the members of the body are the people you are joined to&mdash;not by preference, but by the Spirit.</p>
+  </div>
+  <div class="bd-app"><strong>Application:</strong> Live as a member of Christ's body&mdash;not as a spectator but as one joined to the rest.</div>
+  <div class="bd-sup">Supporting references: Romans 12:4-5; Ephesians 4:15-16</div>
+</div>
+<div class="bd-entry">
+  <div class="bd-head"><span class="bd-name">Every Member Matters</span><a class="bd-ref" href="bible.html?ref=1%20Corinthians%2012:14" target="_blank" rel="noopener">1 Corinthians 12:14-21 &nearr;</a></div>
+  <div class="bd-body">
+    <p>The temptation in every church is to rank members&mdash;to think the visible gifts matter and the quiet ones don't. Paul refuses that. He says the body is not one member but many, and the foot cannot say, "Because I am not a hand, I do not belong to the body," and the ear cannot say, "Because I am not an eye, I do not belong" (1 Corinthians 12:14-16). If the whole body were an eye, where would be the hearing? Every member has a place not by achieving it but by being placed in it&mdash;God arranged the members in the body, each one of them, as he chose (1 Corinthians 12:18). And then the sentence that corrects all our ranking: the eye cannot say to the hand, "I have no need of you" (1 Corinthians 12:21). Paul goes on to say that we are the body of Christ and individually members of it (1 Corinthians 12:27). There is no member you can spare. That is true of the person you find hardest to love in your congregation, and it is true of you when you feel unseen.</p>
+  </div>
+  <div class="bd-app"><strong>Application:</strong> Honor the member you're tempted to overlook&mdash;every part of the body is needed.</div>
+  <div class="bd-sup">Supporting references: 1 Corinthians 12:18; 1 Corinthians 12:27</div>
+</div>
+<div class="bd-entry">
+  <div class="bd-head"><span class="bd-name">Unity in Diversity</span><a class="bd-ref" href="bible.html?ref=1%20Corinthians%2012:4" target="_blank" rel="noopener">1 Corinthians 12:4-6 &nearr;</a></div>
+  <div class="bd-body">
+    <p>The body is not uniform&mdash;it is diverse, and the diversity is by design. Paul writes that there are varieties of gifts but the same Spirit, varieties of service but the same Lord, varieties of activities but the same God who empowers them all (1 Corinthians 12:4-6). The unity is not in the uniformity; the unity is in the Spirit who gives, the Lord who is served, and the God who empowers. Paul says that in Christ there is neither Jew nor Greek, slave nor free, male nor female, for all are one in Christ Jesus (Galatians 3:28)&mdash;the differences don't disappear, they are brought into one body and made to serve one Lord. And Christ gave gifts to equip the saints for the work of ministry, for building up the body of Christ (Ephesians 4:12). That is the mystery the world cannot reproduce: a people who are not alike, who do not naturally belong together, and who are nevertheless one in Christ.</p>
+  </div>
+  <div class="bd-app"><strong>Application:</strong> Celebrate the differences in your church&mdash;unity in Christ makes diverse people one.</div>
+  <div class="bd-sup">Supporting references: Ephesians 4:11-13; Galatians 3:28</div>
+</div>
+<div class="bd-entry">
+  <div class="bd-head"><span class="bd-name">Spiritual Gifts</span><a class="bd-ref" href="bible.html?ref=1%20Corinthians%2012:7" target="_blank" rel="noopener">1 Corinthians 12:7-11 &nearr;</a></div>
+  <div class="bd-body">
+    <p>Paul says that to each is given the manifestation of the Spirit for the common good (1 Corinthians 12:7). Gifts are not trophies; they are tools. They are given not for your self-esteem but for the building up of the body, and they are given to you&mdash;specifically, individually, to each one, not just to the professionals. Some are spectacular and some are ordinary; Paul lists wisdom, knowledge, faith, healing, miracles, prophecy, discernment, tongues, and interpretation (1 Corinthians 12:8-10), and then in Romans he adds service, teaching, exhortation, generosity, leadership, and mercy (Romans 12:6-8). The point is not to rank them but to use them. A gift unused is a member missing, and a gift used to display yourself is a member working against the body. The Spirit gave it to you for the common good; the question is what you are doing with it.</p>
+  </div>
+  <div class="bd-app"><strong>Application:</strong> Use your gift for the common good&mdash;the body grows when every member serves.</div>
+  <div class="bd-sup">Supporting references: 1 Corinthians 12:27-31; Romans 12:6-8</div>
+</div>
+<div class="bd-entry">
+  <div class="bd-head"><span class="bd-name">Mutual Honour</span><a class="bd-ref" href="bible.html?ref=1%20Corinthians%2012:22" target="_blank" rel="noopener">1 Corinthians 12:22-26 &nearr;</a></div>
+  <div class="bd-body">
+    <p>Paul says the members of the body that seem weaker are indispensable, and the parts we think less honorable we give greater honor (1 Corinthians 12:22-23). Then he gives the reason: that there may be no division in the body, but that the members may have the same care for one another (1 Corinthians 12:25). And then the great sentence: if one member suffers, all suffer together; if one member is honored, all rejoice together (1 Corinthians 12:26). That is the test of whether a church is a body or just a crowd&mdash;whether the suffering of one is felt by all, and the honor of one is celebrated by all. Paul tells the Romans to outdo one another in showing honor (Romans 12:10), and he tells the Philippians to count others more significant than themselves (Philippians 2:3). Mutual honour is not politeness; it is the nervous system of the body. When one part is cut off from feeling the pain of another, the body is already dying.</p>
+  </div>
+  <div class="bd-app"><strong>Application:</strong> Weep with those who weep and rejoice with those who rejoice&mdash;feel the body's life as your own.</div>
+  <div class="bd-sup">Supporting references: Romans 12:10; Philippians 2:3-4</div>
+</div>
+<div class="bd-entry">
+  <div class="bd-head"><span class="bd-name">The Body at Work</span><a class="bd-ref" href="bible.html?ref=Acts%202:42" target="_blank" rel="noopener">Acts 2:42-47 &nearr;</a></div>
+  <div class="bd-body">
+    <p>The first church in Jerusalem shows the body actually functioning. They devoted themselves to the apostles' teaching and the fellowship, to the breaking of bread and the prayers (Acts 2:42). They were together, they had all things in common, they sold property to meet needs, and they attended the temple daily with glad and generous hearts, praising God and having favor with all the people&mdash;and the Lord added to their number day by day (Acts 2:46-47). Later, the fullness of those who believed was one heart and soul, and no one said that any of the things he possessed was his own (Acts 4:32). That is the body at work&mdash;not a program but a people, not an event but a life, not a service you attend but a fellowship you are in. Notice that the gospel spread not because of a strategy but because of a community so visibly different that the surrounding city took notice. The body evangelizes by being the body.</p>
+  </div>
+  <div class="bd-app"><strong>Application:</strong> Invest in real fellowship&mdash;the world sees Christ when the body lives as one.</div>
+  <div class="bd-sup">Supporting references: Acts 4:32-35</div>
+</div>
+<div class="bd-entry">
+  <div class="bd-head"><span class="bd-name">The Body and Christ</span><a class="bd-ref" href="bible.html?ref=1%20Corinthians%2012:27" target="_blank" rel="noopener">1 Corinthians 12:27 &nearr;</a></div>
+  <div class="bd-body">
+    <p>The body is not the church's own project&mdash;it belongs to Christ. Paul says, "You are the body of Christ and individually members of it" (1 Corinthians 12:27), and he says that Christ is the head of the body, the church (Colossians 1:18). The head is where the life comes from, the direction comes from, the unity comes from. God put all things under Christ's feet and gave him as head over all things to the church, which is his body, the fullness of him who fills all in all (Ephesians 1:22-23). A body without a head is dead; a body that does not obey its head is sick. This is the comfort and the command of the whole study: the body is not yours to run, but it is yours to live in. You are a member of Christ's body, and the head of that body is not a committee or a pastor&mdash;it is the risen Lord himself, who gives the body its life and its direction and its future.</p>
+  </div>
+  <div class="bd-app"><strong>Application:</strong> Submit to Christ as your head&mdash;the body lives only when it obeys Him.</div>
+  <div class="bd-sup">Supporting references: Colossians 1:18; Ephesians 1:22-23</div>
+</div>
+<!-- BSH-BODY-END -->
+<footer>
+  &copy; 2026 Safari Softwares &mdash; Bible Study Helper &mdash; The Body of Christ<br>
+  This is a study aid, not the Bible. <a href="bible.html">Open the Bible &rarr;</a>
+</footer>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('darkToggle');
+  if (localStorage.getItem('bsh_theme') === 'dark') root.classList.add('dark-mode');
+  if (darkBtn) darkBtn.addEventListener('click', function () {
+    root.classList.toggle('dark-mode');
+    localStorage.setItem('bsh_theme', root.classList.contains('dark-mode') ? 'dark' : 'light');
+  });
+  var size = parseInt(localStorage.getItem('bsh_fontsize') || '100', 10);
+  function applySize() {
+    root.style.fontSize = size + '%';
+    localStorage.setItem('bsh_fontsize', String(size));
+  }
+  applySize();
+  var inc = document.getElementById('fontInc');
+  var dec = document.getElementById('fontDec');
+  if (inc) inc.addEventListener('click', function () { size = Math.min(140, size + 10); applySize(); });
+  if (dec) dec.addEventListener('click', function () { size = Math.max(70, size - 10); applySize(); });
+})();
+</script>
 </body>
 </html>
