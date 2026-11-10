@@ -3,37 +3,281 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🙏 Prayer Warriors — Bible Study Helper</title>
+<title>Prayer &mdash; Bible Study Helper</title>
 <style>
-  :root { --bg:#f4f7f4; --card:#fff; --text:#1e2f2e; --green:#3d9970; --green-hover:#34a870; --border:#e2ede4; }
-  .dark-mode { --bg:#1a2520; --card:#25332b; --text:#dfe8e0; --border:#3b5143; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg); color: var(--text);
-    padding: 24px 20px; line-height: 1.6;
-    min-height: 100vh; display: flex; flex-direction: column;
-  }
-  .container { max-width: 700px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .card { background: var(--card); border-radius: 24px; padding: 44px 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); border: 1px solid var(--border); text-align: center; }
-  .emoji { font-size: 3rem; margin-bottom: 12px; }
-  h1 { color: var(--green); margin-bottom: 16px; font-size: 1.9rem; font-weight: 700; }
-  p { margin-bottom: 14px; opacity: 0.88; font-size: 1.02rem; }
-  .coming-soon { display: inline-block; background: #fff4d6; color: #8a6d00; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; letter-spacing: 0.02em; }
-  .btn { display: inline-block; padding: 14px 28px; background: var(--green); color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; margin-top: 10px; transition: 0.15s; box-shadow: 0 3px 10px rgba(61,153,112,0.25); }
-  .btn:hover { background: var(--green-hover); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(61,153,112,0.35); }
+  :root { --bg:#f7f4ef; --card:#ffffff; --text:#2c2c2c; --btn-bg:#f0ece4; --btn-text:#3a3a3a; --border:#d8d1c4; --highlight:#6b4a2f; --highlight-light:#f0e6d8; --shadow:0 4px 14px rgba(0,0,0,.08); }
+  .dark-mode { --bg:#1a1a1a; --card:#242424; --text:#e8e8e8; --btn-bg:#2e2e2e; --btn-text:#d0d0d0; --border:#3a3a3a; --highlight:#d4a574; --highlight-light:#3a2e22; --shadow:0 4px 14px rgba(0,0,0,.4); }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height:1.65; transition: background .2s, color .2s; }
+  .container { max-width: 920px; margin: 0 auto; padding: 0 18px 60px; }
+  header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; padding:18px 0 14px; border-bottom:1px solid var(--border); margin-bottom:22px; }
+  header h1 { margin:0; font-size:1.15rem; font-weight:700; color:var(--highlight); }
+  .header-btns { display:flex; gap:6px; flex-wrap:wrap; }
+  .header-btns button { background:var(--btn-bg); color:var(--btn-text); border:1px solid var(--border); border-radius:8px; padding:6px 11px; cursor:pointer; font-size:.9rem; font-family:inherit; }
+  .header-btns button:hover { background:var(--highlight); color:#fff; }
+  .pr-disclaimer { background:var(--highlight-light); border-left:4px solid var(--highlight); border-radius:10px; padding:16px 20px; margin-bottom:22px; font-size:.95rem; }
+  .pr-disclaimer strong { color:var(--highlight); display:block; margin-bottom:6px; font-size:1rem; }
+  .pr-scope { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 24px; margin-bottom:30px; box-shadow:var(--shadow); }
+  .pr-scope h2 { margin:0 0 12px; font-size:1.1rem; color:var(--highlight); text-transform:uppercase; letter-spacing:.04em; }
+  .pr-scope p { margin:0; font-size:.93rem; }
+  h2.section-h { margin:36px 0 14px; font-size:1.2rem; color:var(--highlight); border-bottom:2px solid var(--highlight-light); padding-bottom:6px; }
+  h3.group-h { margin:30px 0 12px; font-size:1.02rem; color:var(--text); text-transform:uppercase; letter-spacing:.05em; border-left:4px solid var(--highlight); padding-left:10px; }
+  .pr-entry { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:12px; box-shadow:var(--shadow); }
+  .pr-entry .pr-head { display:flex; align-items:baseline; flex-wrap:wrap; gap:10px; margin-bottom:8px; }
+  .pr-entry .pr-name { font-weight:700; font-size:1.04rem; color:var(--highlight); }
+  .pr-entry .pr-ref { display:inline-block; background:var(--highlight-light); color:var(--highlight); padding:2px 10px; border-radius:12px; font-size:.78rem; font-weight:600; text-decoration:none; border:1px solid var(--highlight-light); }
+  .pr-entry .pr-ref:hover { background:var(--highlight); color:#fff; border-color:var(--highlight); }
+  .pr-entry .pr-body { font-size:.94rem; line-height:1.7; }
+  .pr-entry .pr-body p { margin:0 0 8px; }
+  .pr-entry .pr-app { margin-top:10px; padding:10px 14px; background:var(--highlight-light); border-left:3px solid var(--highlight); border-radius:6px; font-size:.9rem; font-style:italic; }
+  .pr-entry .pr-app strong { font-style:normal; color:var(--highlight); }
+  .pr-entry .pr-sup { margin-top:10px; font-size:.8rem; opacity:.75; font-style:italic; }
+  footer { margin-top:50px; padding-top:20px; border-top:1px solid var(--border); text-align:center; font-size:.85rem; color:var(--text); opacity:.75; }
+  footer a { color:var(--highlight); }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="card">
-    <div class="emoji">🙏</div>
-    <h1>Prayer Warriors</h1>
-    <div class="coming-soon">COMING SOON</div>
-    <p>Intercessors of Scripture — Abraham, Moses, Hannah, Daniel, Paul, Epaphras.</p>
-    <p>This page is being prepared with the same care as Women of Faith.</p>
-    <a href="index.html" class="btn">← Back to Study Helper</a>
+<header>
+  <h1>&#128591; Prayer</h1>
+  <div class="header-btns">
+    <button id="darkToggle" type="button" title="Toggle dark mode">&#127769;</button>
+    <button id="fontDec" type="button" title="Smaller text">A&minus;</button>
+    <button id="fontInc" type="button" title="Larger text">A+</button>
+    <a href="index.html"><button type="button">&larr; Back</button></a>
   </div>
+</header>
+<div class="pr-disclaimer">
+  <strong>&#128591; This is a study book, not the Bible.</strong>
+  This is a study aid, not the Bible. It is meant to help you notice patterns, ask better questions, and open the actual Scriptures for yourself. Every summary here is a signpost, not a substitute&mdash;read the verses, sit with them, and let the text speak in its own voice. Where my words fall short, the Word does not.
+  <br><a href="bible.html">&rarr; Open the Bible</a>
 </div>
+<section class="pr-scope">
+  <h2>A Note Before You Begin</h2>
+  <p>This page introduces some of Scripture's great intercessors&mdash;men and women who stood in the gap and prayed for others. It is meant to inspire your own prayer life, not to create a catalog of prayer techniques. These were ordinary people who spoke to a living God with honesty, persistence, and faith. This page covers about twenty-four intercessors in two groups&mdash;twelve from the Old Testament and twelve from the New&mdash;each with a brief narrative snapshot and a key passage. It is an introduction, not an exhaustive survey. Read their stories in context, and let their example stir you to pray. Every intercessor here points toward the great Intercessor, Jesus Christ.</p>
+</section>
+<!-- BSH-PRAYER-START -->
+<h2 class="section-h">Intercessors of Scripture</h2>
+<h3 class="group-h">1. Old Testament Intercessors</h3>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Abraham</span><a class="pr-ref" href="bible.html?ref=Genesis%2018:16" target="_blank" rel="noopener">Genesis 18:16-33 &nearr;</a></div>
+  <div class="pr-body">
+    <p>When three visitors came to Abraham's tent by the oaks of Mamre, one of them turned out to be the LORD Himself (Genesis 18:1-2). As the visitors looked toward Sodom, God said He would not hide from Abraham what He was about to do (Genesis 18:17). Abraham began to bargain&mdash;fifty righteous men, then forty, then thirty, then twenty, then ten (Genesis 18:24-32). He did not argue from a position of pride but from a posture of humility, confessing that he was nothing but dust and ashes (Genesis 18:27). He pressed close to the heart of God, not away from it, and asked again and again, daring to believe that God was more merciful than judgment required (Genesis 18:32). This is one of the first great pictures of intercession in Scripture&mdash;a man who pleaded for a wicked city because he trusted the character of its Judge. Abraham shows us that bold prayer is not irreverent; it is relational.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Bring your boldest request to God this week, trusting His character more than your worthiness.</div>
+  <div class="pr-sup">Supporting references: Genesis 18:17; Genesis 18:27; Genesis 18:32</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Moses</span><a class="pr-ref" href="bible.html?ref=Exodus%2032:7" target="_blank" rel="noopener">Exodus 32:7-14 &nearr;</a></div>
+  <div class="pr-body">
+    <p>While Moses was on the mountain receiving the law, Israel was at the bottom building a golden calf (Exodus 32:1-6). God told Moses what was happening and said to leave Him alone so that His anger could burn against them (Exodus 32:10). Moses refused the invitation. He argued with God, appealing to His own reputation, His promises to Abraham, and the nations who would watch (Exodus 32:11-13). He even offered his own life in their place, asking God to blot him out of the book rather than destroy the people (Exodus 32:32). This is intercession at its most self-forgetful&mdash;standing between a holy God and a guilty people, willing to bear the cost yourself (Psalm 106:23). Moses is a picture of a shepherd who would not abandon his flock, and a shadow of the greater Shepherd to come.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Pray for someone who has wronged you, asking God to show them mercy rather than judgment.</div>
+  <div class="pr-sup">Supporting references: Exodus 32:30-32; Psalm 106:23</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Hannah</span><a class="pr-ref" href="bible.html?ref=1%20Samuel%201:1" target="_blank" rel="noopener">1 Samuel 1:1-20 &nearr;</a></div>
+  <div class="pr-body">
+    <p>Hannah was a woman with a broken heart. She was barren, taunted by a rival, and misunderstood even by the priest Eli, who saw her weeping and assumed she was drunk (1 Samuel 1:6-14). But Hannah prayed. She poured out her soul before the LORD at Shiloh, not with polished words but with tears and silent lips (1 Samuel 1:10-15). She asked God to look on her misery and remember her (1 Samuel 1:11). Her prayer was honest and desperate, and God heard it. She gave birth to Samuel, the prophet who would anoint David, and she gave him back to God (1 Samuel 1:26-28). Hannah teaches us that intercession is not about eloquence; it is about honesty. She brought her grief to God without hiding it, and her prayer changed history.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Pour out your honest grief to God today, believing He hears even the prayers you cannot put into words.</div>
+  <div class="pr-sup">Supporting references: 1 Samuel 1:10-15; 1 Samuel 1:26-28</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">David</span><a class="pr-ref" href="bible.html?ref=Psalm%2086:1" target="_blank" rel="noopener">Psalm 86 &nearr;</a></div>
+  <div class="pr-body">
+    <p>David was a warrior, a king, and a poet&mdash;and his psalms are a school of prayer. He prayed when he was hunted, when he was crowned, when he sinned, and when he was broken (Psalm 51). He asked God to hear his prayer and listen to his cry for mercy (Psalm 86:6). Out of the depths he cried to the LORD (Psalm 130:1). David prayed for his enemies, for his own heart, and for the nation of Israel. He did not sanitize his emotions&mdash;his psalms are full of fear, anger, confusion, and longing&mdash;but he always turned those emotions toward God rather than away from Him. He prayed for others too, asking that all who seek God would rejoice and be glad in Him (Psalm 40:16). David shows us that a prayer life can hold everything, because the God we pray to is big enough to hold it.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Write out your rawest emotion as a prayer to God today, and let the psalms guide your honesty.</div>
+  <div class="pr-sup">Supporting references: Psalm 130:1; Psalm 40:16; Psalm 51</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Solomon's Dedication Prayer</span><a class="pr-ref" href="bible.html?ref=1%20Kings%208:22" target="_blank" rel="noopener">1 Kings 8:22-53 &nearr;</a></div>
+  <div class="pr-body">
+    <p>When Solomon finished building the temple, he stood before the altar of the LORD in the presence of all the assembly of Israel, spread out his hands toward heaven, and prayed one of the longest recorded prayers in the Bible (1 Kings 8:22-23). He began with the character of God&mdash;LORD, God of Israel, there is no God like you, in heaven above or on earth beneath, keeping covenant and steadfast love with your servants (1 Kings 8:23). Then he prayed for the future: if your people are defeated before an enemy, hear from heaven and forgive; if the heavens are shut up and there is no rain because they have sinned against you, hear and forgive; if there is famine, or pestilence, or whatever plague or sickness, whatever prayer or plea is made by any man or by all your people Israel, each knowing the affliction of his own heart, hear in heaven your dwelling place and forgive and act (1 Kings 8:33-40). He prayed for the foreigner too, that all the peoples of the earth may know your name and fear you (1 Kings 8:43). Solomon's prayer is a template for a leader interceding for a people before a God whose character is the ground of every request.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Pray for your community and its leaders, grounding every request in the character of God.</div>
+  <div class="pr-sup">Supporting references: 2 Chronicles 6:12-42; 1 Kings 8:54-61</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Daniel</span><a class="pr-ref" href="bible.html?ref=Daniel%209:1" target="_blank" rel="noopener">Daniel 9:1-19 &nearr;</a></div>
+  <div class="pr-body">
+    <p>Daniel was a man in exile, but he was not a man without hope. When he read Jeremiah's prophecy that Jerusalem would lie desolate seventy years, he set his face toward God in prayer and petition, in fasting, and in sackcloth and ashes (Daniel 9:2-3). His prayer is a remarkable confession&mdash;not they sinned, but we have sinned (Daniel 9:5). He identified himself with his people, confessing the guilt of the nation as his own. He cried out for God to listen, forgive, hear, and act, not because Israel deserved it but because God's name and His city were at stake (Daniel 9:19). Daniel shows us intercession that is rooted in Scripture, bathed in humility, and persistent in hope. He prayed, and God answered before he finished (Daniel 9:20-23).</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Confess the sins of your community as your own, and pray for God's mercy on those around you.</div>
+  <div class="pr-sup">Supporting references: Daniel 9:3; Daniel 9:5; Daniel 9:19; Daniel 9:20-23</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Elijah</span><a class="pr-ref" href="bible.html?ref=1%20Kings%2018:36" target="_blank" rel="noopener">1 Kings 18:36-38 &nearr;</a></div>
+  <div class="pr-body">
+    <p>Elijah stands on Mount Carmel before a nation that has wandered, and he prays a short, bold prayer that God would let it be known that He is God in Israel (1 Kings 18:36). Fire falls, the people fall on their faces, and the drought begins to break. But Elijah's prayer life did not end at Carmel. After the fire, he prayed again for rain, bowing down to the ground with his face between his knees (1 Kings 18:42). And in a moment of exhaustion and fear, he prayed a very different prayer, asking God to take his life (1 Kings 19:4). God answered that one too, not with fire but with a gentle whisper (1 Kings 19:12). Elijah shows us that intercession includes mountain-moving boldness and quiet, weary honesty&mdash;and God hears both.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Bring both your boldest requests and your weary complaints to God, trusting Him to hear both.</div>
+  <div class="pr-sup">Supporting references: 1 Kings 18:41-46; 1 Kings 19:4-13; James 5:17-18</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Job</span><a class="pr-ref" href="bible.html?ref=Job%2042:7" target="_blank" rel="noopener">Job 42:7-10 &nearr;</a></div>
+  <div class="pr-body">
+    <p>Job lost everything&mdash;children, wealth, health&mdash;and spent chapter after chapter pouring out his complaint before God (Job 1-2). He did not quietly resign; he argued, questioned, and demanded answers. But God answered out of the whirlwind, and Job was humbled, confessing that God can do all things and that no purpose of His can be thwarted (Job 42:2). Then something unexpected happens. God tells Job's three friends that they have spoken wrongly about Him, and that they must bring sacrifices and ask Job to pray for them (Job 42:7-8). The man who had suffered the most was called to pray for the very friends who had judged him. Job's intercession was accepted and his fortunes were restored (Job 42:10). He shows us that prayer for others can rise even out of a broken life&mdash;and that God honors the prayers of a wounded but humble heart.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Pray for someone who has hurt you, and trust God to restore what has been broken.</div>
+  <div class="pr-sup">Supporting references: Job 42:1-6; Job 42:8</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Samuel</span><a class="pr-ref" href="bible.html?ref=1%20Samuel%2012:19" target="_blank" rel="noopener">1 Samuel 12:19-25 &nearr;</a></div>
+  <div class="pr-body">
+    <p>Samuel was Israel's prophet, judge, and kingmaker, and at the end of his public ministry he said something remarkable. The people had asked for a king, rejecting God's direct rule, and they were afraid. Samuel told them: do not be afraid; you have done all this evil. Yet do not turn aside from following the LORD, but serve the LORD with all your heart… And as for me, far be it from me that I should sin against the LORD by ceasing to pray for you, and I will instruct you in the good and the right way (1 Samuel 12:20-23). Notice what Samuel calls it: ceasing to pray for them would be a sin against the LORD. He did not treat prayer for others as optional, a side ministry, or something to give up when people disappointed him. He had already shown this pattern at Mizpah, where he cried to the LORD on Israel's behalf and God answered with thunder and routed the Philistines (1 Samuel 7:5-11). Samuel's prayer life is a picture of a leader who would rather be rejected by his people than fail to pray for them. His mother Hannah said of him, "As long as he lives, he is lent to the LORD" (1 Samuel 1:28), and he lived out that lending in intercession.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Refuse to give up praying for people, even when they disappoint you&mdash;to stop would be a sin.</div>
+  <div class="pr-sup">Supporting references: 1 Samuel 7:5-11; 1 Samuel 8:6; Psalm 99:6</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Nehemiah</span><a class="pr-ref" href="bible.html?ref=Nehemiah%201:4" target="_blank" rel="noopener">Nehemiah 1:4-11 &nearr;</a></div>
+  <div class="pr-body">
+    <p>When Nehemiah heard that Jerusalem's walls were broken down and its gates destroyed by fire, he sat down and wept and mourned for days, and he continued fasting and praying before the God of heaven (Nehemiah 1:4). His prayer is one of the most complete in Scripture: he addressed God as great and awesome, keeping covenant and steadfast love with those who love him (1:5), he confessed the sins of Israel including his own (1:6-7), he remembered God's promise to gather the exiles (1:8-9), and he asked God to give him mercy in the sight of the Persian king (1:11). Four months later, when the king asked him why he looked sad, Nehemiah says: I prayed to the God of heaven and said to the king, If it pleases the king… (Nehemiah 2:4-5). The prayer life of Nehemiah is shot through with short arrow-prayers: when his enemies threatened, he prayed (4:4-5, 9); when they tried to frighten him, he prayed for God to strengthen his hands (6:9). And at the end of the book, three times, he prays, Remember me, O my God, for good (13:14, 22, 31). Nehemiah shows us that intercession is not a long, isolated act&mdash;it is the atmosphere of a life that depends on God for every step.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Make prayer your reflex this week&mdash;before the meeting, before the conversation, before the decision.</div>
+  <div class="pr-sup">Supporting references: Nehemiah 2:4-5; Nehemiah 4:4-5; Nehemiah 6:9; Nehemiah 13:14, 22, 31</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Ezra</span><a class="pr-ref" href="bible.html?ref=Ezra%209:5" target="_blank" rel="noopener">Ezra 9:5-15 &nearr;</a></div>
+  <div class="pr-body">
+    <p>Ezra was a priest and a scribe who set his heart to study the Law of the LORD, to do it, and to teach it (Ezra 7:10). When he arrived in Jerusalem and learned that the returned exiles had intermarried with the surrounding nations and compromised their distinct identity, he tore his garment and his cloak, pulled hair from his head and beard, and sat down appalled (Ezra 9:3). At the evening sacrifice he rose from his fasting and fell on his knees with his hands spread out to the LORD, and prayed a long, confessional prayer. He confessed not the sins of others but the sins of his own people as his own&mdash;from the days of our fathers to this day we have been in great guilt (Ezra 9:7). He confessed the grace that had been shown in the return from exile, and he ended with a plea: O LORD, the God of Israel, you are just, for we are left a remnant that has escaped, as it is today. Behold, we are before you in our guilt, for none can stand before you because of this (Ezra 9:15). As he prayed and confessed, a very great assembly of men, women, and children gathered around him, weeping bitterly (Ezra 10:1). Ezra's prayer is a model of identificational confession&mdash;praying the sins of the community as if they were your own, and asking God for mercy based on His justice and grace, not on the community's worthiness.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Take a moment today to confess the sins of your community as if they were your own.</div>
+  <div class="pr-sup">Supporting references: Ezra 7:10; Ezra 10:1; Nehemiah 9:1-3</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Hezekiah</span><a class="pr-ref" href="bible.html?ref=2%20Kings%2019:14" target="_blank" rel="noopener">2 Kings 19:14-19 &nearr;</a></div>
+  <div class="pr-body">
+    <p>When Sennacherib, king of Assyria, sent a letter to Hezekiah threatening to destroy Jerusalem and mocking the God of Israel, Hezekiah took the letter and went up to the house of the LORD and spread it before the LORD (2 Kings 19:14). Then he prayed: O LORD, the God of Israel, enthroned above the cherubim, you are the God, you alone, of all the kingdoms of the earth; you have made heaven and earth. Incline your ear, O LORD, and hear; open your eyes, O LORD, and see; and hear the words of Sennacherib, which he has sent to mock the living God (2 Kings 19:15-16). He prayed that God would save them so that all the kingdoms of the earth might know that He alone is God (2 Kings 19:19). His prayer was not for his own safety but for the honor of God's name. That night the angel of the LORD struck down a hundred and eighty-five thousand Assyrians, and the city was saved (2 Kings 19:35). Years later, when Hezekiah was told he would die, he turned his face to the wall and wept and prayed, and God gave him fifteen more years (2 Kings 20:1-6). His instinct in every crisis, from military threat to personal illness, was to go to the house of the LORD and spread it out before God.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> When a threat or fear comes today, "spread the letter" before God in prayer&mdash;bring it to Him specifically.</div>
+  <div class="pr-sup">Supporting references: 2 Kings 18:5-7; 2 Kings 20:1-6; Isaiah 37:14-20</div>
+</div>
+<h3 class="group-h">2. New Testament Intercessors</h3>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Jesus</span><a class="pr-ref" href="bible.html?ref=John%2017:1" target="_blank" rel="noopener">John 17:1-26 &nearr;</a></div>
+  <div class="pr-body">
+    <p>In the upper room, on the night He would be betrayed, Jesus did not pray for His own escape. He prayed for His disciples&mdash;and for us. This prayer, often called the high priestly prayer, is the longest recorded prayer of Jesus in Scripture. He prayed for their protection, asking the Holy Father to protect them by the power of His name (John 17:11). He prayed for their sanctification, asking God to sanctify them by the truth of His word (John 17:17). He prayed for their unity, that they may be one as He and the Father are one (John 17:22). Then He prayed for all who would believe through their message&mdash;including you. Jesus intercedes not from a distance but from the very heart of the Godhead, and He ever lives to make intercession for us (Hebrews 7:25). Every other intercessor on this page is a shadow of Him.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Thank Jesus today that He is praying for you right now at the right hand of the Father.</div>
+  <div class="pr-sup">Supporting references: John 17:11; John 17:17; John 17:22; Hebrews 7:25</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Jesus in Gethsemane</span><a class="pr-ref" href="bible.html?ref=Luke%2022:39" target="_blank" rel="noopener">Luke 22:39-44 &nearr;</a></div>
+  <div class="pr-body">
+    <p>After the last supper, Jesus went out to the Mount of Olives as was His custom, and His disciples followed Him (Luke 22:39). There, in the garden of Gethsemane, He knelt down and prayed: Father, if you are willing, remove this cup from me. Nevertheless, not my will, but yours, be done (Luke 22:42). Luke tells us that being in agony He prayed more earnestly, and His sweat became like great drops of blood falling down to the ground (Luke 22:44). The Son of God, who had been with the Father from eternity, prayed in such anguish that an angel was sent to strengthen Him. Hebrews says that in the days of His flesh, Jesus offered up prayers and supplications, with loud cries and tears, to him who was able to save him from death, and he was heard because of his reverence (Hebrews 5:7). Gethsemane shows us the mystery of prayer at its deepest: full honesty about our desire, full submission to the Father's will, and full trust that the Father hears us even when the answer is not what we would have chosen. It is the model of intercession we did not fully understand until Jesus went through it.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> In your next time of prayer, name your deepest desire honestly&mdash;then add, "Nevertheless, not my will but yours be done."</div>
+  <div class="pr-sup">Supporting references: Matthew 26:36-46; Mark 14:32-42; Hebrews 5:7</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">The Lord's Prayer as Model</span><a class="pr-ref" href="bible.html?ref=Matthew%206:9" target="_blank" rel="noopener">Matthew 6:9-13 &nearr;</a></div>
+  <div class="pr-body">
+    <p>When the disciples asked Jesus to teach them to pray, He gave them a prayer that has shaped the church for two thousand years. It begins not with us but with God: Our Father in heaven, hallowed be your name. Your kingdom come, your will be done, on earth as it is in heaven (Matthew 6:9-10). It then turns to our need, and it teaches us the priorities of need: daily bread before tomorrow's, forgiveness received and extended, deliverance from temptation and evil (Matthew 6:11-13). Notice what the prayer does not include&mdash;it does not include long words, impressive phrases, or elaborate requests. Jesus had just warned His disciples not to heap up empty phrases as the Gentiles do, thinking they will be heard for their many words (Matthew 6:7). The Lord's Prayer is short, direct, and God-centered. It is a model, not a formula&mdash;Jesus does not say "pray only these words" but "pray then like this" (Matthew 6:9). And it can be prayed sincerely in a minute or pondered for an hour. It teaches us that prayer is not an attempt to convince a reluctant God but an approach to a Father who already knows what we need before we ask (Matthew 6:8).</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Pray the Lord's Prayer slowly today, pausing on each phrase and letting it shape the way you pray.</div>
+  <div class="pr-sup">Supporting references: Luke 11:1-4; Matthew 6:5-8; Matthew 7:7-11</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Paul</span><a class="pr-ref" href="bible.html?ref=Ephesians%203:14" target="_blank" rel="noopener">Ephesians 3:14-21 &nearr;</a></div>
+  <div class="pr-body">
+    <p>Paul's letters are full of prayers for the churches he loved, and two of them stand out. In Ephesians 3, he bows his knees before the Father and prays that the believers would be rooted and established in love, and that they would have power to grasp how wide and long and high and deep is the love of Christ (Ephesians 3:17-18). He prays that they would be filled to the measure of all the fullness of God (Ephesians 3:19). In Philippians 1, he prays that their love would abound more and more in knowledge and depth of insight, so that they would be able to discern what is best and be filled with the fruit of righteousness (Philippians 1:9-11). Paul's prayers are not vague; they are specific, deep, and oriented toward spiritual growth (Colossians 1:9-14). He prayed for people he had not visited, for churches in distant towns, for the very people who caused him trouble. He shows us that intercession is not reserved for those we like&mdash;it is part of loving the church of God.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Pray one of Paul's prayers from Ephesians or Philippians over a friend this week, inserting their name into the text.</div>
+  <div class="pr-sup">Supporting references: Philippians 1:9-11; Colossians 1:9-14; Romans 1:9-10</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Epaphras</span><a class="pr-ref" href="bible.html?ref=Colossians%204:12" target="_blank" rel="noopener">Colossians 4:12-13 &nearr;</a></div>
+  <div class="pr-body">
+    <p>Epaphras was not an apostle. He was a servant of Christ in Colossae who labored quietly and prayed hard. Paul tells the Colossians that Epaphras is always wrestling in prayer for them, that they may stand firm in all the will of God, mature and fully assured (Colossians 4:12). The word wrestling is the same root used for an athletic struggle&mdash;not a casual mention but a labor, a toil. Paul says Epaphras has worked hard for the Colossians and for those in Laodicea and Hierapolis (Colossians 4:13). He had also brought Paul news of the Colossians' love in the Spirit (Colossians 1:7-8). This is the intercessor who is not famous, not a leader, not in the spotlight&mdash;but who prays with grit and persistence for the spiritual maturity of others. Epaphras reminds us that prayer is work, and some of the most important work in the kingdom is done on our knees in private.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Commit to praying persistently for one person's spiritual maturity this month, even if no one sees.</div>
+  <div class="pr-sup">Supporting references: Colossians 1:7-8; Colossians 4:12</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">The Early Church</span><a class="pr-ref" href="bible.html?ref=Acts%2012:1" target="_blank" rel="noopener">Acts 12:1-17 &nearr;</a></div>
+  <div class="pr-body">
+    <p>When Peter was arrested and imprisoned, the church did something remarkable: they gathered in a home and prayed earnestly to God for him (Acts 12:5). They did not know what God would do&mdash;when Peter was miraculously freed and knocked on the door, the servant girl Rhoda was so excited she forgot to open it (Acts 12:14). The gathered believers told her she was out of her mind, struggling to believe the very miracle they had been praying for (Acts 12:15). This is one of the most encouraging pictures of corporate intercession in the Bible. The early church prayed together, earnestly, in a home, through the night, for a man in prison (Acts 12:12). Their prayer did not earn the answer, but it was the context in which God acted. Earlier, when they were threatened by the authorities, they had gathered and prayed, and the place where they were meeting was shaken, and they were all filled with the Holy Spirit and continued to speak the word of God with boldness (Acts 4:31). Corporate prayer is not optional; it is the lifeblood of the church.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Join with other believers in prayer this week, and keep praying even when the answer seems impossible.</div>
+  <div class="pr-sup">Supporting references: Acts 12:5; Acts 12:12-15; Acts 4:24-31</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Peter and John's Prayer</span><a class="pr-ref" href="bible.html?ref=Acts%204:24" target="_blank" rel="noopener">Acts 4:24-31 &nearr;</a></div>
+  <div class="pr-body">
+    <p>After Peter and John were arrested and threatened by the Sanhedrin for preaching in the name of Jesus, they were released and went back to their friends. When their friends heard what had happened, they lifted their voices together to God and prayed (Acts 4:24). Their prayer is a Spirit-filled reading of Psalm 2: Sovereign Lord, who made the heaven and the earth and the sea and everything in them, who through the mouth of our father David, your servant, said by the Holy Spirit, Why did the Gentiles rage, and the peoples plot in vain?… for truly in this city there were gathered together against your holy servant Jesus, whom you anointed, both Herod and Pontius Pilate, along with the Gentiles and the peoples of Israel, to do whatever your hand and your plan had predestined to take place (Acts 4:24-28). They did not pray for the threats to stop&mdash;they prayed for boldness to keep speaking. And now, Lord, look upon their threats and grant to your servants to continue to speak your word with all boldness (Acts 4:29). When they had prayed, the place in which they were gathered together was shaken, and they were all filled with the Holy Spirit and continued to speak the word of God with boldness (Acts 4:31). This is the church's first recorded corporate prayer for courage, and it shows us that the answer to opposition is not the removal of opposition but a fresh filling of the Spirit.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Pray not for an easy road but for boldness to keep speaking Christ on the road you are on.</div>
+  <div class="pr-sup">Supporting references: Acts 4:13-22; Acts 4:23; Psalm 2:1-2</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Stephen</span><a class="pr-ref" href="bible.html?ref=Acts%207:59" target="_blank" rel="noopener">Acts 7:59-60 &nearr;</a></div>
+  <div class="pr-body">
+    <p>Stephen was one of the seven men chosen to serve tables in the Jerusalem church, but he was full of faith and of the Holy Spirit, and he did great wonders and signs among the people (Acts 6:5-8). When the religious leaders could not withstand the wisdom with which he spoke, they brought him before the council and stirred up false witnesses against him (Acts 6:9-14). Stephen preached a long, fearless sermon that traced Israel's history of resisting God and ended with the charge that they had betrayed and murdered the Righteous One (Acts 7:2-53). They were enraged and ground their teeth at him. But Stephen, full of the Holy Spirit, gazed into heaven and saw the glory of God, and Jesus standing at the right hand of God (Acts 7:55-56). They cast him out of the city and stoned him. As they were stoning him, Stephen prayed: Lord Jesus, receive my spirit. And falling to his knees, he cried out with a loud voice: Lord, do not hold this sin against them. And when he had said this, he fell asleep (Acts 7:59-60). His prayer is a direct echo of Jesus' own prayer on the cross&mdash;Lord, forgive them, for they know not what they do (Luke 23:34). Stephen is the first martyr of the church, and he died praying the way Jesus died praying.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> The next time someone wrongs you, pray for them in the moment&mdash;that is the prayer that costs the most and does the most.</div>
+  <div class="pr-sup">Supporting references: Acts 6:5-8; Acts 7:54-58; Acts 8:1</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Anna</span><a class="pr-ref" href="bible.html?ref=Luke%202:36" target="_blank" rel="noopener">Luke 2:36-38 &nearr;</a></div>
+  <div class="pr-body">
+    <p>Anna was a prophetess, a widow of about eighty-four years, who spent her days in the temple courts, fasting and praying night and day (Luke 2:37). She had lost her husband after only seven years of marriage, and instead of withdrawing in bitterness, she gave herself to worship and intercession (Luke 2:36-37). When Mary and Joseph brought the baby Jesus to the temple, Anna came up to them, gave thanks to God, and spoke about the child to all who were looking forward to the redemption of Jerusalem (Luke 2:38). Here is an intercessor whose prayer life was steady, private, and faithful for decades&mdash;and who was rewarded with a sight of the Messiah. Anna shows us that prayer is not only for the young or the prominent. It is for the faithful, the persistent, the patient. She prayed for years in a temple she may have wondered would ever see the promised King, and then one day, there He was (Luke 2:38).</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Stay faithful in prayer even when the answer seems delayed, trusting that God rewards persistent devotion.</div>
+  <div class="pr-sup">Supporting references: Luke 2:37; Luke 2:38; 1 Timothy 5:5</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">Cornelius</span><a class="pr-ref" href="bible.html?ref=Acts%2010:1" target="_blank" rel="noopener">Acts 10:1-8 &nearr;</a></div>
+  <div class="pr-body">
+    <p>Cornelius was a centurion of the Italian Cohort in Caesarea&mdash;a Gentile, a Roman soldier, a man outside the commonwealth of Israel. But Luke tells us he was a devout man who feared God with all his household, gave alms generously to the people, and prayed continually to God (Acts 10:1-2). About the ninth hour of the day he saw in a vision an angel of God, who said to him: Your prayers and your alms have ascended as a memorial before God (Acts 10:4). While Cornelius was praying, God was preparing Peter in Joppa to come and preach the gospel to him. When Peter arrived and preached, the Holy Spirit fell on all who heard the word, and the Gentiles were baptized (Acts 10:44-48). Cornelius shows us that God hears the prayers of those who seek Him&mdash;even those who do not yet know Jesus. His prayers did not save him; the gospel did. But God in His mercy arranged the whole encounter around Cornelius's prayers, and He used them to open the door of the gospel to the entire Gentile world. Prayer, in Cornelius's life, was the first step of a door that God opened for all nations.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Never stop praying for those who do not yet know Christ&mdash;their prayers matter to God even before they believe.</div>
+  <div class="pr-sup">Supporting references: Acts 10:30-31; Acts 10:4; Acts 10:44-48</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">The Persistent Widow</span><a class="pr-ref" href="bible.html?ref=Luke%2018:1" target="_blank" rel="noopener">Luke 18:1-8 &nearr;</a></div>
+  <div class="pr-body">
+    <p>Jesus told a parable to His disciples to the effect that they ought always to pray and not lose heart (Luke 18:1). In a certain city there was a judge who neither feared God nor respected man, and there was a widow in that city who kept coming to him and saying, Give me justice against my adversary. For a while he refused, but afterward he said to himself, Though I neither fear God nor respect man, yet because this widow keeps bothering me, I will give her justice, so that she will not beat me down by her continual coming (Luke 18:2-5). And the Lord said, Hear what the unrighteous judge says. And will not God give justice to his elect, who cry to him day and night? Will he delay long over them? I tell you, he will give justice to them speedily (Luke 18:6-8). The point is not that God is like an unjust judge but that He is utterly unlike him. If even an unjust judge answers persistent prayer, how much more will a good Father answer the cries of His children? The widow is not a picture of someone who has earned an answer but of someone who refuses to give up. She shows us that persistent, honest, repeated prayer is not a lack of faith&mdash;it is faith in action.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Do not lose heart in prayer&mdash;the persistent widow is your model, and the Father you pray to is nothing like the judge.</div>
+  <div class="pr-sup">Supporting references: Luke 11:5-10; Luke 18:7-8; 1 Thessalonians 5:17</div>
+</div>
+<div class="pr-entry">
+  <div class="pr-head"><span class="pr-name">The Pharisee and the Tax Collector</span><a class="pr-ref" href="bible.html?ref=Luke%2018:9" target="_blank" rel="noopener">Luke 18:9-14 &nearr;</a></div>
+  <div class="pr-body">
+    <p>Jesus also told a parable to some who trusted in themselves that they were righteous and treated others with contempt (Luke 18:9). Two men went up into the temple to pray&mdash;one a Pharisee and the other a tax collector. The Pharisee stood by himself and prayed: God, I thank you that I am not like other men, extortioners, unjust, adulterers, or even like this tax collector. I fast twice a week; I give tithes of all that I get (Luke 18:10-12). The tax collector, standing far off, would not even lift up his eyes to heaven, but beat his breast, saying, God, be merciful to me, a sinner (Luke 18:13). Jesus says: I tell you, this man went down to his house justified, rather than the other. For everyone who exalts himself will be humbled, but the one who humbles himself will be exalted (Luke 18:14). The parable is a caution about prayer itself. The Pharisee prayed&mdash;and it did not count. The tax collector prayed&mdash;and it justified him. The difference was not the words but the posture. Prayer that is a performance of our own goodness is not prayer at all. Prayer that is a cry for mercy is heard by God. This is the single most important lesson about prayer in the Gospels: our standing before God is not built on our religious record but on His mercy.</p>
+  </div>
+  <div class="pr-app"><strong>Application:</strong> Start every prayer with "God, be merciful to me, a sinner"&mdash;and let that posture shape everything else you ask.</div>
+  <div class="pr-sup">Supporting references: Luke 18:13-14; Psalm 51:17; 1 Peter 5:5</div>
+</div>
+<!-- BSH-PRAYER-END -->
+<footer>
+  &copy; 2026 Safari Softwares &mdash; Bible Study Helper &mdash; Prayer<br>
+  This is a study aid, not the Bible. <a href="bible.html">Open the Bible &rarr;</a>
+</footer>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('darkToggle');
+  if (localStorage.getItem('bsh_theme') === 'dark') root.classList.add('dark-mode');
+  if (darkBtn) darkBtn.addEventListener('click', function () {
+    root.classList.toggle('dark-mode');
+    localStorage.setItem('bsh_theme', root.classList.contains('dark-mode') ? 'dark' : 'light');
+  });
+  var size = parseInt(localStorage.getItem('bsh_fontsize') || '100', 10);
+  function applySize() {
+    root.style.fontSize = size + '%';
+    localStorage.setItem('bsh_fontsize', String(size));
+  }
+  applySize();
+  var inc = document.getElementById('fontInc');
+  var dec = document.getElementById('fontDec');
+  if (inc) inc.addEventListener('click', function () { size = Math.min(140, size + 10); applySize(); });
+  if (dec) dec.addEventListener('click', function () { size = Math.max(70, size - 10); applySize(); });
+})();
+</script>
 </body>
 </html>
