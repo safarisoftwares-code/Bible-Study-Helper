@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fasting &mdash; Bible Study Helper</title>
+<style>
+  :root { --bg:#f7f4ef; --card:#ffffff; --text:#2c2c2c; --btn-bg:#f0ece4; --btn-text:#3a3a3a; --border:#d8d1c4; --highlight:#6b4a2f; --highlight-light:#f0e6d8; --shadow:0 4px 14px rgba(0,0,0,.08); }
+  .dark-mode { --bg:#1a1a1a; --card:#242424; --text:#e8e8e8; --btn-bg:#2e2e2e; --btn-text:#d0d0d0; --border:#3a3a3a; --highlight:#d4a574; --highlight-light:#3a2e22; --shadow:0 4px 14px rgba(0,0,0,.4); }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height:1.65; transition: background .2s, color .2s; }
+  .container { max-width: 920px; margin: 0 auto; padding: 0 18px 60px; }
+  header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; padding:18px 0 14px; border-bottom:1px solid var(--border); margin-bottom:22px; }
+  header h1 { margin:0; font-size:1.15rem; font-weight:700; color:var(--highlight); }
+  .header-btns { display:flex; gap:6px; flex-wrap:wrap; }
+  .header-btns button { background:var(--btn-bg); color:var(--btn-text); border:1px solid var(--border); border-radius:8px; padding:6px 11px; cursor:pointer; font-size:.9rem; font-family:inherit; }
+  .header-btns button:hover { background:var(--highlight); color:#fff; }
+  .ft-disclaimer { background:var(--highlight-light); border-left:4px solid var(--highlight); border-radius:10px; padding:16px 20px; margin-bottom:22px; font-size:.95rem; }
+  .ft-disclaimer strong { color:var(--highlight); display:block; margin-bottom:6px; font-size:1rem; }
+  .ft-scope { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 24px; margin-bottom:30px; box-shadow:var(--shadow); }
+  .ft-scope h2 { margin:0 0 12px; font-size:1.1rem; color:var(--highlight); text-transform:uppercase; letter-spacing:.04em; }
+  .ft-scope p { margin:0; font-size:.93rem; }
+  h2.section-h { margin:36px 0 14px; font-size:1.2rem; color:var(--highlight); border-bottom:2px solid var(--highlight-light); padding-bottom:6px; }
+  h3.group-h { margin:30px 0 12px; font-size:1.02rem; color:var(--text); text-transform:uppercase; letter-spacing:.05em; border-left:4px solid var(--highlight); padding-left:10px; }
+  .ft-entry { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:12px; box-shadow:var(--shadow); }
+  .ft-entry .ft-head { display:flex; align-items:baseline; flex-wrap:wrap; gap:10px; margin-bottom:8px; }
+  .ft-entry .ft-name { font-weight:700; font-size:1.04rem; color:var(--highlight); }
+  .ft-entry .ft-ref { display:inline-block; background:var(--highlight-light); color:var(--highlight); padding:2px 10px; border-radius:12px; font-size:.78rem; font-weight:600; text-decoration:none; border:1px solid var(--highlight-light); }
+  .ft-entry .ft-ref:hover { background:var(--highlight); color:#fff; border-color:var(--highlight); }
+  .ft-entry .ft-body { font-size:.94rem; line-height:1.7; }
+  .ft-entry .ft-body p { margin:0 0 8px; }
+  .ft-entry .ft-app { margin-top:10px; padding:10px 14px; background:var(--highlight-light); border-left:3px solid var(--highlight); border-radius:6px; font-size:.9rem; font-style:italic; }
+  .ft-entry .ft-app strong { font-style:normal; color:var(--highlight); }
+  .ft-entry .ft-sup { margin-top:10px; font-size:.8rem; opacity:.75; font-style:italic; }
+  footer { margin-top:50px; padding-top:20px; border-top:1px solid var(--border); text-align:center; font-size:.85rem; color:var(--text); opacity:.75; }
+  footer a { color:var(--highlight); }
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <h1>&#128591; Fasting</h1>
+  <div class="header-btns">
+    <button id="darkToggle" type="button" title="Toggle dark mode">&#127769;</button>
+    <button id="fontDec" type="button" title="Smaller text">A&minus;</button>
+    <button id="fontInc" type="button" title="Larger text">A+</button>
+    <a href="index.html"><button type="button">&larr; Back</button></a>
+  </div>
+</header>
+<div class="ft-disclaimer">
+  <strong>&#128591; This is a study book, not the Bible.</strong>
+  This is a study aid, not the Bible. It is meant to help you notice patterns, ask better questions, and open the actual Scriptures for yourself. Every summary here is a signpost, not a substitute&mdash;read the verses, sit with them, and let the text speak in its own voice. Where my words fall short, the Word does not.
+  <br><a href="bible.html">&rarr; Open the Bible</a>
+</div>
+<section class="ft-scope">
+  <h2>A Note Before You Begin</h2>
+  <p>This page is a biblical study on fasting. It explores the theology of fasting, its practice throughout Scripture, how to fast, the warnings against empty ritual, and the deep connection between fasting and spiritual power. Fasting is not a hunger strike to manipulate God; it is a posture of humility and desperation that positions us to hear from Him. If you have medical conditions (diabetes, pregnancy, eating disorders, etc.), please consult a doctor before undertaking a fast. The goal is not to suffer, but to seek the Lord.</p>
+</section>
+<!-- BSH-FASTING-START -->
+<h2 class="section-h">Fasting &mdash; Seeking God with All Your Heart</h2>
+
+<h3 class="group-h">1. The Theology of Fasting</h3>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">What Is Fasting?</span><a class="ft-ref" href="bible.html?ref=Matthew%206:16" target="_blank" rel="noopener">Matthew 6:16-18 &nearr;</a></div>
+  <div class="ft-body"><p>Fasting is the voluntary abstention from food (and sometimes drink) for a spiritual purpose. It is not a hunger strike to manipulate God, nor is it a diet plan. It is a physical posture that expresses a spiritual reality: that we are desperate for God, that we depend on Him more than on bread, and that we are willing to set aside our physical appetites to seek His face. In Matthew 6:16-18, Jesus assumes His followers will fast: "And when you fast, do not look gloomy like the hypocrites... But when you fast, anoint your head and wash your face, that your fasting may not be seen by others but by your Father who is in secret." Notice that Jesus says "when you fast," not "if you fast." Fasting is a normal part of the Christian life. It is a discipline that humbles the soul (Psalm 35:13) and prepares the heart to hear from God.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Consider what area of your life you need to seek God about&mdash;and ask Him if fasting is the right response.</div>
+  <div class="ft-sup">Supporting references: Joel 2:12; Ezra 8:21; Psalm 35:13</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">The Biblical Purpose of Fasting</span><a class="ft-ref" href="bible.html?ref=Joel%202:12" target="_blank" rel="noopener">Joel 2:12-13 &nearr;</a></div>
+  <div class="ft-body"><p>The primary purpose of fasting is not to change God's mind but to change our hearts. Joel 2:12-13 says, "Yet even now, declares the LORD, return to me with all your heart, with fasting, with weeping, and with mourning; and rend your hearts and not your garments." Notice: "rend your hearts, not your garments." The external act of fasting is meant to express an internal reality of repentance and surrender. Fasting is often connected to repentance (Jonah 3:5-10), seeking direction (Ezra 8:21), intercession (Esther 4:16), and spiritual warfare (Matthew 4:1-11). It is a way of saying to God: "I am not depending on my own strength. I am not satisfied with business as usual. I need You." Fasting does not earn us anything, but it positions us before God in humility and openness.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Ask God to search your heart today&mdash;is there anything you need to repent of or surrender?</div>
+  <div class="ft-sup">Supporting references: 2 Chronicles 7:14; Isaiah 58:6; Jonah 3:5-10</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Fasting in the Old Testament</span><a class="ft-ref" href="bible.html?ref=Judges%2020:26" target="_blank" rel="noopener">Judges 20:26 &nearr;</a></div>
+  <div class="ft-body"><p>Fasting is woven throughout the Old Testament. In Judges 20:26, the Israelites fasted and wept before the Lord when they were defeated in battle. In 1 Samuel 7:6, they fasted and confessed their sin at Mizpah. In 2 Samuel 12:16, David fasted and prayed for the life of his child. In 1 Kings 21:27, Ahab fasted in repentance after Elijah pronounced judgment on him. In Nehemiah 1:4, Nehemiah fasted and mourned when he heard that Jerusalem's walls were broken down. In Daniel 9:3, Daniel fasted and prayed when he read Jeremiah's prophecy about the seventy years. In Esther 4:16, Esther called for a three-day fast before she went to the king to plead for her people. Fasting in the Old Testament was a response to crisis, a sign of repentance, a posture of intercession, and a way of seeking God's direction.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Read one of these Old Testament fasting stories this week&mdash;and ask what you can learn from it.</div>
+  <div class="ft-sup">Supporting references: 1 Samuel 7:6; 2 Samuel 12:16; 1 Kings 21:27; Nehemiah 1:4</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Fasting in the New Testament</span><a class="ft-ref" href="bible.html?ref=Luke%202:37" target="_blank" rel="noopener">Luke 2:37 &nearr;</a></div>
+  <div class="ft-body"><p>Fasting continues into the New Testament. Anna, the prophetess, "did not depart from the temple, worshiping with fasting and prayer night and day" (Luke 2:37). Jesus fasted forty days and forty nights in the wilderness before beginning His public ministry (Matthew 4:1-11). He taught His disciples about fasting in the Sermon on the Mount (Matthew 6:16-18) and said that some demons only come out "by prayer and fasting" (Mark 9:29). In Acts 13:2-3, the church at Antioch was "worshiping the Lord and fasting" when the Holy Spirit set apart Barnabas and Saul for missionary work. In Acts 14:23, Paul and Barnabas appointed elders "with prayer and fasting" in every church. Fasting was not optional in the early church; it was a normal part of the life of the church.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Ask yourself: how often do I fast, and what role does fasting play in my spiritual life?</div>
+  <div class="ft-sup">Supporting references: Matthew 4:1-11; Acts 13:2-3; Acts 14:23; Matthew 9:15</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">The Link Between Fasting and Power</span><a class="ft-ref" href="bible.html?ref=Mark%209:29" target="_blank" rel="noopener">Mark 9:29 &nearr;</a></div>
+  <div class="ft-body"><p>In Mark 9:29, the disciples asked Jesus why they could not cast out a certain demon. He answered, "This kind cannot be driven out by anything but prayer and fasting." Some ancient manuscripts also add "and fasting" to Matthew 17:21. This is one of the most striking statements in the Gospels: there are some spiritual battles that require prayer <em>and fasting</em>. Fasting is not a guarantee of power, but it is often a prerequisite for it. Fasting humbles the flesh, sharpens the spirit, and positions us to hear from God. Daniel fasted for twenty-one days before receiving an angelic vision (Daniel 10:1-14). Jesus fasted for forty days before beginning His ministry. The early church fasted before sending out missionaries. There is a deep connection between fasting and spiritual power&mdash;not because fasting earns power, but because fasting removes the distractions and self-reliance that block the power of God.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Is there a spiritual battle in your life that needs more than prayer&mdash;that needs fasting?</div>
+  <div class="ft-sup">Supporting references: Matthew 17:21; Isaiah 58:6-9; Daniel 10:1-14</div>
+</div>
+
+<h3 class="group-h">2. Fasting in Scripture</h3>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">The Fast of Moses</span><a class="ft-ref" href="bible.html?ref=Exodus%2034:28" target="_blank" rel="noopener">Exodus 34:28 &nearr;</a></div>
+  <div class="ft-body"><p>Moses fasted for forty days and forty nights on Mount Sinai, and he neither ate bread nor drank water (Exodus 34:28). During that time, he was in the presence of God, receiving the Law. The fast of Moses was a total fast&mdash;no food, no water. It was a supernatural fast, sustained by the presence of God. The Bible tells us that Moses "was there with the LORD forty days and forty nights" (Exodus 34:28). He was so close to God that his face shone when he came down the mountain (Exodus 34:29-30). The fast of Moses teaches us that fasting is not just a discipline; it is a way of entering into the presence of God. When we fast, we are saying to God: "I want You more than I want food. I want to hear from You more than I want to satisfy my appetites."</p></div>
+  <div class="ft-app"><strong>Application:</strong> Fast for one meal this week and spend that time in prayer&mdash;ask God to reveal Himself to you.</div>
+  <div class="ft-sup">Supporting references: Deuteronomy 9:9; Deuteronomy 9:18; Exodus 24:18</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">David's Fast</span><a class="ft-ref" href="bible.html?ref=2%20Samuel%2012:16" target="_blank" rel="noopener">2 Samuel 12:16-23 &nearr;</a></div>
+  <div class="ft-body"><p>When David's child was struck with illness, David fasted and went in and lay all night on the ground (2 Samuel 12:16). His servants tried to raise him up, but he would not, and he would not eat with them. He pleaded with God for the life of his child. When the child died, David got up, washed, anointed himself, changed his clothes, and went to the house of the LORD and worshiped. His servants were confused: "What is this thing that you have done? You fasted and wept for the child while he was alive; but when the child died, you arose and ate food." David answered, "While the child was still alive, I fasted and wept, for I said, 'Who knows whether the LORD will be gracious to me, that the child may live?' But now he is dead. Why should I fast? Can I bring him back again? I shall go to him, but he will not return to me" (2 Samuel 12:22-23). David's fast teaches us that fasting is not a magic formula; it is a plea for mercy. And sometimes God says no. But even in the no, we worship.</p></div>
+  <div class="ft-app"><strong>Application:</strong> When you fast, hold your requests loosely&mdash;ask God for mercy, but trust His answer.</div>
+  <div class="ft-sup">Supporting references: Psalm 35:13; Psalm 69:10; 1 Corinthians 7:5</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">The Fast of Daniel</span><a class="ft-ref" href="bible.html?ref=Daniel%2010:1" target="_blank" rel="noopener">Daniel 10:1-14 &nearr;</a></div>
+  <div class="ft-body"><p>Daniel fasted for twenty-one days, eating no rich food, no meat, and drinking no wine (Daniel 10:2-3). He was mourning and seeking God. At the end of the twenty-one days, an angel appeared to him and said, "Fear not, Daniel, for from the first day that you set your heart to understand and humbled yourself before your God, your words have been heard, and I have come because of your words" (Daniel 10:12). Notice: the angel came because of Daniel's words. His prayer and fasting moved heaven. There was also spiritual warfare happening behind the scenes: the angel said, "The prince of the kingdom of Persia withstood me twenty-one days, but Michael, one of the chief princes, came to help me" (Daniel 10:13). Daniel's fast was not just a physical discipline; it was a spiritual battle. While he was fasting and praying, angels and demons were fighting. This is one of the most powerful passages in Scripture on the connection between fasting, prayer, and spiritual warfare.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Commit to a 21-day fast (or a shorter fast) for a specific breakthrough in your life or ministry.</div>
+  <div class="ft-sup">Supporting references: Daniel 9:3; Daniel 1:8-16; Daniel 6:18</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">The Fast of Esther</span><a class="ft-ref" href="bible.html?ref=Esther%204:16" target="_blank" rel="noopener">Esther 4:16 &nearr;</a></div>
+  <div class="ft-body"><p>When Mordecai told Esther that Haman had plotted to destroy all the Jews, Esther said: "Go, gather all the Jews to be found in Susa, and hold a fast on my behalf, and do not eat or drink for three days, night or day. I and my young women will also fast as you do. Then I will go to the king, though it is against the law, and if I perish, I perish" (Esther 4:16). Esther was going to risk her life by approaching the king without being summoned. She knew that she could be put to death. So she called for a fast&mdash;not just her own, but the whole Jewish community's. She fasted for three days and then went to the king. And God delivered her people. Esther's fast teaches us that fasting is not a private discipline; it can be a corporate act of intercession. When a community fasts together, heaven moves.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Invite one or two trusted friends to fast with you for a specific need&mdash;there is power in corporate fasting.</div>
+  <div class="ft-sup">Supporting references: Esther 4:1-17; Esther 5:1-3; Esther 7:3-4</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">The Fast of Nehemiah</span><a class="ft-ref" href="bible.html?ref=Nehemiah%201:4" target="_blank" rel="noopener">Nehemiah 1:4 &nearr;</a></div>
+  <div class="ft-body"><p>When Nehemiah heard that Jerusalem's walls were broken down and its gates destroyed by fire, he sat down and wept and mourned for days, and he continued fasting and praying before the God of heaven (Nehemiah 1:4). For days, Nehemiah fasted and prayed. He confessed the sins of Israel, remembered God's promises, and asked for favor with the king. Four months later, when the king asked Nehemiah why he looked sad, Nehemiah prayed a quick prayer and then made his request. The king granted it. Nehemiah's fast teaches us that fasting is often a precursor to breakthrough. Before Nehemiah rebuilt the walls, he fasted and prayed. Before we rebuild anything for God, we need to fast and pray.</p></div>
+  <div class="ft-app"><strong>Application:</strong> If God has put a burden on your heart, fast and pray about it this week before you take any action.</div>
+  <div class="ft-sup">Supporting references: Nehemiah 1:4-11; Nehemiah 2:1-8; Nehemiah 9:1-3</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">The Fast of Jesus</span><a class="ft-ref" href="bible.html?ref=Matthew%204:1" target="_blank" rel="noopener">Matthew 4:1-11 &nearr;</a></div>
+  <div class="ft-body"><p>Jesus was led by the Spirit into the wilderness to be tempted by the devil. And after fasting forty days and forty nights, he was hungry (Matthew 4:1-2). He fasted for forty days and forty nights, and then the devil came to Him with three temptations. Each time, Jesus answered with Scripture: "It is written..." (Matthew 4:4, 7, 10). The fast of Jesus was a time of preparation for His public ministry. It was a time of testing, of prayer, and of communion with the Father. Notice that the Spirit led Jesus into the wilderness; fasting was not Jesus's idea, it was the Spirit's. And notice that Jesus did not fast in His own strength; He was filled with the Holy Spirit. Jesus's fast teaches us that fasting is not about our willpower; it is about our dependence on God. When we fast, we are saying: "I need You more than I need food. I need Your strength more than I need my own."</p></div>
+  <div class="ft-app"><strong>Application:</strong> Ask the Holy Spirit if He is leading you into a fast&mdash;and if so, obey.</div>
+  <div class="ft-sup">Supporting references: Luke 4:1-13; Mark 1:12-13; Hebrews 4:15</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">The Early Church Fast</span><a class="ft-ref" href="bible.html?ref=Acts%2013:2" target="_blank" rel="noopener">Acts 13:2-3 &nearr;</a></div>
+  <div class="ft-body"><p>In Acts 13:2-3, we read: "While they were worshiping the Lord and fasting, the Holy Spirit said, 'Set apart for me Barnabas and Saul for the work to which I have called them.' Then after fasting and praying they laid their hands on them and sent them off." The church at Antioch fasted before they sent out the first missionaries. In Acts 14:23, Paul and Barnabas appointed elders "with prayer and fasting" in every church. Fasting was not optional in the early church; it was a normal part of the life of the church. They fasted before making major decisions. They fasted before sending out missionaries. They fasted before appointing leaders. Fasting was a way of saying: "We are not making this decision on our own. We need the Holy Spirit to guide us."</p></div>
+  <div class="ft-app"><strong>Application:</strong> Before making your next big decision, consider fasting and praying for a day.</div>
+  <div class="ft-sup">Supporting references: Acts 14:23; Acts 2:42; Acts 9:9</div>
+</div>
+
+<h3 class="group-h">3. How to Fast</h3>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Types of Fasting</span><a class="ft-ref" href="bible.html?ref=Judges%2020:26" target="_blank" rel="noopener">Judges 20:26 &nearr;</a></div>
+  <div class="ft-body"><p>There are several types of fasting in Scripture. The most common is the partial fast: abstaining from certain foods or drinks but not all of them. Daniel fasted from meat, wine, and rich food (Daniel 10:3). The Israelites fasted from food but not water (Judges 20:26). Another type is the total fast: abstaining from all food and drink for a limited time. Moses fasted for forty days and forty nights without food or water (Exodus 34:28). Esther called for a three-day total fast (Esther 4:16). There is also the corporate fast: an entire community fasting together (Esther 4:16; Jonah 3:5-10). And there is the private fast: fasting individually before God (Matthew 6:16-18). The type of fast you choose should depend on your health, your circumstances, and the leading of the Holy Spirit. Fasting is not a competition; it is a personal response to God.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Decide what kind of fast God is calling you to&mdash;and commit to it for a specific period.</div>
+  <div class="ft-sup">Supporting references: Daniel 10:3; Matthew 4:1-11; Esther 4:16</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Preparation for Fasting</span><a class="ft-ref" href="bible.html?ref=2%20Chronicles%2020:3" target="_blank" rel="noopener">2 Chronicles 20:3 &nearr;</a></div>
+  <div class="ft-body"><p>Fasting should not be entered into lightly. 2 Chronicles 20:3 says, "Then Jehoshaphat was afraid and set his face to seek the LORD, and proclaimed a fast throughout all Judah." Notice: he set his face to seek the LORD. Fasting requires preparation. You need to set a specific time frame. You need to determine the type of fast. You need to prepare your heart through confession and repentance. You need to set aside time for prayer and Scripture reading during your fast. The Israelites prepared for fasting by consecrating themselves and seeking God (1 Samuel 7:6). Jonah prepared the Ninevites for a fast by calling them to repentance (Jonah 3:5-10). When we prepare for a fast, we are not just deciding not to eat; we are saying to God, "I am going to seek You with all my heart."</p></div>
+  <div class="ft-app"><strong>Application:</strong> Write down your fasting plan this week&mdash;what you will abstain from, when you will fast, and how you will spend that time with God.</div>
+  <div class="ft-sup">Supporting references: Ezra 8:21; Jonah 3:5-10; Joel 2:15-16</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Fasting with Prayer</span><a class="ft-ref" href="bible.html?ref=Ezra%208:23" target="_blank" rel="noopener">Ezra 8:23 &nearr;</a></div>
+  <div class="ft-body"><p>Fasting is not just a physical discipline; it is a spiritual discipline that is meant to be coupled with prayer. Ezra 8:23 says, "So we fasted and implored our God for this, and he listened to our entreaty." Notice: fasting and prayer are linked together. When we fast, we are setting aside time for prayer. Fasting without prayer is just going hungry. Prayer without fasting is fine, but prayer <em>with</em> fasting is more focused, more intense, and more open to hearing from God. Nehemiah fasted and prayed (Nehemiah 1:4-11). Daniel fasted and prayed (Daniel 9:3-19). Anna fasted and prayed (Luke 2:37). Fasting is the physical posture of a prayerful heart. It is a way of saying to God, "I am so desperate for You that I will set aside even food to seek Your face."</p></div>
+  <div class="ft-app"><strong>Application:</strong> During your next fast, replace mealtimes with prayer times&mdash;talk to God in the moments when you would have eaten.</div>
+  <div class="ft-sup">Supporting references: Nehemiah 1:4-11; Daniel 9:3-19; Luke 2:37</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Fasting and the Word</span><a class="ft-ref" href="bible.html?ref=Matthew%204:4" target="_blank" rel="noopener">Matthew 4:4 &nearr;</a></div>
+  <div class="ft-body"><p>When Jesus was tempted by the devil after fasting forty days, He said, "It is written, 'Man shall not live by bread alone, but by every word that comes from the mouth of God'" (Matthew 4:4). This is the ultimate lesson of fasting: man shall not live by bread alone. Fasting is a way of saying that we need more than food; we need the Word of God. Deuteronomy 8:3 says, "And he humbled you and let you hunger and fed you with manna, which you did not know, nor did your fathers know, that he might make you know that man does not live by bread alone, but man lives by every word that comes from the mouth of the LORD." When we fast, we are not just skipping meals; we are satisfying our hunger with the Word of God. Fasting is a way of saying, "God, I am hungering for You. I am hungering for Your Word."</p></div>
+  <div class="ft-app"><strong>Application:</strong> During your fast, read Scripture during your mealtimes&mdash;let the Word of God be your food.</div>
+  <div class="ft-sup">Supporting references: Deuteronomy 8:3; Jeremiah 15:16; Psalm 119:103</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Breaking a Fast</span><a class="ft-ref" href="bible.html?ref=1%20Kings%2019:5" target="_blank" rel="noopener">1 Kings 19:5-8 &nearr;</a></div>
+  <div class="ft-body"><p>Breaking a fast is as important as starting it. When Elijah fled from Jezebel after the victory on Mount Carmel, he was exhausted and wanted to die. An angel touched him and said, "Arise and eat." And he looked, and behold, there was at his head a cake baked on hot stones and a jar of water. And he ate and drank and lay down again. And the angel of the LORD came again a second time and touched him and said, "Arise and eat, for the journey is too great for you." And he arose and ate and drank, and went in the strength of that food forty days and forty nights to Horeb, the mount of God (1 Kings 19:5-8). God did not rebuke Elijah for needing food; He fed him. After a fast, you need to break your fast wisely. Do not immediately eat a large meal; start with small portions of light, easily digestible food. Let your body recover. The purpose of fasting is not to harm your body; it is to seek God. And after the fast, we need to be strengthened for the journey.</p></div>
+  <div class="ft-app"><strong>Application:</strong> End your fast with a light meal and prayer&mdash;thank God for His presence and ask for strength for what lies ahead.</div>
+  <div class="ft-sup">Supporting references: Luke 4:2; Exodus 16:35; Daniel 1:12-16</div>
+</div>
+
+<h3 class="group-h">4. Warnings Against Empty Fasting</h3>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">The Fast God Chooses</span><a class="ft-ref" href="bible.html?ref=Isaiah%2058:3" target="_blank" rel="noopener">Isaiah 58:3-9 &nearr;</a></div>
+  <div class="ft-body"><p>Isaiah 58 is the most important passage in the Bible on fasting. The people were fasting, but they were complaining: "Why have we fasted, and you see it not? Why have we humbled ourselves, and you take no knowledge of it?" (Isaiah 58:3). And God answered: "Behold, in the day of your fast you seek your own pleasure, and oppress all your workers... Fasting like yours this day will not make your voice to be heard on high" (Isaiah 58:3-4). And then God said what the fast He chooses is: "Is not this the fast that I choose: to loose the bonds of wickedness, to undo the straps of the yoke, to let the oppressed go free, and to break every yoke? Is it not to share your bread with the hungry and bring the homeless poor into your house; when you see the naked, to cover him, and not to hide yourself from your own flesh?" (Isaiah 58:6-7). And then the promise: "Then shall your light break forth like the dawn, and your healing shall spring up speedily... Then you shall call, and the LORD will answer; you shall cry, and he will say, 'Here I am'" (Isaiah 58:8-9). God does not want an empty ritual; God wants a fast that changes our hearts and our lives.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Ask yourself: is my fasting connected to how I treat others? Am I seeking God's face or just checking a religious box?</div>
+  <div class="ft-sup">Supporting references: Isaiah 58:1-14; Zechariah 7:1-14; Matthew 6:16-18</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Do Not Fast Like the Hypocrites</span><a class="ft-ref" href="bible.html?ref=Matthew%206:16" target="_blank" rel="noopener">Matthew 6:16-18 &nearr;</a></div>
+  <div class="ft-body"><p>In the Sermon on the Mount, Jesus said: "And when you fast, do not look gloomy like the hypocrites, for they disfigure their faces that their fasting may be seen by others. Truly, I say to you, they have received their reward. But when you fast, anoint your head and wash your face, that your fasting may not be seen by others but by your Father who is in secret. And your Father who sees in secret will reward you" (Matthew 6:16-18). The Pharisees fasted, but they did it for show. They wanted to be seen and admired. Jesus said: don't do that. Fasting is not a performance. It is a private discipline between you and God. If you are fasting to be seen by others, you are not fasting for God; you are fasting for yourself. The Father who sees in secret will reward you&mdash;but only if you are fasting for Him.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Keep your fasting private this week&mdash;do not tell anyone unless it is necessary.</div>
+  <div class="ft-sup">Supporting references: Zechariah 7:5-6; Luke 18:9-14; Isaiah 1:11-17</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">The Danger of Empty Ritual</span><a class="ft-ref" href="bible.html?ref=Zechariah%207:4" target="_blank" rel="noopener">Zechariah 7:4-7 &nearr;</a></div>
+  <div class="ft-body"><p>In Zechariah 7, the people asked whether they should continue fasting in the fifth month, as they had done for years. God answered: "When you fasted and mourned in the fifth month and in the seventh, for these seventy years, was it for me that you fasted? And when you eat and when you drink, do you not eat for yourselves and drink for yourselves?" (Zechariah 7:5-6). The people had been fasting for decades, but it was empty ritual. They were not fasting for God; they were fasting for themselves. Isaiah 1:11-17 says that God is tired of the empty offerings and festivals of a people who do not obey Him. Amos 5:21-24 says, "I hate, I despise your feasts, and I take no delight in your solemn assemblies... But let justice roll down like waters, and righteousness like an ever-flowing stream." Micah 6:8 says, "He has told you, O man, what is good; and what does the LORD require of you but to do justice, and to love kindness, and to walk humbly with your God?" God does not want empty ritual; He wants our hearts. And He wants our lives to match our fasting.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Check your heart before you fast this week&mdash;is it a ritual, or is it a genuine seeking of God?</div>
+  <div class="ft-sup">Supporting references: Isaiah 1:11-17; Amos 5:21-24; Micah 6:6-8</div>
+</div>
+
+<h3 class="group-h">5. Fasting for Spiritual Breakthrough</h3>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Fasting for Protection</span><a class="ft-ref" href="bible.html?ref=Esther%204:16" target="_blank" rel="noopener">Esther 4:16 &nearr;</a></div>
+  <div class="ft-body"><p>When Esther was faced with the threat of annihilation, she called for a three-day fast. She knew that she needed more than just a good plan; she needed divine intervention. She knew that she could be killed for approaching the king uninvited. So she called for a fast&mdash;not just her own, but the whole Jewish community's. She said: "If I perish, I perish." But she did not perish. God delivered her people. Fasting was the weapon Esther used to seek God's protection. It was a way of saying, "God, we are not relying on our own strength. We are relying on You." When we fast, we acknowledge that we need God's protection over our lives, our families, and our churches. Fasting does not guarantee physical safety, but it does align our hearts with the One who promises to be with us in every circumstance.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Fast this week for protection over a specific area of your life or family&mdash;and trust God for His covering.</div>
+  <div class="ft-sup">Supporting references: Esther 4:1-17; Esther 7:3-4; Psalm 91</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Fasting for Direction</span><a class="ft-ref" href="bible.html?ref=Ezra%208:21" target="_blank" rel="noopener">Ezra 8:21 &nearr;</a></div>
+  <div class="ft-body"><p>In Ezra 8:21, we read: "Then I proclaimed a fast there, at the river Ahava, that we might humble ourselves before our God, to seek from him a safe journey for ourselves, our children, and all our goods." Ezra was leading a group of exiles back to Jerusalem. It was a dangerous journey. There were robbers and enemies along the way. Ezra was ashamed to ask the king for soldiers to protect them, because he had told the king that the hand of God was on them. So he called for a fast. He wanted to seek God's direction and protection. And God answered. In the same way, in Acts 13:2-3, the church fasted before they sent out missionaries. Fasting is a way of saying, "God, we do not know what to do. We need Your direction." And God promises to give wisdom to those who ask (James 1:5).</p></div>
+  <div class="ft-app"><strong>Application:</strong> If you are at a crossroads, consider a fast to seek God's direction for your next step.</div>
+  <div class="ft-sup">Supporting references: Judges 20:26-28; Acts 13:2-3; James 1:5</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Fasting for Deliverance</span><a class="ft-ref" href="bible.html?ref=2%20Chronicles%2020:3" target="_blank" rel="noopener">2 Chronicles 20:3-4 &nearr;</a></div>
+  <div class="ft-body"><p>In 2 Chronicles 20, Jehoshaphat was told that a vast army was coming against Judah. He was afraid, but he did not panic. He "set his face to seek the LORD, and proclaimed a fast throughout all Judah" (2 Chronicles 20:3). The people gathered to seek God. Jehoshaphat prayed: "O LORD, God of our fathers, are you not God in heaven? You rule over all the kingdoms of the nations. In your hand are power and might, so that none is able to withstand you... We are powerless against this great horde that is coming against us. We do not know what to do, but our eyes are on you" (2 Chronicles 20:6, 12). And God answered, "Do not be afraid and do not be dismayed at this great horde, for the battle is not yours but God's" (2 Chronicles 20:15). The next day, God defeated the enemy, and the people did not even have to fight. Fasting is a powerful way to seek God's deliverance in the midst of overwhelming circumstances.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Fast this week for deliverance from something that is oppressing you&mdash;and trust God to fight for you.</div>
+  <div class="ft-sup">Supporting references: 2 Chronicles 20:1-30; Jonah 3:5-10; Luke 4:16-21</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Fasting for Revival</span><a class="ft-ref" href="bible.html?ref=Nehemiah%209:1" target="_blank" rel="noopener">Nehemiah 9:1-3 &nearr;</a></div>
+  <div class="ft-body"><p>In Nehemiah 9, the people of Israel gathered together with fasting, in sackcloth, and with earth on their heads. They confessed their sins and the sins of their fathers. And then they read from the Book of the Law of the LORD their God for a quarter of the day, and for another quarter they confessed and worshiped the LORD their God (Nehemiah 9:1-3). This was a national revival, and it began with fasting and confession. Joel 2:12-17 calls the people to return to God with fasting, weeping, and mourning. Jonah 3:5-10 tells how the entire city of Nineveh fasted and repented, and God relented. 2 Chronicles 7:14 says, "If my people who are called by my name humble themselves, and pray and seek my face and turn from their wicked ways, then I will hear from heaven and will forgive their sin and heal their land." Fasting is a key ingredient in revival. When we fast, we are humbling ourselves before God and saying, "We need You to move."</p></div>
+  <div class="ft-app"><strong>Application:</strong> Fast and pray for revival in your church, your community, and your nation this week.</div>
+  <div class="ft-sup">Supporting references: Joel 2:12-17; Jonah 3:5-10; 2 Chronicles 7:14</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Fasting for Breakthrough</span><a class="ft-ref" href="bible.html?ref=Mark%209:29" target="_blank" rel="noopener">Mark 9:29 &nearr;</a></div>
+  <div class="ft-body"><p>In Mark 9, a man brought his son to Jesus, who was possessed by a demon that made him mute. The disciples had tried to cast out the demon but could not. Jesus rebuked the demon, and the boy was healed. When the disciples asked Jesus privately why they could not cast it out, He said, "This kind cannot be driven out by anything but prayer and fasting" (Mark 9:29). There are some spiritual battles that require more than just a quick prayer. There are some strongholds that only come down through prayer <em>and</em> fasting. Daniel fasted for twenty-one days before he received his breakthrough (Daniel 10:1-14). Esther fasted for three days before she received hers (Esther 4:16). Jesus fasted for forty days before He began His ministry (Matthew 4:1-11). If you are facing a breakthrough that has not come, consider fasting. It is a way of saying to God, "I am not going to give up. I am going to seek You until You move."</p></div>
+  <div class="ft-app"><strong>Application:</strong> What breakthrough are you waiting for? Fast and pray for it this week&mdash;and do not give up.</div>
+  <div class="ft-sup">Supporting references: Matthew 17:14-21; Daniel 10:1-14; Isaiah 58:6-9</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Fasting for Spiritual Growth</span><a class="ft-ref" href="bible.html?ref=Matthew%206:16" target="_blank" rel="noopener">Matthew 6:16-18 &nearr;</a></div>
+  <div class="ft-body"><p>Fasting is not just for crisis moments; it is a discipline for spiritual growth. Anna the prophetess "did not depart from the temple, worshiping with fasting and prayer night and day" (Luke 2:37). She was eighty-four years old, and she had devoted her life to fasting and prayer. Paul tells Timothy, "Have nothing to do with irreverent, silly myths. Rather train yourself for godliness; for while bodily training is of some value, godliness is of value in every way, as it holds promise for the present life and also for the life to come" (1 Timothy 4:7-8). Fasting is spiritual training. It is a way of disciplining our bodies, our appetites, and our desires so that we can be more attuned to the Spirit. Paul says in Galatians 5:16-24 that the desires of the flesh are against the Spirit, and the desires of the Spirit are against the flesh. Fasting is a way of saying to our flesh, "You are not in charge. The Spirit is." It is a way of growing in holiness, in self-control, and in intimacy with God.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Make fasting a regular part of your spiritual life&mdash;not just in crisis, but as a discipline for growth.</div>
+  <div class="ft-sup">Supporting references: Luke 2:37; 1 Timothy 4:7-8; Galatians 5:16-24</div>
+</div>
+
+<div class="ft-entry">
+  <div class="ft-head"><span class="ft-name">Fasting and Humility</span><a class="ft-ref" href="bible.html?ref=Psalm%2035:13" target="_blank" rel="noopener">Psalm 35:13 &nearr;</a></div>
+  <div class="ft-body"><p>Psalm 35:13 says, "But I, when they were sick&mdash;I wore sackcloth; I afflicted myself with fasting; I prayed with head bowed on my chest." Notice: "I afflicted myself with fasting." Fasting is a way of humbling ourselves before God. It is a way of saying, "I am not self-sufficient. I need You." Ezra 8:21 says, "Then I proclaimed a fast there, at the river Ahava, that we might humble ourselves before our God." Isaiah 58:5 talks about bowing down the head like a reed as a sign of humility. 1 Peter 5:6 says, "Humble yourselves, therefore, under the mighty hand of God so that at the proper time he may exalt you." Fasting is a physical expression of humility. When we deny ourselves food, we are saying to God, "You are more important than my appetites. Your will is more important than my comfort." And God promises to exalt the humble. He promises to hear the humble. He promises to lift up the humble.</p></div>
+  <div class="ft-app"><strong>Application:</strong> Fast this week with a heart of humility&mdash;not to earn anything, but to say to God, "I need You."</div>
+  <div class="ft-sup">Supporting references: Ezra 8:21; Isaiah 58:5; 1 Peter 5:6</div>
+</div>
+
+<!-- BSH-FASTING-END -->
+<footer>
+  &copy; 2026 Safari Softwares &mdash; Bible Study Helper &mdash; Fasting<br>
+  This is a study aid, not the Bible. <a href="bible.html">Open the Bible &rarr;</a>
+</footer>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('darkToggle');
+  if (localStorage.getItem('bsh_theme') === 'dark') root.classList.add('dark-mode');
+  if (darkBtn) darkBtn.addEventListener('click', function () {
+    root.classList.toggle('dark-mode');
+    localStorage.setItem('bsh_theme', root.classList.contains('dark-mode') ? 'dark' : 'light');
+  });
+  var size = parseInt(localStorage.getItem('bsh_fontsize') || '100', 10);
+  function applySize() {
+    root.style.fontSize = size + '%';
+    localStorage.setItem('bsh_fontsize', String(size));
+  }
+  applySize();
+  var inc = document.getElementById('fontInc');
+  var dec = document.getElementById('fontDec');
+  if (inc) inc.addEventListener('click', function () { size = Math.min(140, size + 10); applySize(); });
+  if (dec) dec.addEventListener('click', function () { size = Math.max(70, size - 10); applySize(); });
+})();
+</script>
+</body>
+</html>
