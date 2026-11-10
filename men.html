@@ -3,37 +3,285 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏛️ Men as Pillars — Bible Study Helper</title>
+<title>Men as Pillars &mdash; Bible Study Helper</title>
 <style>
-  :root { --bg:#f4f7f4; --card:#fff; --text:#1e2f2e; --green:#3d9970; --green-hover:#34a870; --border:#e2ede4; }
-  .dark-mode { --bg:#1a2520; --card:#25332b; --text:#dfe8e0; --border:#3b5143; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg); color: var(--text);
-    padding: 24px 20px; line-height: 1.6;
-    min-height: 100vh; display: flex; flex-direction: column;
-  }
-  .container { max-width: 700px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .card { background: var(--card); border-radius: 24px; padding: 44px 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); border: 1px solid var(--border); text-align: center; }
-  .emoji { font-size: 3rem; margin-bottom: 12px; }
-  h1 { color: var(--green); margin-bottom: 16px; font-size: 1.9rem; font-weight: 700; }
-  p { margin-bottom: 14px; opacity: 0.88; font-size: 1.02rem; }
-  .coming-soon { display: inline-block; background: #fff4d6; color: #8a6d00; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; letter-spacing: 0.02em; }
-  .btn { display: inline-block; padding: 14px 28px; background: var(--green); color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; margin-top: 10px; transition: 0.15s; box-shadow: 0 3px 10px rgba(61,153,112,0.25); }
-  .btn:hover { background: var(--green-hover); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(61,153,112,0.35); }
+  :root { --bg:#f7f4ef; --card:#ffffff; --text:#2c2c2c; --btn-bg:#f0ece4; --btn-text:#3a3a3a;
+    --border:#d8d1c4; --highlight:#6b4a2f; --highlight-light:#f0e6d8;
+    --shadow:0 4px 14px rgba(0,0,0,.08); }
+  .dark-mode { --bg:#1a1a1a; --card:#242424; --text:#e8e8e8; --btn-bg:#2e2e2e; --btn-text:#d0d0d0;
+    --border:#3a3a3a; --highlight:#d4a574; --highlight-light:#3a2e22; --shadow:0 4px 14px rgba(0,0,0,.4); }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height:1.65; transition: background .2s, color .2s; }
+  .container { max-width: 920px; margin: 0 auto; padding: 0 18px 60px; }
+  header { display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:10px; padding:18px 0 14px;
+    border-bottom:1px solid var(--border); margin-bottom:22px; }
+  header h1 { margin:0; font-size:1.15rem; font-weight:700; color:var(--highlight); }
+  .header-btns { display:flex; gap:6px; flex-wrap:wrap; }
+  .header-btns button { background:var(--btn-bg); color:var(--btn-text);
+    border:1px solid var(--border); border-radius:8px; padding:6px 11px;
+    cursor:pointer; font-size:.9rem; font-family:inherit; }
+  .header-btns button:hover { background:var(--highlight); color:#fff; }
+  .mn-disclaimer { background:var(--highlight-light);
+    border-left:4px solid var(--highlight); border-radius:10px;
+    padding:16px 20px; margin-bottom:22px; font-size:.95rem; }
+  .mn-disclaimer strong { color:var(--highlight); display:block;
+    margin-bottom:6px; font-size:1rem; }
+  .mn-scope { background:var(--card); border:1px solid var(--border);
+    border-radius:12px; padding:18px 24px; margin-bottom:30px; box-shadow:var(--shadow); }
+  .mn-scope h2 { margin:0 0 12px; font-size:1.1rem; color:var(--highlight);
+    text-transform:uppercase; letter-spacing:.04em; }
+  .mn-scope ul { margin:0; padding-left:22px; }
+  .mn-scope li { margin-bottom:8px; font-size:.93rem; }
+  h2.section-h { margin:36px 0 14px; font-size:1.2rem; color:var(--highlight);
+    border-bottom:2px solid var(--highlight-light); padding-bottom:6px; }
+  h3.group-h { margin:30px 0 12px; font-size:1.02rem; color:var(--text);
+    text-transform:uppercase; letter-spacing:.05em;
+    border-left:4px solid var(--highlight); padding-left:10px; }
+  .mn-man { background:var(--card); border:1px solid var(--border);
+    border-radius:10px; padding:16px 20px; margin-bottom:12px; box-shadow:var(--shadow); }
+  .mn-man .mn-head { display:flex; align-items:baseline; flex-wrap:wrap;
+    gap:10px; margin-bottom:8px; }
+  .mn-man .mn-name { font-weight:700; font-size:1.04rem; color:var(--highlight); }
+  .mn-man .mn-ref { display:inline-block; background:var(--highlight-light);
+    color:var(--highlight); padding:2px 10px; border-radius:12px;
+    font-size:.78rem; font-weight:600; text-decoration:none;
+    border:1px solid var(--highlight-light); }
+  .mn-man .mn-ref:hover { background:var(--highlight); color:#fff; border-color:var(--highlight); }
+  .mn-man .mn-body { font-size:.94rem; line-height:1.7; }
+  .mn-man .mn-body p { margin:0 0 8px; }
+  .mn-man .mn-body p:last-child { margin-bottom:0; }
+  .mn-man .mn-app { margin-top:10px; padding:10px 14px;
+    background:var(--highlight-light); border-left:3px solid var(--highlight);
+    border-radius:6px; font-size:.9rem; font-style:italic; }
+  .mn-man .mn-app strong { font-style:normal; color:var(--highlight); }
+  .mn-man .mn-sup { margin-top:10px; font-size:.8rem; opacity:.75; font-style:italic; }
+  footer { margin-top:50px; padding-top:20px; border-top:1px solid var(--border);
+    text-align:center; font-size:.85rem; color:var(--text); opacity:.75; }
+  footer a { color:var(--highlight); }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="card">
-    <div class="emoji">🏛️</div>
-    <h1>Men as Pillars</h1>
-    <div class="coming-soon">COMING SOON</div>
-    <p>Men God used to hold up His church — Abraham, Joseph, Daniel, Barnabas, Aquila, and more.</p>
-    <p>This page is being prepared with the same care as Women of Faith.</p>
-    <a href="index.html" class="btn">← Back to Study Helper</a>
+<header>
+  <h1>&#128220; Men as Pillars</h1>
+  <div class="header-btns">
+    <button id="darkToggle" type="button" title="Toggle dark mode">&#127769;</button>
+    <button id="fontDec" type="button" title="Smaller text">A&minus;</button>
+    <button id="fontInc" type="button" title="Larger text">A+</button>
+    <a href="index.html"><button type="button">&larr; Back</button></a>
   </div>
+</header>
+<div class="mn-disclaimer">
+  <strong>&#128220; This is a study book, not the Bible.</strong>
+  This is a study aid, not the Bible. It is meant to help you notice patterns, ask better questions, and open the actual Scriptures for yourself. Every summary here is a signpost, not a substitute&mdash;read the verses, sit with them, and let the text speak in its own voice. Where my words fall short, the Word does not.
+  <br><a href="bible.html">&rarr; Open the Bible</a>
 </div>
+<section class="mn-scope">
+  <h2>What This Page Is and Isn&rsquo;t</h2>
+  <ul>
+    <li>Is: A narrative introduction to roughly twenty-five biblical men who served as pillars&mdash;foundational, courageous, quiet, prayerful, and full of integrity.</li>
+    <li>Is: A study companion that traces how God forms men through obedience, waiting, testing, and faithfulness in ordinary days.</li>
+    <li>Isn't: A ranking of who was "greatest," or a claim that every decision these men made was wise.</li>
+    <li>Isn't: A place for role debates or denominational arguments. The focus is the story and your own walk with God.</li>
+    <li>Isn't: The final word. It's a doorway; the Bible is the room.</li>
+  </ul>
+</section>
+<!-- BSH-MEN-START -->
+<h2 class="section-h">Men of Scripture &mdash; A Devotional Catalog</h2>
+<h3 class="group-h">1. Foundational Fathers</h3>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Abraham</span><a class="mn-ref" href="bible.html?ref=Genesis%2012:1" target="_blank" rel="noopener">Genesis 12:1-4 &nearr;</a></div>
+  <div class="mn-body">
+    <p>God told a seventy-five-year-old man to leave everything familiar&mdash;country, kin, and father's house&mdash;for a land he had never seen (Genesis 12:1). Abraham went, not because he had a map, but because he had a promise that God would make of him a great nation (Genesis 12:2). He stumbled along the way: he lied about his wife, he fathered a child through impatience, and he laughed at God's timing. Yet Scripture remembers him chiefly for believing God, and it was credited to him as righteousness (Genesis 15:6; Romans 4:3). His leadership was less about flawless strategy and more about a direction&mdash;he kept pitching his tent toward the promise, even when the road was unclear (Hebrews 11:8). When he was tested with Isaac on the mountain, he obeyed to the point of raising the knife, and God provided a ram (Genesis 22:12). When you face a call that outstrips your resources, Abraham's story asks a simple question: will you go before you can see the whole road?</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Step out in obedience to God's call even when the destination is unclear&mdash;trust that the One who calls is faithful to lead.</div>
+  <div class="mn-sup">Supporting references: Genesis 15:6; Genesis 22:1-12; Romans 4:3; Hebrews 11:8-10</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Isaac</span><a class="mn-ref" href="bible.html?ref=Genesis%2026:1" target="_blank" rel="noopener">Genesis 26:1-33 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Isaac is the child of promise&mdash;the son born to Abraham and Sarah when they were far too old to have children (Genesis 21:2). He carried wood up the mountain and asked his father where the lamb was, and he submitted to being bound on the altar (Genesis 22:7-9). He married Rebekah, who comforted him after his mother's death (Genesis 24:67). He prayed for his barren wife, and God answered (Genesis 25:21). When famine struck, he went to Gerar, and God told him to stay and promised to bless him and multiply his offspring for His servant Abraham's sake (Genesis 26:24). Isaac sowed in that land and reaped a hundredfold in the same year, and he dug wells that the Philistines stopped and that he reopened (Genesis 26:18). He was not a flashy leader; he was a quiet recipient of promise who kept digging wells of blessing in a hostile land.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Trust God's promises in ordinary obedience&mdash;keep digging wells of blessing even in hostile ground.</div>
+  <div class="mn-sup">Supporting references: Genesis 22:1-14; Genesis 24:67; Genesis 25:21; Genesis 26:24</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Jacob</span><a class="mn-ref" href="bible.html?ref=Genesis%2028:10" target="_blank" rel="noopener">Genesis 28:10-22 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Jacob was born grasping his brother's heel and spent his early years grasping for blessing through deceit (Genesis 25:26). He tricked Esau out of his birthright and his blessing, and he fled for his life (Genesis 27:36). At Bethel he saw a ladder stretching to heaven and heard God promise to be with him (Genesis 28:13-15). He worked fourteen years for Rachel, was deceived by Laban, and grew a large family in a foreign land. At the Jabbok he wrestled with a man until daybreak and would not let him go without a blessing (Genesis 32:26), and he walked away with a limp and a new name&mdash;Israel (Genesis 32:28). God renewed the covenant with him at Bethel (Genesis 35:10-12). His blessings over his twelve sons became the blueprint for the twelve tribes (Genesis 49). Jacob's leadership was not smooth; it was the long, limping story of a man God grabbed hold of and did not let go.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Hold on to God in the struggle&mdash;let Him rename you and reshape you through the wrestling.</div>
+  <div class="mn-sup">Supporting references: Genesis 32:24-32; Genesis 35:1-15; Genesis 49:1-28; Hosea 12:3-6</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Joseph</span><a class="mn-ref" href="bible.html?ref=Genesis%2037:1" target="_blank" rel="noopener">Genesis 37:1-11 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Joseph was the favored son, given a colorful robe and dreams of his family bowing down to him (Genesis 37:3, 7). His brothers sold him into slavery out of jealousy (Genesis 37:28), and he rose in Potiphar's house only to be falsely accused and thrown into prison (Genesis 39:20). In prison he interpreted dreams for Pharaoh's servants, and eventually for Pharaoh himself (Genesis 41:16). He was lifted from prison to the palace in a single day and placed over all Egypt (Genesis 41:41). When famine brought his brothers to him, he revealed himself and told them that God had sent him ahead to preserve life (Genesis 45:5). When his father died and his brothers feared revenge, Joseph said the words that shape all forgiveness: what they meant for evil, God meant for good (Genesis 50:20). Joseph's leadership was the patient, faithful kind&mdash;years of obscurity and suffering, then sudden responsibility, all carried with integrity.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Stay faithful in the prison season&mdash;God may be preparing you for a palace assignment you cannot yet see.</div>
+  <div class="mn-sup">Supporting references: Genesis 39:1-23; Genesis 41:14-41; Genesis 45:4-8; Genesis 50:20</div>
+</div>
+<h3 class="group-h">2. Men of Courage</h3>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Daniel</span><a class="mn-ref" href="bible.html?ref=Daniel%201:1" target="_blank" rel="noopener">Daniel 1:1-21 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Daniel was a teenager taken captive to Babylon, and he resolved not to defile himself with the king's food (Daniel 1:8). God gave him favor, learning, and wisdom beyond his peers, and he served in the courts of Babylonian and Persian kings for decades (Daniel 1:17). His courage was not loud&mdash;it was the quiet refusal to compromise over a long lifetime. He interpreted dreams that no one else could (Daniel 2), and he faced the lions' den because he kept praying three times a day with his windows open (Daniel 6:10). When his friends faced the fiery furnace for not bowing, they told the king their God was able to deliver them, and even if He did not, they would not serve his gods (Daniel 3:17-18). Daniel confessed the sins of his people in a prayer that reads like a template for intercession (Daniel 9:4-19). His leadership was built on a daily habit of prayer and an unshakable commitment to God above all earthly powers.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Resolve in your heart not to compromise&mdash;stay faithful in prayer, and let courage be your daily habit.</div>
+  <div class="mn-sup">Supporting references: Daniel 3:16-18; Daniel 6:10-23; Daniel 9:1-19; Daniel 10:12</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Shadrach, Meshach, and Abednego</span><a class="mn-ref" href="bible.html?ref=Daniel%203:1" target="_blank" rel="noopener">Daniel 3:1-30 &nearr;</a></div>
+  <div class="mn-body">
+    <p>These three young men were taken with Daniel into Babylonian captivity and given new names by their captors (Daniel 1:7). They refused the king's food and chose vegetables and water, and God gave them health and wisdom (Daniel 1:15-17). When Nebuchadnezzar built a golden image and commanded everyone to bow, they refused (Daniel 3:12). Their answer to the king is one of the most courageous statements in Scripture: our God is able to deliver us, but even if He does not, we will not bow (Daniel 3:17-18). They were thrown into the furnace heated seven times hotter, and the men who threw them in were killed by the flames (Daniel 3:22). Then the king saw a fourth man walking with them in the fire, and they came out without even the smell of smoke on them (Daniel 3:25-27). Their courage was not in expecting deliverance but in obeying God regardless of the outcome.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Stand firm in your convictions&mdash;obey God even when you cannot see the deliverance, and trust Him with the results.</div>
+  <div class="mn-sup">Supporting references: Daniel 1:6-20; Daniel 3:16-18; Daniel 3:24-27; Hebrews 11:33-34</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Gideon</span><a class="mn-ref" href="bible.html?ref=Judges%206:1" target="_blank" rel="noopener">Judges 6:1-40 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Gideon was threshing wheat in a winepress, hiding from the Midianites, when the angel of the Lord called him a mighty man of valor (Judges 6:12). He protested that his clan was the weakest and he was the least in his father's house (Judges 6:15). God told him to go in his strength and that He would be with him, and Gideon asked for signs&mdash;a fleece wet and dry&mdash;and God graciously gave them (Judges 6:37-40). With three hundred men carrying trumpets, jars, and torches, he routed the Midianite army (Judges 7:20-22). When the people wanted to make him king, he refused and said the Lord would rule over them (Judges 8:23). His story shows that God often calls the reluctant and the least to do what only He can do.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Go in the strength you have&mdash;God does not call the qualified, He qualifies the called.</div>
+  <div class="mn-sup">Supporting references: Judges 7:1-25; Judges 8:22-23; Hebrews 11:32; Isaiah 41:10</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Jonathan</span><a class="mn-ref" href="bible.html?ref=1%20Samuel%2014:1" target="_blank" rel="noopener">1 Samuel 14:1-23 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Jonathan was the son of King Saul and the heir apparent, yet he loved David as his own soul (1 Samuel 18:1). He made a covenant with David and gave him his robe, armor, sword, bow, and belt (1 Samuel 18:4). When his father sought to kill David, Jonathan warned him and interceded for him (1 Samuel 19:1-7). He strengthened David's hand in God and told him that he would be king and Jonathan would be second to him (1 Samuel 23:17). He died with his father on Mount Gilboa, and David sang a lament over him (2 Samuel 1:19-27). Jonathan's courage was not only on the battlefield at Micmash (1 Samuel 14:6) but in the quiet loyalty he showed to a friend who would take his throne. He chose faithfulness over advancement.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Choose loyalty and friendship over advancement&mdash;strengthen others' hands in God, even when it costs you.</div>
+  <div class="mn-sup">Supporting references: 1 Samuel 18:1-4; 1 Samuel 20:1-42; 1 Samuel 23:16-18; 2 Samuel 1:17-27</div>
+</div>
+<h3 class="group-h">3. Quiet Faithful</h3>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Aquila</span><a class="mn-ref" href="bible.html?ref=Acts%2018:1" target="_blank" rel="noopener">Acts 18:1-3 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Aquila was a Jewish tentmaker from Pontus who lived in Rome, was expelled by Claudius, and settled in Corinth (Acts 18:2). Paul stayed with him and Priscilla because they shared the same trade, and they worked together making tents (Acts 18:3). They became Paul's co-workers and hosted a church in their home (Romans 16:5). When Apollos came to Ephesus preaching boldly but incompletely, Aquila and Priscilla took him aside and explained the way of God more accurately (Acts 18:26). They risked their necks for Paul, and he thanked them publicly (Romans 16:3-4). Aquila's leadership was quiet, consistent, and behind the scenes&mdash;working with his hands, opening his home, and correcting a gifted preacher with gentleness. He shows that hospitality and faithfulness in ordinary work are their own kind of ministry.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Open your home and your life to others&mdash;quiet faithfulness in ordinary work and hospitality builds the church.</div>
+  <div class="mn-sup">Supporting references: Acts 18:24-26; Romans 16:3-5; 1 Corinthians 16:19; 2 Timothy 4:19</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Barnabas</span><a class="mn-ref" href="bible.html?ref=Acts%204:36" target="_blank" rel="noopener">Acts 4:36-37 &nearr;</a></div>
+  <div class="mn-body">
+    <p>His real name was Joseph, but the apostles called him Barnabas, which means son of encouragement, and the name stuck because it described him so well (Acts 4:36). He sold a field and laid the money at the apostles' feet (Acts 4:37). When everyone in Jerusalem was afraid of the newly converted Saul, Barnabas vouched for him and brought him into the church (Acts 9:27). Later, he went to Tarsus to find Saul and brought him to Antioch, launching Paul's ministry in earnest (Acts 11:25-26). He stood by Mark after Mark had abandoned the first missionary journey, even when it cost him a disagreement with Paul (Acts 15:39). Barnabas led by believing in people before they had earned it&mdash;and the church has been richer for the people he lifted.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Be a son or daughter of encouragement&mdash;believe in people before they earn it and lift them up.</div>
+  <div class="mn-sup">Supporting references: Acts 9:26-27; Acts 11:22-26; Acts 15:36-41; Colossians 4:10</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Silas</span><a class="mn-ref" href="bible.html?ref=Acts%2015:22" target="_blank" rel="noopener">Acts 15:22-41 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Silas was a leading man among the brothers in Jerusalem, chosen to accompany Paul and Barnabas to Antioch with the letter from the Jerusalem council (Acts 15:22). He was also a prophet, and he encouraged and strengthened the believers with a long message (Acts 15:32). After the disagreement between Paul and Barnabas, Silas was chosen to travel with Paul through Syria and Cilicia (Acts 15:40-41). In Philippi he was beaten and imprisoned with Paul, and at midnight they sang hymns to God while the other prisoners listened (Acts 16:25). When the jailer woke to the earthquake and drew his sword, Paul and Silas stopped him and led him and his household to faith (Acts 16:30-33). Silas is named alongside Paul in the letters to the Thessalonians (1 Thessalonians 1:1) and was Peter's faithful brother in the faith (1 Peter 5:12). He was a quiet, faithful companion who strengthened churches and shared in suffering without seeking the spotlight.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Be a faithful companion in the work of the gospel&mdash;strengthen others and share in suffering without seeking the spotlight.</div>
+  <div class="mn-sup">Supporting references: Acts 16:19-34; 1 Thessalonians 1:1; 2 Thessalonians 1:1; 1 Peter 5:12</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Onesiphorus</span><a class="mn-ref" href="bible.html?ref=2%20Timothy%201:16" target="_blank" rel="noopener">2 Timothy 1:16-18 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Onesiphorus is remembered for one thing: he refreshed Paul when Paul was in prison and was not ashamed of his chains (2 Timothy 1:16). Paul says he often refreshed him and that he had been a faithful servant (2 Timothy 1:16-18). He did not abandon Paul when others did; he searched diligently for him and found him. Paul prays that the Lord will grant mercy to the household of Onesiphorus and that he will be faithful on the day of judgment (2 Timothy 1:16, 18). Onesiphorus also served the church in Ephesus, and Paul sends greetings to his household in his final letter (2 Timothy 4:19). He is barely known to us, and yet he is exactly the kind of friend every leader needs&mdash;one who shows up in the hardest seasons and is not embarrassed by the suffering of others.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Be a friend who is not ashamed of others' chains&mdash;show up when it costs you and refresh those who need it.</div>
+  <div class="mn-sup">Supporting references: 2 Timothy 4:19; Acts 19:10; 1 Timothy 1:18-19</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Epaphroditus</span><a class="mn-ref" href="bible.html?ref=Philippians%202:25" target="_blank" rel="noopener">Philippians 2:25-30 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Epaphroditus was a member of the Philippian church, sent by them to deliver support to Paul in prison and to minister to his needs (Philippians 2:25). Paul calls him a fellow worker and fellow soldier and says he risked his life to complete the service of the Philippians on his behalf (Philippians 2:25, 30). He became deeply distressed because the Philippians had heard he was ill, and he nearly died (Philippians 2:27). God had mercy on him and spared him, and Paul sent him back to the Philippians so they could rejoice and Paul could have less anxiety. Paul told the church to receive him with joy and honor because of the work he had done (Philippians 2:29). Epaphroditus shows that leadership is not always about visible roles; sometimes it is the quiet courier who carries support, risks his life, and is willing to go home without recognition.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Serve sacrificially in whatever role God gives you&mdash;faithfulness matters more than recognition.</div>
+  <div class="mn-sup">Supporting references: Philippians 4:18; 2 Corinthians 9:12; 2 Timothy 4:11; 1 Corinthians 16:15-16</div>
+</div>
+<h3 class="group-h">4. Men of Prayer</h3>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Epaphras</span><a class="mn-ref" href="bible.html?ref=Colossians%204:12" target="_blank" rel="noopener">Colossians 4:12-13 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Epaphras was a beloved fellow servant from Colossae who founded the church in his hometown and then worked hard for the believers there, in Laodicea, and in Hierapolis (Colossians 4:12-13). Paul calls him a faithful minister of Christ on their behalf (Colossians 1:7). He is described as always wrestling in prayer for them, asking that they would stand mature and fully assured in all the will of God (Colossians 4:12). That phrase&mdash;always wrestling in prayer&mdash;is the whole description of his leadership. He is barely mentioned in the New Testament, and yet Paul bore witness to the great zeal he had for the people he served. Epaphras reminds us that some of the most significant leaders are known mainly in heaven, and their labor is mostly on their knees.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Wrestle in prayer for the people God has placed in your care&mdash;labor on your knees for their maturity in Christ.</div>
+  <div class="mn-sup">Supporting references: Colossians 1:7-8; Philemon 1:23; Colossians 2:1-3</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Daniel</span><a class="mn-ref" href="bible.html?ref=Daniel%206:1" target="_blank" rel="noopener">Daniel 6:1-28 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Daniel served in Babylon and Persia for decades with integrity and excellence, and he was promoted above the other officials (Daniel 6:3). When the other officials set a trap to destroy him, they could find no fault in his work and decided his only vulnerability was his God (Daniel 6:4-5). They persuaded the king to decree that no one could pray to any god or man except the king for thirty days (Daniel 6:7). Daniel, knowing the decree, went to his house, opened the windows toward Jerusalem, and prayed three times a day, giving thanks to his God, just as he had always done (Daniel 6:10). He was thrown into the lions' den, and God shut the mouths of the lions (Daniel 6:22). His prayer life was not a crisis response; it was the steady habit of a lifetime, and it was the reason he was unshakable when the crisis came.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Make prayer your daily habit&mdash;open your windows and pray, and let faithfulness be your defense when the crisis comes.</div>
+  <div class="mn-sup">Supporting references: Daniel 2:17-23; Daniel 9:1-19; Daniel 10:1-14; Daniel 6:10</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Elijah</span><a class="mn-ref" href="bible.html?ref=1%20Kings%2017:1" target="_blank" rel="noopener">1 Kings 17:1-18:46 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Elijah appeared out of nowhere and stood before Ahab with a word from God: no rain until I say so (1 Kings 17:1). He then hid by a brook and was fed by ravens (1 Kings 17:4), and later by a widow whose oil did not run out (1 Kings 17:15-16). On Mount Carmel he prayed a short, direct prayer, and fire fell and the people fell on their faces (1 Kings 18:36-39). Then, hours later, he was hiding under a broom tree asking to die (1 Kings 19:4). God met him in a gentle whisper, fed him, and sent him back out (1 Kings 19:12-13). James tells us he was a man with a nature like ours, and that his prayer closed and opened the heavens (James 5:17-18). Elijah's leadership was intense, solitary, and profoundly human&mdash;power on the mountain and despair in the valley, held together by the God who refused to let him quit.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Pray boldly like Elijah&mdash;the prayer of a righteous person has great power, and God meets you in the whisper.</div>
+  <div class="mn-sup">Supporting references: 1 Kings 19:1-18; James 5:17-18; 1 Kings 18:36-37; Malachi 4:5-6</div>
+</div>
+<h3 class="group-h">5. Men of Integrity</h3>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Joseph</span><a class="mn-ref" href="bible.html?ref=Genesis%2039:1" target="_blank" rel="noopener">Genesis 39:1-23 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Joseph was the favored son, given a colorful robe and dreams of his family bowing down to him (Genesis 37:3, 7). His brothers sold him into slavery out of jealousy (Genesis 37:28), and he rose in Potiphar's house only to be falsely accused and thrown into prison (Genesis 39:20). In prison he interpreted dreams for Pharaoh's servants, and eventually for Pharaoh himself (Genesis 41:16). He was lifted from prison to the palace in a single day and placed over all Egypt (Genesis 41:41). When famine brought his brothers to him, he revealed himself and told them that God had sent him ahead to preserve life (Genesis 45:5). When his father died and his brothers feared revenge, Joseph said the words that shape all forgiveness: what they meant for evil, God meant for good (Genesis 50:20). Joseph's leadership was the patient, faithful kind&mdash;years of obscurity and suffering, then sudden responsibility, all carried with integrity.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Stay faithful in the prison season&mdash;God may be preparing you for a palace assignment you cannot yet see.</div>
+  <div class="mn-sup">Supporting references: Genesis 37:1-11; Genesis 41:14-41; Genesis 45:4-8; Genesis 50:20</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Boaz</span><a class="mn-ref" href="bible.html?ref=Ruth%202:1" target="_blank" rel="noopener">Ruth 2:1-23 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Boaz was a wealthy landowner in Bethlehem and a relative of Naomi's deceased husband (Ruth 2:1). When Ruth came to glean in his fields, he noticed her, protected her, and told his young men to leave her alone (Ruth 2:8-9). He called her daughter and praised her loyalty to her mother-in-law, and he prayed that the Lord would repay her (Ruth 2:11-12). When Ruth came to him at the threshing floor and asked him to spread his cloak over her, he honored her and promised to redeem her if the closer relative would not (Ruth 3:9-13). He did not take advantage of her; he dealt with the legal matter at the gate and took her as his wife (Ruth 4:1-10). Boaz is a picture of integrity&mdash;a man who used his power to protect, not to exploit, and who redeemed what was lost. He is in the genealogy of Jesus (Matthew 1:5).</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Use your power to protect, not exploit&mdash;redeem what is lost and deal with integrity in all things.</div>
+  <div class="mn-sup">Supporting references: Ruth 3:1-18; Ruth 4:1-12; Matthew 1:5; Proverbs 31:23</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Job</span><a class="mn-ref" href="bible.html?ref=Job%201:1" target="_blank" rel="noopener">Job 1:1-22 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Job was a blameless and upright man who feared God and turned away from evil (Job 1:1). He lost his children, his wealth, and his health in a single season, and his wife told him to curse God and die (Job 2:9). Job did not understand why he was suffering, and he argued with God at length, but he never turned away from Him. He said that though God slay him, he would hope in Him (Job 13:15), and he confessed that his Redeemer lives and that in his flesh he would see God (Job 19:25-26). When God finally answered out of the whirlwind, Job repented in dust and ashes and said he had heard of God by the hearing of the ear but now his eyes had seen Him (Job 42:5). Job's integrity was not the absence of questions but the refusal to abandon God in the middle of them. He is a model of patient endurance under suffering.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Hold fast to God in your suffering&mdash;even when you don't understand, trust that your Redeemer lives.</div>
+  <div class="mn-sup">Supporting references: Job 2:9-10; Job 13:15; Job 19:25-27; Job 42:1-6</div>
+</div>
+<div class="mn-man">
+  <div class="mn-head"><span class="mn-name">Enoch</span><a class="mn-ref" href="bible.html?ref=Genesis%205:21" target="_blank" rel="noopener">Genesis 5:21-24 &nearr;</a></div>
+  <div class="mn-body">
+    <p>Enoch lived in the seventh generation from Adam, and Scripture tells us he walked with God (Genesis 5:22). He lived 365 years, and then he was not, because God took him (Genesis 5:24). Hebrews says that by faith Enoch was taken up so that he should not see death, and that he pleased God (Hebrews 11:5). The author of Hebrews tells us that without faith it is impossible to please God, and that whoever would draw near to God must believe that He exists and that He rewards those who seek Him (Hebrews 11:6). Jude records that Enoch prophesied about the Lord coming with ten thousands of His holy ones (Jude 1:14-15). Enoch's life was short compared to others in his genealogy, but it was defined by one thing: he walked with God. He is a picture of what it means to live with an eternal perspective.</p>
+  </div>
+  <div class="mn-app"><strong>Application:</strong> Walk with God today&mdash;your life is measured not by its length but by its faithfulness to Him.</div>
+  <div class="mn-sup">Supporting references: Hebrews 11:5-6; Jude 1:14-15; Genesis 4:26; Micah 6:8</div>
+</div>
+<!-- BSH-MEN-END -->
+<footer>
+  &copy; 2026 Safari Softwares &mdash; Bible Study Helper &mdash; Men as Pillars<br>
+  This is a study aid, not the Bible. <a href="bible.html">Open the Bible &rarr;</a>
+</footer>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('darkToggle');
+  if (localStorage.getItem('bsh_theme') === 'dark') root.classList.add('dark-mode');
+  if (darkBtn) darkBtn.addEventListener('click', function () {
+    root.classList.toggle('dark-mode');
+    localStorage.setItem('bsh_theme', root.classList.contains('dark-mode') ? 'dark' : 'light');
+  });
+  var size = parseInt(localStorage.getItem('bsh_fontsize') || '100', 10);
+  function applySize() {
+    root.style.fontSize = size + '%';
+    localStorage.setItem('bsh_fontsize', String(size));
+  }
+  applySize();
+  var inc = document.getElementById('fontInc');
+  var dec = document.getElementById('fontDec');
+  if (inc) inc.addEventListener('click', function () { size = Math.min(140, size + 10); applySize(); });
+  if (dec) dec.addEventListener('click', function () { size = Math.max(70, size - 10); applySize(); });
+})();
+</script>
 </body>
 </html>
