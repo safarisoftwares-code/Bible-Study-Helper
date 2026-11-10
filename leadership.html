@@ -3,37 +3,334 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎯 Leadership — Bible Study Helper</title>
+<title>Leadership &mdash; Bible Study Helper</title>
 <style>
-  :root { --bg:#f4f7f4; --card:#fff; --text:#1e2f2e; --green:#3d9970; --green-hover:#34a870; --border:#e2ede4; }
-  .dark-mode { --bg:#1a2520; --card:#25332b; --text:#dfe8e0; --border:#3b5143; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg); color: var(--text);
-    padding: 24px 20px; line-height: 1.6;
-    min-height: 100vh; display: flex; flex-direction: column;
-  }
-  .container { max-width: 700px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .card { background: var(--card); border-radius: 24px; padding: 44px 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); border: 1px solid var(--border); text-align: center; }
-  .emoji { font-size: 3rem; margin-bottom: 12px; }
-  h1 { color: var(--green); margin-bottom: 16px; font-size: 1.9rem; font-weight: 700; }
-  p { margin-bottom: 14px; opacity: 0.88; font-size: 1.02rem; }
-  .coming-soon { display: inline-block; background: #fff4d6; color: #8a6d00; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; letter-spacing: 0.02em; }
-  .btn { display: inline-block; padding: 14px 28px; background: var(--green); color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; margin-top: 10px; transition: 0.15s; box-shadow: 0 3px 10px rgba(61,153,112,0.25); }
-  .btn:hover { background: var(--green-hover); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(61,153,112,0.35); }
+  :root { --bg:#f7f4ef; --card:#ffffff; --text:#2c2c2c; --btn-bg:#f0ece4; --btn-text:#3a3a3a;
+    --border:#d8d1c4; --highlight:#6b4a2f; --highlight-light:#f0e6d8;
+    --shadow:0 4px 14px rgba(0,0,0,.08); }
+  .dark-mode { --bg:#1a1a1a; --card:#242424; --text:#e8e8e8; --btn-bg:#2e2e2e; --btn-text:#d0d0d0;
+    --border:#3a3a3a; --highlight:#d4a574; --highlight-light:#3a2e22; --shadow:0 4px 14px rgba(0,0,0,.4); }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height:1.65; transition: background .2s, color .2s; }
+  .container { max-width: 920px; margin: 0 auto; padding: 0 18px 60px; }
+  header { display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:10px; padding:18px 0 14px;
+    border-bottom:1px solid var(--border); margin-bottom:22px; }
+  header h1 { margin:0; font-size:1.15rem; font-weight:700; color:var(--highlight); }
+  .header-btns { display:flex; gap:6px; flex-wrap:wrap; }
+  .header-btns button { background:var(--btn-bg); color:var(--btn-text);
+    border:1px solid var(--border); border-radius:8px; padding:6px 11px;
+    cursor:pointer; font-size:.9rem; font-family:inherit; }
+  .header-btns button:hover { background:var(--highlight); color:#fff; }
+  .ld-disclaimer { background:var(--highlight-light);
+    border-left:4px solid var(--highlight); border-radius:10px;
+    padding:16px 20px; margin-bottom:22px; font-size:.95rem; }
+  .ld-disclaimer strong { color:var(--highlight); display:block;
+    margin-bottom:6px; font-size:1rem; }
+  .ld-scope { background:var(--card); border:1px solid var(--border);
+    border-radius:12px; padding:18px 24px; margin-bottom:30px; box-shadow:var(--shadow); }
+  .ld-scope h2 { margin:0 0 12px; font-size:1.1rem; color:var(--highlight);
+    text-transform:uppercase; letter-spacing:.04em; }
+  .ld-scope ul { margin:0; padding-left:22px; }
+  .ld-scope li { margin-bottom:8px; font-size:.93rem; }
+  h2.section-h { margin:36px 0 14px; font-size:1.2rem; color:var(--highlight);
+    border-bottom:2px solid var(--highlight-light); padding-bottom:6px; }
+  h3.group-h { margin:30px 0 12px; font-size:1.02rem; color:var(--text);
+    text-transform:uppercase; letter-spacing:.05em;
+    border-left:4px solid var(--highlight); padding-left:10px; }
+  .ld-leader { background:var(--card); border:1px solid var(--border);
+    border-radius:10px; padding:16px 20px; margin-bottom:12px; box-shadow:var(--shadow); }
+  .ld-leader .ld-head { display:flex; align-items:baseline; flex-wrap:wrap;
+    gap:10px; margin-bottom:8px; }
+  .ld-leader .ld-name { font-weight:700; font-size:1.04rem; color:var(--highlight); }
+  .ld-leader .ld-ref { display:inline-block; background:var(--highlight-light);
+    color:var(--highlight); padding:2px 10px; border-radius:12px;
+    font-size:.78rem; font-weight:600; text-decoration:none;
+    border:1px solid var(--highlight-light); }
+  .ld-leader .ld-ref:hover { background:var(--highlight); color:#fff; border-color:var(--highlight); }
+  .ld-leader .ld-body { font-size:.94rem; line-height:1.7; }
+  .ld-leader .ld-body p { margin:0 0 8px; }
+  .ld-leader .ld-body p:last-child { margin-bottom:0; }
+  .ld-leader .ld-app { margin-top:10px; padding:10px 14px;
+    background:var(--highlight-light); border-left:3px solid var(--highlight);
+    border-radius:6px; font-size:.9rem; font-style:italic; }
+  .ld-leader .ld-app strong { font-style:normal; color:var(--highlight); }
+  .ld-leader .ld-sup { margin-top:10px; font-size:.8rem; opacity:.75; font-style:italic; }
+  footer { margin-top:50px; padding-top:20px; border-top:1px solid var(--border);
+    text-align:center; font-size:.85rem; color:var(--text); opacity:.75; }
+  footer a { color:var(--highlight); }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="card">
-    <div class="emoji">🎯</div>
-    <h1>Leadership</h1>
-    <div class="coming-soon">COMING SOON</div>
-    <p>God's pattern for leaders — shepherds, elders, and servant leadership. From Moses to Nehemiah to Paul.</p>
-    <p>This page is being prepared with the same care as Women of Faith.</p>
-    <a href="index.html" class="btn">← Back to Study Helper</a>
+<header>
+  <h1>&#128218; Leadership</h1>
+  <div class="header-btns">
+    <button id="darkToggle" type="button" title="Toggle dark mode">&#127769;</button>
+    <button id="fontDec" type="button" title="Smaller text">A&minus;</button>
+    <button id="fontInc" type="button" title="Larger text">A+</button>
+    <a href="index.html"><button type="button">&larr; Back</button></a>
   </div>
+</header>
+<div class="ld-disclaimer">
+  <strong>&#128218; This is a study book, not the Bible.</strong>
+  This is a study aid, not the Bible. It is meant to help you notice patterns, ask better questions, and open the actual Scriptures for yourself. Every summary here is a signpost, not a substitute&mdash;read the verses, sit with them, and let the text speak in its own voice. Where my words fall short, the Word does not.
+  <br><a href="bible.html">&rarr; Open the Bible</a>
 </div>
+<section class="ld-scope">
+  <h2>What This Page Is and Isn&rsquo;t</h2>
+  <ul>
+    <li>Is: A narrative introduction to roughly thirty biblical leaders, grouped by season and calling, each tied to a specific passage you can read today.</li>
+    <li>Is: A study companion that traces how God forms, tests, corrects, and uses people&mdash;often unlikely ones.</li>
+    <li>Isn't: A ranking of who was "greatest," or a claim that every decision these leaders made was wise.</li>
+    <li>Isn't: A place for role debates or denominational arguments. The focus is the story and your own walk with God.</li>
+    <li>Isn't: The final word. It's a doorway; the Bible is the room.</li>
+  </ul>
+</section>
+<!-- BSH-LEADERSHIP-START -->
+<h2 class="section-h">Leaders of Scripture &mdash; A Devotional Catalog</h2>
+<h3 class="group-h">1. Patriarchs &amp; Founders</h3>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Abraham</span><a class="ld-ref" href="bible.html?ref=Genesis%2012:1" target="_blank" rel="noopener">Genesis 12:1-4 &nearr;</a></div>
+  <div class="ld-body">
+    <p>God told a seventy-five-year-old man to leave everything familiar&mdash;country, kin, and father's house&mdash;for a land he had never seen (Genesis 12:1). Abraham went, not because he had a map, but because he had a promise that God would make of him a great nation (Genesis 12:2). He stumbled along the way: he lied about his wife, he fathered a child through impatience, and he laughed at God's timing. Yet Scripture remembers him chiefly for believing God, and it was credited to him as righteousness (Genesis 15:6; Romans 4:3). His leadership was less about flawless strategy and more about a direction&mdash;he kept pitching his tent toward the promise, even when the road was unclear (Hebrews 11:8). When he was tested with Isaac on the mountain, he obeyed to the point of raising the knife, and God provided a ram (Genesis 22:12). When you face a call that outstrips your resources, Abraham's story asks a simple question: will you go before you can see the whole road?</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Step out in obedience to God's call even when the destination is unclear&mdash;trust that the One who calls is faithful to lead.</div>
+  <div class="ld-sup">Supporting references: Genesis 15:6; Genesis 22:1-12; Romans 4:3; Hebrews 11:8-10</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Moses</span><a class="ld-ref" href="bible.html?ref=Exodus%203:1" target="_blank" rel="noopener">Exodus 3:1-4:17 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Moses spent forty years in a palace and forty more in a wilderness, and it was the wilderness that prepared him to lead. He was tending his father-in-law's flock when God called him from a burning bush (Exodus 3:2), and his first response was to argue&mdash;five times (Exodus 3:11; 4:1, 10, 13). But God answered each excuse with Himself. Moses led a nation of freed slaves through the sea (Exodus 14:21-22), through hunger, through rebellion, and through his own seasons of exhaustion and intercession. He learned to delegate when his father-in-law told him he was wearing himself out, and he learned to stand in the gap when the people deserved judgment. The man who once killed in anger (Exodus 2:12) became the meekest man on earth (Numbers 12:3). He was barred from the promised land for one rash act (Deuteronomy 34:4), yet he appeared with Elijah on the mount of transfiguration (Matthew 17:3) and was faithful as a servant over God's house (Hebrews 3:5).</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> When God calls you, obey&mdash;even if you feel unqualified. He equips those He sends.</div>
+  <div class="ld-sup">Supporting references: Exodus 14:13-14; Numbers 12:3; Deuteronomy 34:10-12; Hebrews 11:24-27</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Joshua</span><a class="ld-ref" href="bible.html?ref=Joshua%201:1" target="_blank" rel="noopener">Joshua 1:1-9 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Joshua served as Moses' aide for decades before he ever led anything, which means his leadership was shaped mostly by watching and waiting (Exodus 24:13). When the mantle finally passed to him, God's first word was not "be strong and courageous" as a suggestion but as a command&mdash;repeated three times, tied to the book of the Law and to God's abiding presence (Joshua 1:6-9). Joshua took a generation of wilderness wanderers across the Jordan and into a land full of fortified cities. He failed at Ai because he relied on reconnaissance instead of seeking God (Joshua 7:3-5). He succeeded at Jericho because he obeyed a plan that made no military sense (Joshua 6:20). His famous closing challenge&mdash;choose this day whom you will serve&mdash;came from a man who had already made his choice and had the scars to prove it (Joshua 24:15).</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Courage is not the absence of fear but obedience in the presence of fear&mdash;stand on God's promises and lead boldly.</div>
+  <div class="ld-sup">Supporting references: Joshua 6:1-20; Joshua 7:1-12; Joshua 24:14-15; Hebrews 4:8</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Samuel</span><a class="ld-ref" href="bible.html?ref=1%20Samuel%203:1" target="_blank" rel="noopener">1 Samuel 3:1-21 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Samuel heard God's voice as a boy, before he knew whose voice it was, and his first lesson in leadership was learning to say, "Speak, for your servant is listening" (1 Samuel 3:10). He grew up in a time of corrupt priests and indifferent kings, serving as prophet, judge, and kingmaker. He led Israel to repentance and victory at Mizpah (1 Samuel 7:6-10). He anointed Saul and then had to pronounce God's rejection of him because Saul disobeyed (1 Samuel 15:22-23). He anointed David while Saul was still on the throne, and God reminded him that He looks at the heart, not outward appearance (1 Samuel 16:7). Samuel grieved over Saul, and God had to nudge him forward. He was the kind of leader who could confront power to its face and still weep over the one he confronted.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Cultivate a listening heart before God&mdash;obedience to His voice matters more than outward success.</div>
+  <div class="ld-sup">Supporting references: 1 Samuel 7:3-13; 1 Samuel 8:6-9; 1 Samuel 15:22-23; 1 Samuel 16:7</div>
+</div>
+<h3 class="group-h">2. Kings</h3>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">David</span><a class="ld-ref" href="bible.html?ref=1%20Samuel%2016:1" target="_blank" rel="noopener">1 Samuel 16:1-13 &nearr;</a></div>
+  <div class="ld-body">
+    <p>David was the youngest son, overlooked by his own father, tending sheep when Samuel came looking for a king (1 Samuel 16:11). God told Samuel that He looks at the heart, not the outward appearance (1 Samuel 16:7)&mdash;a principle that governed David's entire ascent. He faced Goliath with a sling and a theology: the battle is the Lord's (1 Samuel 17:47). He refused to kill Saul twice when he had the chance, choosing to wait for God's timing rather than seize his own. God made an everlasting covenant with him (2 Samuel 7:16). But David also fell&mdash;his sin with Bathsheba and the arranged death of Uriah shattered his family and haunted his reign (2 Samuel 12:9-10). What makes David a leader worth studying is not his flawlessness but his repentance (2 Samuel 12:13). Psalm 51 came out of his worst failure, and it shows a king on his knees, asking God to create in him a clean heart (Psalm 51:10). He was a man after God's own heart precisely because he kept returning to God after he wandered.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> When you fail, run to God in repentance rather than away from Him&mdash;He restores the humble.</div>
+  <div class="ld-sup">Supporting references: 1 Samuel 17:45-47; 2 Samuel 7:8-16; 2 Samuel 12:13; Psalm 51:10-12</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Solomon</span><a class="ld-ref" href="bible.html?ref=1%20Kings%203:5" target="_blank" rel="noopener">1 Kings 3:5-14 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Solomon inherited a kingdom at peace and asked for something most rulers never think to request: an understanding heart to govern God's people (1 Kings 3:9). God was pleased with the request and gave him wisdom, riches, and honor beyond anything he asked for (1 Kings 3:12-13). Solomon built the temple his father could only dream of (1 Kings 6:1), organized a nation, and authored proverbs and songs. He also married foreign wives, accumulated horses and gold in defiance of the Law (1 Kings 10:26-27), and gradually let his heart drift toward the gods of his alliances (1 Kings 11:4). His story is a warning wrapped in a gift: wisdom is not the same as faithfulness, and a brilliant beginning does not guarantee a faithful end. The Teacher of Ecclesiastes learned at last that the whole duty of man is to fear God and keep His commandments (Ecclesiastes 12:13).</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Guard your heart against gradual compromise&mdash;wisdom without obedience leads to a divided life.</div>
+  <div class="ld-sup">Supporting references: 1 Kings 6:1; 1 Kings 10:23-27; 1 Kings 11:1-8; Ecclesiastes 12:13</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Hezekiah</span><a class="ld-ref" href="bible.html?ref=2%20Kings%2018:1" target="_blank" rel="noopener">2 Kings 18:1-7 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Hezekiah became king when Judah was a vassal to Assyria, and he spent his reign undoing the compromises of his father. He tore down the high places, smashed the sacred stones, and trusted the Lord as no king since David had (2 Kings 18:5-6). When Sennacherib's army surrounded Jerusalem and mocked the God of Israel, Hezekiah spread the threatening letter before the Lord and prayed (2 Kings 19:14). That night the angel of the Lord struck down a hundred and eighty-five thousand Assyrians, and the city was saved (2 Kings 19:35). Later, when Hezekiah was told he would die, he turned his face to the wall and wept and prayed, and God gave him fifteen more years (2 Kings 20:5-6). His weakness was pride&mdash;he showed Babylonian envoys all his treasures&mdash;but his instinct in crisis was always to go to the house of the Lord.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> In crisis, spread your fears before God in prayer&mdash;He is your defense and your deliverer.</div>
+  <div class="ld-sup">Supporting references: 2 Kings 19:14-19; 2 Kings 20:1-6; Isaiah 37:14-20; 2 Chronicles 32:20-21</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Josiah</span><a class="ld-ref" href="bible.html?ref=2%20Kings%2022:1" target="_blank" rel="noopener">2 Kings 22:1-23:25 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Josiah was eight years old when he became king, and by the time he was a young man he was already purging Judah of idols (2 Chronicles 34:3). During temple repairs, a worker found the Book of the Law, and when it was read to Josiah he tore his robes in grief (2 Kings 22:11). He had been leading without the full text, and now that he had it, he led differently&mdash;reading it aloud to the people (2 Kings 23:2), renewing the covenant, and reforming worship from the ground up. He was killed in battle at Megiddo by Pharaoh Neco, and the nation grieved him deeply. Scripture remembers him as a king who did what was right in the eyes of the Lord and walked in all the way of David his father (2 Kings 22:2). Josiah shows what happens when a leader lets Scripture interrupt his plans: everything gets reorganized around what God has said.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Let Scripture interrupt your plans&mdash;reform your life and leadership around what God has said.</div>
+  <div class="ld-sup">Supporting references: 2 Kings 22:11; 2 Kings 23:1-3; 2 Chronicles 34:3; Jeremiah 22:15-16</div>
+</div>
+<h3 class="group-h">3. Prophets as Leaders</h3>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Elijah</span><a class="ld-ref" href="bible.html?ref=1%20Kings%2017:1" target="_blank" rel="noopener">1 Kings 17:1-18:46 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Elijah appeared out of nowhere and stood before Ahab with a word from God: no rain until I say so (1 Kings 17:1). He then hid by a brook and was fed by ravens (1 Kings 17:4), and later by a widow whose oil did not run out (1 Kings 17:15-16). On Mount Carmel he confronted four hundred and fifty prophets of Baal in a contest that was less a debate than a showdown, and fire fell and the people fell on their faces (1 Kings 18:38-39). Then, hours later, he was hiding under a broom tree asking to die (1 Kings 19:4). God met him in a gentle whisper, fed him, and sent him back out (1 Kings 19:12-13). Elijah's leadership was intense, solitary, and profoundly human&mdash;power on the mountain and despair in the valley, held together by the God who refused to let him quit. James tells us he was a man with a nature like ours, and that his prayer closed and opened the heavens (James 5:17-18).</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Bring your exhaustion honestly to God&mdash;He meets you in the whisper and sends you back out.</div>
+  <div class="ld-sup">Supporting references: 1 Kings 19:1-18; James 5:17-18; Malachi 4:5-6; Matthew 17:3</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Elisha</span><a class="ld-ref" href="bible.html?ref=2%20Kings%202:1" target="_blank" rel="noopener">2 Kings 2:1-14 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Elisha asked for a double portion of Elijah's spirit&mdash;not a double portion of power but of inheritance, the portion a firstborn son would receive (2 Kings 2:9). He followed his mentor through Gilgal, Bethel, and Jericho, refusing to be deterred, and he watched Elijah ascend in a whirlwind (2 Kings 2:11). What followed was decades of quiet, persistent ministry: multiplying a widow's oil (2 Kings 4:6), raising a Shunammite's son (2 Kings 4:35), healing Naaman the Syrian of leprosy (2 Kings 5:14). When his servant panicked at the sight of an enemy army, Elisha prayed that God would open his eyes to see the chariots of fire (2 Kings 6:17). Elisha rarely spoke in thunder; he simply showed up where God sent him and did what God gave him to do. His leadership teaches that faithfulness over the long haul is its own kind of miracle.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Ask God for a double portion of His Spirit and serve faithfully in the ordinary, unseen works.</div>
+  <div class="ld-sup">Supporting references: 2 Kings 4:1-7; 2 Kings 4:32-37; 2 Kings 5:1-14; 2 Kings 6:15-17</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Isaiah</span><a class="ld-ref" href="bible.html?ref=Isaiah%206:1" target="_blank" rel="noopener">Isaiah 6:1-8 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Isaiah's call came in the year King Uzziah died, in the temple, with a vision of the Lord high and lifted up and the train of His robe filling the temple (Isaiah 6:1). Isaiah saw himself for what he was&mdash;a man of unclean lips among a people of unclean lips&mdash;and a seraph touched his mouth with a burning coal (Isaiah 6:5-7). Then he heard the voice of the Lord asking whom He should send, and Isaiah said, "Here am I; send me" (Isaiah 6:8). That single response launched decades of preaching to a nation that mostly would not listen. He confronted Ahaz's fear and spoke of a virgin who would conceive and bear a son (Isaiah 7:14). He prophesied the suffering Servant who was pierced for our transgressions (Isaiah 53:5). His leadership was obedience without visible results, which is the hardest kind.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> When God calls, answer "Here am I"&mdash;faithfulness matters more than visible results.</div>
+  <div class="ld-sup">Supporting references: Isaiah 1:18; Isaiah 7:14; Isaiah 53:1-6; Isaiah 55:10-11</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Jeremiah</span><a class="ld-ref" href="bible.html?ref=Jeremiah%201:4" target="_blank" rel="noopener">Jeremiah 1:4-19 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Jeremiah was a young man when God told him he had been appointed a prophet before he was born (Jeremiah 1:5). He protested that he was too young and did not know how to speak, and God touched his mouth and said, do not be afraid (Jeremiah 1:9). For forty years Jeremiah preached to Jerusalem and watched it slide toward destruction. He was beaten, put in stocks, thrown into a cistern, and accused of treason. He wept over the city he warned, and he argued with God about the cost&mdash;he called God a deceptive brook, and God did not strike him down for it (Jeremiah 20:7). He announced a new covenant God would write on hearts (Jeremiah 31:33) and hope for exiles in a land they had not yet left (Jeremiah 29:11). His leadership is proof that faithfulness sometimes looks like being heartbroken and still showing up.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Keep speaking God's truth even when no one listens&mdash;and trust His mercies are new every morning (Lamentations 3:22-23).</div>
+  <div class="ld-sup">Supporting references: Jeremiah 20:7-9; Jeremiah 29:11; Jeremiah 31:31-34; Lamentations 3:22-23</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Ezekiel</span><a class="ld-ref" href="bible.html?ref=Ezekiel%201:1" target="_blank" rel="noopener">Ezekiel 1:1-3:27 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Ezekiel was a priest in exile in Babylon when God called him to be a watchman for the house of Israel (Ezekiel 3:17). God told him plainly that the people were rebellious and stubborn, and that whether they listened or not, they would know a prophet had been among them (Ezekiel 2:5). Ezekiel acted out his messages&mdash;lying on his side for hundreds of days (Ezekiel 4:4-6), shaving his head, packing a bag and digging through a wall&mdash;so that a deaf nation might see what they refused to hear. His vision of the valley of dry bones is one of the most hopeful passages in all of Scripture: God asking whether these bones can live, and then breathing life into a dead army (Ezekiel 37:3-10). God promised to replace hearts of stone with hearts of flesh and put His Spirit within His people (Ezekiel 36:26-27). Ezekiel led by being a living sign, even when it made him strange.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Be a faithful watchman&mdash;speak God's truth and trust Him to bring dry bones to life.</div>
+  <div class="ld-sup">Supporting references: Ezekiel 3:17-19; Ezekiel 36:26-27; Ezekiel 37:1-14; Ezekiel 48:35</div>
+</div>
+<h3 class="group-h">4. Rebuilders</h3>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Zerubbabel</span><a class="ld-ref" href="bible.html?ref=Ezra%203:1" target="_blank" rel="noopener">Ezra 3:1-13 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Zerubbabel led the first wave of exiles back from Babylon to rebuild the temple, and the foundation-laying was marked by both shouting and weeping&mdash;the older generation remembered the former glory, and the younger could only see what was missing (Ezra 3:12-13). He faced opposition, delays, and a long pause in construction while enemies lobbied the empire (Ezra 4:4-5). The prophets Haggai and Zechariah finally stirred him up to finish, and God promised that He would move mountains and that the temple's final glory would exceed the first (Haggai 2:9; Zechariah 4:7). God told him it was not by might nor by power but by the Spirit (Zechariah 4:6). The temple was completed and dedicated (Ezra 6:15). Zerubbabel's leadership is about starting a thing you may not finish, and trusting that God is the one who completes it.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Keep building what God has called you to build, even through opposition&mdash;trust His Spirit to finish it.</div>
+  <div class="ld-sup">Supporting references: Haggai 2:1-9; Zechariah 4:6-10; Ezra 4:1-5; Ezra 6:14-15</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Ezra</span><a class="ld-ref" href="bible.html?ref=Ezra%207:1" target="_blank" rel="noopener">Ezra 7:1-28 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Ezra set his heart to study the Law of the Lord, to practice it, and to teach it&mdash;in that order (Ezra 7:10). That single verse is a whole philosophy of leadership. He led a second group of exiles back to Jerusalem with a letter from the king and a heart full of Scripture (Ezra 7:6). When he arrived and learned that the people had intermarried with neighboring nations and compromised their identity, he tore his garments, pulled out his hair, and sat down appalled (Ezra 9:3), and then he prayed a prayer of confession that read like a long, honest sigh (Ezra 9:6-15). He was not a dramatic personality; he was a student who let what he studied change him, and then led out of the overflow. Later he read the Law aloud to the people and helped them understand it (Nehemiah 8:8).</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Study Scripture until it changes you, then lead others from the overflow of what God has taught you.</div>
+  <div class="ld-sup">Supporting references: Ezra 7:10; Ezra 9:1-15; Ezra 10:1-4; Nehemiah 8:1-8</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Nehemiah</span><a class="ld-ref" href="bible.html?ref=Nehemiah%201:1" target="_blank" rel="noopener">Nehemiah 1:1-2:20 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Nehemiah was a cupbearer in the Persian court when he heard that Jerusalem's walls were broken down (Nehemiah 1:3). He wept, fasted, and prayed for days before he said a word to the king&mdash;and when the king asked what was wrong, he shot a quick prayer to the God of heaven and then spoke plainly (Nehemiah 2:4-5). His leadership is a master class in the integration of prayer and planning: he surveyed the walls at night (Nehemiah 2:13), organized families to build the sections nearest them (Nehemiah 3), and posted guards against every threat (Nehemiah 4:9). He faced mockery, threats, and the subtle temptation to come down from the wall and negotiate. He said the work was great and he could not come down (Nehemiah 6:3). Prayerful, practical, persistent&mdash;that is Nehemiah in three words.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Pray before you plan and plan after you pray&mdash;trust God to complete the work He began in you.</div>
+  <div class="ld-sup">Supporting references: Nehemiah 4:1-23; Nehemiah 6:1-16; Nehemiah 8:10; Nehemiah 9:1-38</div>
+</div>
+<h3 class="group-h">5. New Testament Leaders</h3>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Peter</span><a class="ld-ref" href="bible.html?ref=Matthew%2016:13" target="_blank" rel="noopener">Matthew 16:13-20 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Peter is the disciple who is always speaking before he thinks, which makes him easy to relate to and easy to admire. He was the first to confess Jesus as the Christ, and moments later he was rebuking Jesus for predicting the cross (Matthew 16:16, 22). He walked on water and then sank (Matthew 14:29-31). He swore he would never deny Jesus and then denied Him three times before a charcoal fire (Matthew 26:75). But after the resurrection, Jesus met him at another charcoal fire on the shore and restored him three times over, once for each denial (John 21:15-17). Peter led the early church with that same passionate, sometimes clumsy, always honest faith, preaching at Pentecost (Acts 2:14-41). He was imprisoned, and eventually he wrote to scattered believers as a shepherd who had been healed.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Let your failures drive you to Jesus, not away from Him&mdash;He restores those who love Him.</div>
+  <div class="ld-sup">Supporting references: Matthew 14:28-31; Matthew 26:69-75; John 21:15-19; Acts 2:14-41</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Paul</span><a class="ld-ref" href="bible.html?ref=Acts%209:1" target="_blank" rel="noopener">Acts 9:1-19 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Paul began as a persecutor of the church, holding coats while Stephen was stoned (Acts 7:58), and he was on his way to arrest more Christians when a light from heaven knocked him off his horse (Acts 9:3-4). He spent years in Arabia and Tarsus before anyone would take him seriously, and then he became the most prolific leader in the early church. He planted churches across Asia Minor and Greece, wrote letters that have shaped believers for two thousand years (Acts 13:2-3), and endured shipwrecks, stonings, beatings, imprisonments, and sleepless nights (2 Corinthians 11:23-28). He preached to philosophers in Athens and to kings in chains (Acts 17:22-34). He was a man of enormous intellect and equally enormous energy, and yet he described himself as the chief of sinners and the least of the apostles. His leadership was driven by a single motive: the love of Christ compels us (2 Corinthians 5:14), and he pressed on toward the prize of the upward call (Philippians 3:14).</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Let the love of Christ compel you&mdash;press forward in your calling, forget what lies behind.</div>
+  <div class="ld-sup">Supporting references: Acts 13:2-3; Acts 17:22-34; 2 Corinthians 11:23-28; Philippians 3:4-14</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">James</span><a class="ld-ref" href="bible.html?ref=Acts%2015:13" target="_blank" rel="noopener">Acts 15:13-21 &nearr;</a></div>
+  <div class="ld-body">
+    <p>James was the brother of Jesus, which means he grew up with the Messiah and did not believe in Him until after the resurrection (John 7:5; 1 Corinthians 15:7). That experience&mdash;seeing Jesus alive when he had doubted&mdash;shaped a leader who was both practical and profound. He became the lead elder in Jerusalem and presided over the council that decided Gentiles did not need to become Jews to follow Jesus (Acts 15:13-21). His letter is blunt and wise, full of instruction about faith that shows itself in works (James 2:17), control of the tongue (James 3:5), and caring for the vulnerable. He wrote that trials produce steadfastness (James 1:3) and that the prayer of a righteous person has great power (James 5:16). He was called James the Just, and church history tells us he spent so much time on his knees that they were like camel's knees. Leadership shaped by prayer and lived out in ordinary wisdom&mdash;that is James.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Let your faith show itself in action&mdash;be quick to listen, slow to speak, and constant in prayer.</div>
+  <div class="ld-sup">Supporting references: James 1:2-4; James 2:14-17; James 3:1-12; James 5:16</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">John</span><a class="ld-ref" href="bible.html?ref=John%2013:23" target="_blank" rel="noopener">John 13:23-26 &nearr;</a></div>
+  <div class="ld-body">
+    <p>John was the disciple who leaned on Jesus' chest at the last supper (John 13:23), the only one of the twelve at the cross, and the one who took Mary into his home afterward (John 19:27). He asked to call down fire on a Samaritan village and was rebuked for it, which tells you he was not always the soft-spoken elder he became (Luke 9:54). By the end of his life he was writing letters that are almost entirely about love, because he had learned from decades of walking with God that love is the proof of knowing Him (1 John 4:7-8). He wrote the Revelation on Patmos, having been exiled for his faith (Revelation 1:9). His leadership came from a long, deep friendship with Jesus that changed his temperament and gave him the ability to see the end of the story.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Abide in Jesus' love&mdash;let it transform your temperament and deepen your vision of who He is.</div>
+  <div class="ld-sup">Supporting references: John 19:26-27; 1 John 4:7-8; Revelation 1:9-19; John 21:20-23</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Timothy</span><a class="ld-ref" href="bible.html?ref=1%20Timothy%204:11" target="_blank" rel="noopener">1 Timothy 4:11-16 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Timothy was a young man with a believing Jewish mother and a Greek father, and Paul took him on as a traveling companion and apprentice (Acts 16:1-3). Paul called him his true son in the faith and sent him to deal with difficult churches in Corinth and Ephesus (1 Corinthians 4:17). Timothy was evidently prone to anxiety and perhaps to stomach trouble (1 Timothy 5:23), and Paul kept telling him not to let anyone despise his youth and to stir up the gift within him (1 Timothy 4:12; 2 Timothy 1:6). His mother Lois and grandmother Eunice had passed on a sincere faith (2 Timothy 1:5). The letters to Timothy are full of instruction about sound doctrine, godly conduct, and leading with courage when you feel unqualified. Timothy shows that leadership is often given to the young, the hesitant, and the unimpressive&mdash;if they are faithful and have people who believe in them.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Don't let anyone despise your youth&mdash;set an example in faith, love, and purity, and stir up the gift God gave you.</div>
+  <div class="ld-sup">Supporting references: Acts 16:1-3; 1 Corinthians 4:17; 2 Timothy 1:5-7; 1 Timothy 5:23</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Titus</span><a class="ld-ref" href="bible.html?ref=Titus%201:1" target="_blank" rel="noopener">Titus 1:1-9 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Titus was a Gentile believer who worked alongside Paul and was entrusted with some of the hardest assignments in the apostolic world. Paul sent him to Corinth to deal with a divided church and to encourage the believers there (2 Corinthians 7:6-7), and he sent him to Crete to set things in order and appoint elders (Titus 1:5). That is not glamorous work&mdash;it is the patient, unglamorous labor of putting structures in place so the church can flourish after you leave. Paul wrote to him with clear instructions about godly leadership and warned him about teachers who were ruining entire households (Titus 1:10-11). He told him to teach sound doctrine that accords with godliness and to be a model of good works (Titus 2:1-7). Titus shows us that leadership is not only preaching and planting; sometimes it is going to the messy places and quietly doing what needs to be done.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Do the unglamorous work of setting things in order&mdash;be a model of good works wherever God places you.</div>
+  <div class="ld-sup">Supporting references: Titus 2:1-15; 2 Corinthians 7:6-7; 2 Corinthians 8:16-24; Titus 3:8</div>
+</div>
+<h3 class="group-h">6. Servant Leaders</h3>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Jesus &mdash; The Model</span><a class="ld-ref" href="bible.html?ref=John%2013:1" target="_blank" rel="noopener">John 13:1-17 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Everything the rest of this page describes points to Him. Jesus did not lead from a distance; He washed feet (John 13:5), ate with sinners, touched lepers, and wept at graves. He taught with authority but never used it to protect Himself. He said that whoever would be great among you must be your servant, and that the Son of Man came not to be served but to serve and to give His life as a ransom for many (Mark 10:43-45). He had every right to call down legions of angels and instead He let them arrest Him, because He came to serve (Matthew 26:53). He corrected His disciples, grieved over Jerusalem, and forgave the men driving the nails (Luke 23:34). Philippians says He humbled Himself to death on a cross and God exalted Him (Philippians 2:8-9). When you study Abraham, David, Peter, and Paul, you are studying flawed men who pointed, in different ways, toward this perfect Servant. He is the model for every leader on this page, and every leader on this page falls short of Him (Hebrews 12:2).</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Fix your eyes on Jesus&mdash;lead by serving, and let His humility shape your every step.</div>
+  <div class="ld-sup">Supporting references: Mark 10:42-45; Philippians 2:5-11; John 15:12-13; Hebrews 12:1-3</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Barnabas</span><a class="ld-ref" href="bible.html?ref=Acts%204:36" target="_blank" rel="noopener">Acts 4:36-37 &nearr;</a></div>
+  <div class="ld-body">
+    <p>His real name was Joseph, but the apostles called him Barnabas, which means son of encouragement, and the name stuck because it described him so well (Acts 4:36). He sold a field and laid the money at the apostles' feet (Acts 4:37). When everyone in Jerusalem was afraid of the newly converted Saul, Barnabas vouched for him and brought him into the church (Acts 9:27). Later, he went to Tarsus to find Saul and brought him to Antioch, launching Paul's ministry in earnest (Acts 11:25-26). He stood by Mark after Mark had abandoned the first missionary journey, even when it cost him a disagreement with Paul (Acts 15:39). Barnabas led by believing in people before they had earned it&mdash;and the church has been richer for the people he lifted.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Be a son or daughter of encouragement&mdash;believe in people before they earn it and lift them up.</div>
+  <div class="ld-sup">Supporting references: Acts 9:26-27; Acts 11:22-26; Acts 15:36-41; Colossians 4:10</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Stephen</span><a class="ld-ref" href="bible.html?ref=Acts%206:1" target="_blank" rel="noopener">Acts 6:1-15 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Stephen was one of seven men chosen to handle the distribution of food to widows so the apostles could give themselves to prayer and preaching (Acts 6:2-6). He was chosen because he was full of faith and the Holy Spirit, and he turned out to be full of power and grace as well (Acts 6:8). He performed signs and wonders among the people, and the religious leaders could not withstand the wisdom with which he spoke (Acts 6:10). He delivered a long, fearless sermon to the council that traced Israel's history of resisting God (Acts 7:2-53), and they ground their teeth at him (Acts 7:54). As they stoned him he saw heaven open and asked God not to hold the sin against them (Acts 7:59-60). Stephen's leadership was brief and costly, and it shaped the church&mdash;and one of the men watching that day was Saul (Acts 8:1).</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Be full of faith and the Holy Spirit&mdash;forgive those who oppose you and trust God with the outcome.</div>
+  <div class="ld-sup">Supporting references: Acts 7:51-60; Acts 8:1-3; Acts 22:20; Philippians 2:17</div>
+</div>
+<div class="ld-leader">
+  <div class="ld-head"><span class="ld-name">Epaphras</span><a class="ld-ref" href="bible.html?ref=Colossians%204:12" target="_blank" rel="noopener">Colossians 4:12-13 &nearr;</a></div>
+  <div class="ld-body">
+    <p>Epaphras was a beloved fellow servant from Colossae who founded the church in his hometown and then worked hard for the believers there, in Laodicea, and in Hierapolis (Colossians 4:12-13). Paul calls him a faithful minister of Christ on their behalf (Colossians 1:7). He is described as always wrestling in prayer for them, asking that they would stand mature and fully assured in all the will of God (Colossians 4:12). That phrase&mdash;always wrestling in prayer&mdash;is the whole description of his leadership. He is barely mentioned in the New Testament, and yet Paul bore witness to the great zeal he had for the people he served. Epaphras reminds us that some of the most significant leaders are known mainly in heaven, and their labor is mostly on their knees.</p>
+  </div>
+  <div class="ld-app"><strong>Application:</strong> Wrestle in prayer for the people God has placed in your care&mdash;labor on your knees for their maturity in Christ.</div>
+  <div class="ld-sup">Supporting references: Colossians 1:7-8; Philemon 1:23; Colossians 2:1-3</div>
+</div>
+<!-- BSH-LEADERSHIP-END -->
+<footer>
+  &copy; 2026 Safari Softwares &mdash; Bible Study Helper &mdash; Leadership<br>
+  This is a study aid, not the Bible. <a href="bible.html">Open the Bible &rarr;</a>
+</footer>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('darkToggle');
+  if (localStorage.getItem('bsh_theme') === 'dark') root.classList.add('dark-mode');
+  if (darkBtn) darkBtn.addEventListener('click', function () {
+    root.classList.toggle('dark-mode');
+    localStorage.setItem('bsh_theme', root.classList.contains('dark-mode') ? 'dark' : 'light');
+  });
+  var size = parseInt(localStorage.getItem('bsh_fontsize') || '100', 10);
+  function applySize() {
+    root.style.fontSize = size + '%';
+    localStorage.setItem('bsh_fontsize', String(size));
+  }
+  applySize();
+  var inc = document.getElementById('fontInc');
+  var dec = document.getElementById('fontDec');
+  if (inc) inc.addEventListener('click', function () { size = Math.min(140, size + 10); applySize(); });
+  if (dec) dec.addEventListener('click', function () { size = Math.max(70, size - 10); applySize(); });
+})();
+</script>
 </body>
 </html>
