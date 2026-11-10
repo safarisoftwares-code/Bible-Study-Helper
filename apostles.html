@@ -3,37 +3,228 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>✉️ Apostleship — Bible Study Helper</title>
+<title>Apostleship &mdash; Bible Study Helper</title>
 <style>
-  :root { --bg:#f4f7f4; --card:#fff; --text:#1e2f2e; --green:#3d9970; --green-hover:#34a870; --border:#e2ede4; }
-  .dark-mode { --bg:#1a2520; --card:#25332b; --text:#dfe8e0; --border:#3b5143; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg); color: var(--text);
-    padding: 24px 20px; line-height: 1.6;
-    min-height: 100vh; display: flex; flex-direction: column;
-  }
-  .container { max-width: 700px; margin: 0 auto; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .card { background: var(--card); border-radius: 24px; padding: 44px 32px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); border: 1px solid var(--border); text-align: center; }
-  .emoji { font-size: 3rem; margin-bottom: 12px; }
-  h1 { color: var(--green); margin-bottom: 16px; font-size: 1.9rem; font-weight: 700; }
-  p { margin-bottom: 14px; opacity: 0.88; font-size: 1.02rem; }
-  .coming-soon { display: inline-block; background: #fff4d6; color: #8a6d00; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; letter-spacing: 0.02em; }
-  .btn { display: inline-block; padding: 14px 28px; background: var(--green); color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; margin-top: 10px; transition: 0.15s; box-shadow: 0 3px 10px rgba(61,153,112,0.25); }
-  .btn:hover { background: var(--green-hover); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(61,153,112,0.35); }
+  :root { --bg:#f7f4ef; --card:#ffffff; --text:#2c2c2c; --btn-bg:#f0ece4; --btn-text:#3a3a3a;
+    --border:#d8d1c4; --highlight:#6b4a2f; --highlight-light:#f0e6d8;
+    --shadow:0 4px 14px rgba(0,0,0,.08); }
+  .dark-mode { --bg:#1a1a1a; --card:#242424; --text:#e8e8e8; --btn-bg:#2e2e2e; --btn-text:#d0d0d0;
+    --border:#3a3a3a; --highlight:#d4a574; --highlight-light:#3a2e22; --shadow:0 4px 14px rgba(0,0,0,.4); }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height:1.65; transition: background .2s, color .2s; }
+  .container { max-width: 920px; margin: 0 auto; padding: 0 18px 60px; }
+  header { display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:10px; padding:18px 0 14px;
+    border-bottom:1px solid var(--border); margin-bottom:22px; }
+  header h1 { margin:0; font-size:1.15rem; font-weight:700; color:var(--highlight); }
+  .header-btns { display:flex; gap:6px; flex-wrap:wrap; }
+  .header-btns button { background:var(--btn-bg); color:var(--btn-text);
+    border:1px solid var(--border); border-radius:8px; padding:6px 11px;
+    cursor:pointer; font-size:.9rem; font-family:inherit; }
+  .header-btns button:hover { background:var(--highlight); color:#fff; }
+  .ap-disclaimer { background:var(--highlight-light);
+    border-left:4px solid var(--highlight); border-radius:10px;
+    padding:16px 20px; margin-bottom:22px; font-size:.95rem; }
+  .ap-disclaimer strong { color:var(--highlight); display:block;
+    margin-bottom:6px; font-size:1rem; }
+  .ap-scope { background:var(--card); border:1px solid var(--border);
+    border-radius:12px; padding:18px 24px; margin-bottom:30px; box-shadow:var(--shadow); }
+  .ap-scope h2 { margin:0 0 12px; font-size:1.1rem; color:var(--highlight);
+    text-transform:uppercase; letter-spacing:.04em; }
+  .ap-scope p { margin:0; font-size:.93rem; }
+  h2.section-h { margin:36px 0 14px; font-size:1.2rem; color:var(--highlight);
+    border-bottom:2px solid var(--highlight-light); padding-bottom:6px; }
+  h3.group-h { margin:30px 0 12px; font-size:1.02rem; color:var(--text);
+    text-transform:uppercase; letter-spacing:.05em;
+    border-left:4px solid var(--highlight); padding-left:10px; }
+  .ap-apostle { background:var(--card); border:1px solid var(--border);
+    border-radius:10px; padding:16px 20px; margin-bottom:12px; box-shadow:var(--shadow); }
+  .ap-apostle .ap-head { display:flex; align-items:baseline; flex-wrap:wrap;
+    gap:10px; margin-bottom:8px; }
+  .ap-apostle .ap-name { font-weight:700; font-size:1.04rem; color:var(--highlight); }
+  .ap-apostle .ap-ref { display:inline-block; background:var(--highlight-light);
+    color:var(--highlight); padding:2px 10px; border-radius:12px;
+    font-size:.78rem; font-weight:600; text-decoration:none;
+    border:1px solid var(--highlight-light); }
+  .ap-apostle .ap-ref:hover { background:var(--highlight); color:#fff; border-color:var(--highlight); }
+  .ap-apostle .ap-body { font-size:.94rem; line-height:1.7; }
+  .ap-apostle .ap-body p { margin:0 0 8px; }
+  .ap-apostle .ap-body p:last-child { margin-bottom:0; }
+  .ap-apostle .ap-app { margin-top:10px; padding:10px 14px;
+    background:var(--highlight-light); border-left:3px solid var(--highlight);
+    border-radius:6px; font-size:.9rem; font-style:italic; }
+  .ap-apostle .ap-app strong { font-style:normal; color:var(--highlight); }
+  .ap-apostle .ap-sup { margin-top:10px; font-size:.8rem; opacity:.75; font-style:italic; }
+  footer { margin-top:50px; padding-top:20px; border-top:1px solid var(--border);
+    text-align:center; font-size:.85rem; color:var(--text); opacity:.75; }
+  footer a { color:var(--highlight); }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="card">
-    <div class="emoji">✉️</div>
-    <h1>Apostleship</h1>
-    <div class="coming-soon">COMING SOON</div>
-    <p>The Twelve and Paul — their calling, their mission, their legacy.</p>
-    <p>This page is being prepared with the same care as Women of Faith.</p>
-    <a href="index.html" class="btn">← Back to Study Helper</a>
+<header>
+  <h1>&#9993; Apostleship</h1>
+  <div class="header-btns">
+    <button id="darkToggle" type="button" title="Toggle dark mode">&#127769;</button>
+    <button id="fontDec" type="button" title="Smaller text">A&minus;</button>
+    <button id="fontInc" type="button" title="Larger text">A+</button>
+    <a href="index.html"><button type="button">&larr; Back</button></a>
   </div>
+</header>
+<div class="ap-disclaimer">
+  <strong>&#9993; This is a study book, not the Bible.</strong>
+  This is a study aid, not the Bible. It is meant to help you notice patterns, ask better questions, and open the actual Scriptures for yourself. Every summary here is a signpost, not a substitute&mdash;read the verses, sit with them, and let the text speak in its own voice. Where my words fall short, the Word does not.
+  <br><a href="bible.html">&rarr; Open the Bible</a>
 </div>
+<section class="ap-scope">
+  <h2>Disclaimer &amp; Scope</h2>
+  <p>This page is a devotional study of the men Scripture identifies as apostles&mdash;the Twelve, Matthias, and Paul. It is not a scholarly commentary, a church-history survey, or a position paper on apostolic succession or church government. Where Scripture records a man's calling, ministry, and fate, we tell it. Where Scripture is silent, we say so rather than fill the gap with tradition. These entries are meant to help you read the New Testament with the apostles in view&mdash;to see the men behind the letters and the Gospels, and to let their stories turn your heart toward your own calling.</p>
+</section>
+<!-- BSH-APOSTLES-START -->
+<h2 class="section-h">The Apostles &mdash; A Devotional Study</h2>
+<h3 class="group-h">1. The Twelve</h3>
+<div class="ap-apostle">
+  <div class="ap-head"><span class="ap-name">Simon Peter</span><a class="ap-ref" href="bible.html?ref=Matthew%2016:13" target="_blank" rel="noopener">Matthew 16:13-19 &nearr;</a></div>
+  <div class="ap-body">
+    <p>Peter was a fisherman on the Sea of Galilee when Jesus called him from the boat (Matthew 4:18-20), and his name meant "rock" long before he had done a single rock-like thing. He was the first to confess Jesus as the Christ, the Son of the living God (Matthew 16:16), and moments later he was rebuking the same Jesus for talking about a cross (Matthew 16:22). He walked on water and sank; he swore he would die with Jesus and then denied him three times before a charcoal fire. After the resurrection Jesus met him on a beach and asked him three times, "Do you love me?"&mdash;one question for each denial&mdash;and restored him with a commission to feed his sheep (John 21:15-17). On Pentecost it was Peter who stood up and preached, and three thousand were added to the church (Acts 2:41). Scripture records his arrest and miraculous release from prison in Acts 12, and his later ministry among scattered believers (1 Peter 1:1), but it does not record his death. Tradition says he was martyred in Rome; Scripture itself leaves the matter in silence, pointing us instead to the words Jesus spoke to him about stretching out his hands when he was old (John 21:18).</p>
+  </div>
+  <div class="ap-app"><strong>Application:</strong> When you fail, return to the One who restores&mdash;He asks not for perfection but for love.</div>
+  <div class="ap-sup">Supporting references: Matthew 4:18-20; John 21:15-19; Acts 2:14-41; Acts 12:1-17</div>
+</div>
+<div class="ap-apostle">
+  <div class="ap-head"><span class="ap-name">Andrew</span><a class="ap-ref" href="bible.html?ref=John%201:40" target="_blank" rel="noopener">John 1:40-42 &nearr;</a></div>
+  <div class="ap-body">
+    <p>Andrew was Peter's brother and the first of the Twelve to follow Jesus&mdash;he had been a disciple of John the Baptist, and when John pointed to Jesus as the Lamb of God, Andrew went after him and stayed with him that day (John 1:40-42). The very first thing he did was find his brother Simon and bring him to Jesus (John 1:42). That is the shape of his whole ministry in Scripture: he is always bringing someone. He brought the boy with the five loaves and two fish to Jesus when the crowd was hungry (John 6:9). He and Philip brought the inquiring Greeks to Jesus in the last week of his life (John 12:22). He is mentioned in the lists of the Twelve but never as a speaker, never as a leader, never as a rebuke&mdash;just a man who connected people to Christ. Scripture records nothing of his calling beyond the fishing boat, nothing of his preaching, and nothing of his death; tradition fills in the rest, but the inspired record is content to show us a quiet man whose greatest work was introduction.</p>
+  </div>
+  <div class="ap-app"><strong>Application:</strong> Look for one person this week to bring to Jesus&mdash;introduction is a ministry.</div>
+  <div class="ap-sup">Supporting references: Matthew 4:18; John 6:8-9; John 12:20-22</div>
+</div>
+<div class="ap-apostle">
+  <div class="ap-head"><span class="ap-name">James, son of Zebedee</span><a class="ap-ref" href="bible.html?ref=Acts%2012:1" target="_blank" rel="noopener">Acts 12:1-2 &nearr;</a></div>
+  <div class="ap-body">
+    <p>James was a fisherman with his father Zebedee and his brother John when Jesus called them, and they left the boat and their father and followed him immediately (Matthew 4:21-22). Jesus nicknamed the brothers "Boanerges"&mdash;sons of thunder (Mark 3:17)&mdash;and you can see why: they wanted to call fire down on a Samaritan village, and they asked to sit at his right and left hand in his glory (Mark 10:37). Jesus answered that they did not know what they were asking, and asked them whether they were able to drink the cup he would drink (Mark 10:38). James said yes. He was the first of the Twelve to die. Herod Agrippa I, wanting to please the Jewish authorities, had James killed with the sword (Acts 12:2)&mdash;the only apostle whose martyrdom is recorded in Scripture. He drank the cup. The son of thunder was silenced early, and the church learned that the cup Jesus spoke of was real.</p>
+  </div>
+  <div class="ap-app"><strong>Application:</strong> Answer the Lord's call to follow Him fully, even when the cost is costly.</div>
+  <div class="ap-sup">Supporting references: Matthew 4:21-22; Mark 10:35-40; Mark 3:17</div>
+</div>
+<div class="ap-apostle">
+  <div class="ap-head"><span class="ap-name">John</span><a class="ap-ref" href="bible.html?ref=John%2019:25" target="_blank" rel="noopener">John 19:25-27 &nearr;</a></div>
+  <div class="ap-body">
+    <p>John was the brother of James, a fisherman, a son of thunder&mdash;and the disciple whom Jesus loved (John 13:23). He leaned on Jesus at the last supper; he was the only one of the Twelve standing at the cross, and there Jesus gave him his mother, and gave his mother to him (John 19:26-27). He outran Peter to the empty tomb and believed (John 20:8). He wrote a Gospel that begins in eternity and a first letter that says God is light and God is love. And he wrote the Revelation&mdash;a vision received on the island of Patmos, where he had been exiled on account of the word of God and the testimony of Jesus (Revelation 1:9). Of all the Twelve, Scripture records for him no death&mdash;only a long, faithful witness that stretched from a fishing boat to an island prison and a voice saying, "Write what you see." Tradition says he died of old age in Ephesus; whether that is exactly right, the inspired record shows a man who lived long enough to see the church tested from within and without, and who kept pointing every letter back to the Word of life.</p>
+  </div>
+  <div class="ap-app"><strong>Application:</strong> Stay near the cross, and let your witness point always back to Jesus.</div>
+  <div class="ap-sup">Supporting references: Matthew 4:21-22; John 13:23; John 20:1-8; Revelation 1:9</div>
+</div>
+<div class="ap-apostle">
+  <div class="ap-head"><span class="ap-name">Philip</span><a class="ap-ref" href="bible.html?ref=John%201:43" target="_blank" rel="noopener">John 1:43-46 &nearr;</a></div>
+  <div class="ap-body">
+    <p>Philip was from Bethsaida, the same town as Andrew and Peter, and Jesus found him and said two words: "Follow me" (John 1:43). Philip immediately found Nathanael and said, "We have found him of whom Moses and the prophets wrote" (John 1:45). He was the practical one&mdash;when Jesus asked where they could buy bread for the crowd, Philip did the math and said it would take more than half a year's wages (John 6:7). He was the literal one&mdash;at the last supper he said, "Lord, show us the Father, and it is enough for us," and Jesus answered, "Have I been with you so long, and you still do not know me?" (John 14:8-9). But this same Philip is the one the Spirit caught up and sent down the desert road to Gaza, where he met an Ethiopian official reading Isaiah and explained the Scripture to him, and baptized him (Acts 8:35-38). Scripture records nothing of his later ministry or his death, but it records this: the man who wanted to see the Father spent his life showing others the Son.</p>
+  </div>
+  <div class="ap-app"><strong>Application:</strong> Bring people honestly to Jesus&mdash;He answers the questions of the heart.</div>
+  <div class="ap-sup">Supporting references: John 6:5-7; John 14:8-9; Acts 8:26-40</div>
+</div>
+<div class="ap-apostle">
+  <div class="ap-head"><span class="ap-name">Nathanael (Bartholomew)</span><a class="ap-ref" href="bible.html?ref=John%201:45" target="_blank" rel="noopener">John 1:45-51 &nearr;</a></div>
+  <div class="ap-body">
+    <p>Nathanael was from Cana in Galilee, and when Philip told him they had found the Messiah, his first response was a sneer: "Can anything good come out of Nazareth?" Philip didn't argue&mdash;he just said, "Come and see" (John 1:46). Jesus saw him coming and said, "Behold, an Israelite indeed, in whom there is no deceit!" (John 1:47). Nathanael was stunned and asked how Jesus knew him, and Jesus said he had seen him under the fig tree before Philip called him (John 1:48). That was enough. Nathanael confessed, "Rabbi, you are the Son of God! You are the King of Israel!" (John 1:49). Jesus answered that he would see greater things than that&mdash;heaven opened and angels ascending and descending on the Son of Man (John 1:51). He is usually identified with Bartholomew in the lists of the Twelve; Scripture records nothing further of his ministry or his death. He is a reminder that honest doubt and honest confession can live in the same man, and that Jesus sees us before we see him.</p>
+  </div>
+  <div class="ap-app"><strong>Application:</strong> Come and see for yourself&mdash;Jesus knows you before you know Him.</div>
+  <div class="ap-sup">Supporting references: John 21:1-2</div>
+</div>
+<div class="ap-apostle">
+  <div class="ap-head"><span class="ap-name">Matthew (Levi)</span><a class="ap-ref" href="bible.html?ref=Matthew%209:9" target="_blank" rel="noopener">Matthew 9:9-13 &nearr;</a></div>
+  <div class="ap-body">
+    <p>Matthew was a tax collector sitting at the tax booth in Capernaum when Jesus walked by and said, "Follow me." He got up and followed (Matthew 9:9). That is the whole account, and it is staggering&mdash;a man whose livelihood depended on the Roman occupation and the resentment of his own people simply walked away. The first thing he did was throw a banquet for Jesus in his house, and the guests were tax collectors and sinners (Matthew 9:10). The Pharisees were scandalized, and Jesus answered them with the words that still define his mission: those who are well have no need of a physician, but those who are sick (Matthew 9:12). Matthew's Gospel is the most Jewish of the four, full of fulfilled prophecy and the kingdom of heaven&mdash;written by a man who knew what it cost to be called out of one kingdom into another. Scripture records nothing of his later ministry or death, but it records his name on a Gospel that opens with a genealogy of grace and ends with a commission to the nations (Matthew 28:19-20).</p>
+  </div>
+  <div class="ap-app"><strong>Application:</strong> Answer the call to follow Jesus immediately&mdash;leave the old booth behind.</div>
+  <div class="ap-sup">Supporting references: Mark 2:13-17; Luke 5:27-32</div>
+</div>
+<div class="ap-apostle">
+  <div class="ap-head"><span class="ap-name">Thomas</span><a class="ap-ref" href="bible.html?ref=John%2020:24" target="_blank" rel="noopener">John 20:24-29 &nearr;</a></div>
+  <div class="ap-body">
+    <p>Thomas is remembered for one sentence&mdash;"Unless I see in his hands the mark of the nails... I will never believe" (John 20:25)&mdash;and he has been called doubting ever since. But look closer. When Jesus insisted on going to Lazarus in Judea, where the authorities had just tried to stone him, it was Thomas who said, "Let us also go, that we may die with him" (John 11:16). When Jesus spoke of going to prepare a place for them, it was Thomas who asked the honest question the others were afraid to ask: "Lord, we do not know where you are going. How can we know the way?" (John 14:5). And when the risen Jesus appeared and invited him to touch the wounds, Thomas did not touch them&mdash;he fell at his feet and said the greatest confession in John's Gospel: "My Lord and my God!" (John 20:28). Jesus answered that those who have not seen and yet have believed are blessed (John 20:29). Scripture records nothing of his later ministry or death; tradition carries him east, but the inspired record leaves him where he belongs&mdash;a man whose doubt became worship and whose honesty still gives permission to ours.</p>
+  </div>
+  <div class="ap-app"><strong>Application:</strong> Bring your honest doubts to Jesus&mdash;He turns doubt into worship.</div>
+  <div class="ap-sup">Supporting references: John 11:16; John 14:5</div>
+</div>
+<div class="ap-apostle">
+  <div class="ap-head"><span class="ap-name">James, son of Alphaeus</span><a class="ap-ref" href="bible.html?ref=Matthew%2010:3" target="_blank" rel="noopener">Matthew 10:3 &nearr;</a></div>
+  <div class="ap-body">
+    <p>James the son of Alphaeus appears in every list of the Twelve (Matthew 10:3; Mark 3:18; Luke 6:15) and nowhere else in the Gospels&mdash;no calling narrative, no question, no failure, no triumph. He is sometimes called "James the Less," perhaps because he was younger or shorter than the son of Zebedee, and sometimes confused with James the brother of Jesus, who became a leader in the Jerusalem church (Acts 15:13). He is, in other words, one of the quiet apostles&mdash;a name on a list, a man who was faithful enough to be chosen and faithful enough to remain, and whose story Scripture does not tell. That silence is its own kind of sermon: not every disciple is remembered by name in the records of the church, but every disciple is remembered by the Lord who called him. Scripture records nothing of his ministry or his death.</p>
+  </div>
+  <div class="ap-app"><strong>Application:</strong> Be faithful in obscurity&mdash;the Lord sees and remembers the quiet servant.</div>
+  <div class="ap-sup">Supporting references: Mark 3:18; Luke 6:15; Acts 1:13</div>
+</div>
+<div class="ap-apostle">
+  <div class="ap-head"><span class="ap-name">Thaddaeus (Judas son of James)</span><a class="ap-ref" href="bible.html?ref=John%2014:22" target="_blank" rel="noopener">John 14:22 &nearr;</a></div>
+  <div class="ap-body">
+    <p>Thaddaeus&mdash;also called Judas son of James, and not to be confused with Judas Iscariot (Luke 6:16)&mdash;has one recorded question in the Gospels, and it is a good one. At the last supper Jesus said that whoever loves him will keep his word, and that he would manifest himself to that person. Thaddaeus asked, "Lord, how is it that you will manifest yourself to us, and not to the world?" (John 14:22). He expected a public, political unveiling of the Messiah. Jesus answered with the quiet truth of the indwelling: "If anyone loves me, he will keep my word, and my Father will love him, and we will come to him and make our home with him" (John 14:23). That is the whole of what Scripture records of Thaddaeus&mdash;one question, one answer, and a place among the Twelve (Acts 1:13). Scripture records nothing of his later ministry or death.</p>
+  </div>
+  <div class="ap-app"><strong>Application:</strong> Let your love for Jesus be shown in obedience&mdash;that is where He makes His home.</div>
+  <div class="ap-sup">Supporting references: Luke 6:16; Acts 1:13</div>
+</div>
+<div class="ap-apostle">
+  <div class="ap-head"><span class="ap-name">Simon the Zealot</span><a class="ap-ref" href="bible.html?ref=Matthew%2010:4" target="_blank" rel="noopener">Matthew 10:4 &nearr;</a></div>
+  <div class="ap-body">
+    <p>Simon is called "the Zealot" in every list (Matthew 10:4; Mark 3:18; Luke 6:15)&mdash;a designation that almost certainly ties him to the zealot movement, the men who were prepared to take up arms against Rome and who burned with a nationalist fire. Jesus called a tax collector and a zealot to be apostles together, and then he sent them out as a pair (Matthew 10:3-4). Simon's story in Scripture is essentially his name: he was the man of the knife who learned to follow the man of the cross. What became of him, Scripture does not say. Tradition gives various accounts, but the inspired record is silent. He stands in the list as proof that the kingdom of God is not advanced by the sword, and that the most dangerous man in the room can be remade into a witness to peace.</p>
+  </div>
+  <div class="ap-app"><strong>Application:</strong> Let Jesus redirect your zeal&mdash;He turns passion into witness.</div>
+  <div class="ap-sup">Supporting references: Mark 3:18; Luke 6:15; Acts 1:13</div>
+</div>
+<div class="ap-apostle">
+  <div class="ap-head"><span class="ap-name">Judas Iscariot</span><a class="ap-ref" href="bible.html?ref=Matthew%2026:14" target="_blank" rel="noopener">Matthew 26:14-16 &nearr;</a></div>
+  <div class="ap-body">
+    <p>Judas Iscariot was the treasurer of the Twelve and the only one of them from Judea&mdash;the others were Galileans. He objected when Mary anointed Jesus with costly perfume, saying it should have been sold and given to the poor; John tells us he said this not because he cared for the poor, but because he was a thief and kept the money bag (John 12:6). At the last supper Jesus said plainly, "One of you will betray me," and Judas asked, "Is it I, Rabbi?" and Jesus answered, "You have said so" (Matthew 26:25). Then Satan entered into him, and he went out&mdash;and it was night (John 13:30). He betrayed Jesus with a kiss for thirty pieces of silver (Matthew 26:15). When he saw that Jesus was condemned, he regretted it and returned the silver to the chief priests, saying, "I have sinned by betraying innocent blood." They said, "What is that to us?" and he went out and hanged himself (Matthew 27:5). The field bought with his blood money is called the Field of Blood to this day (Acts 1:19). He is the hardest entry on this page, and Scripture does not soften it&mdash;but it does tell the truth about remorse without repentance, and it leaves the mercy of God where it belongs: with God.</p>
+  </div>
+  <div class="ap-app"><strong>Application:</strong> Guard your heart against small compromises&mdash;they grow into betrayal.</div>
+  <div class="ap-sup">Supporting references: John 12:4-6; John 13:21-30; Matthew 27:3-10; Acts 1:16-20</div>
+</div>
+<h3 class="group-h">2. The Replacement</h3>
+<div class="ap-apostle">
+  <div class="ap-head"><span class="ap-name">Matthias</span><a class="ap-ref" href="bible.html?ref=Acts%201:15" target="_blank" rel="noopener">Acts 1:15-26 &nearr;</a></div>
+  <div class="ap-body">
+    <p>After Judas fell, Peter stood up among the hundred and twenty believers and said that the Scripture had to be fulfilled, and that someone must take the place of this ministry and apostleship (Acts 1:20-21). They put forward two men who had been with them the whole time&mdash;from the baptism of John to the day of the resurrection&mdash;as witnesses of the risen Lord (Acts 1:21-22): Joseph called Barsabbas, and Matthias. They prayed, "You, Lord, who know the hearts of all, show which one of these two you have chosen," and they cast lots, and the lot fell to Matthias, and he was numbered with the eleven apostles (Acts 1:24-26). That is all Scripture says of him&mdash;the last verse of Acts 1 leaves him there, numbered, chosen, and silent. He is the patron saint of the unremarkable faithful: a man who had followed Jesus faithfully for three years without ever being named in the Gospels, and whose reward was to be named at the beginning of Acts as one who stood with the Eleven. Scripture records nothing of his later ministry or death.</p>
+  </div>
+  <div class="ap-app"><strong>Application:</strong> Be faithful in the hidden years&mdash;God chooses in His time those who have walked with Him.</div>
+  <div class="ap-sup">Supporting references: Acts 1:21-22; Acts 1:26</div>
+</div>
+<h3 class="group-h">3. The Apostle to the Gentiles</h3>
+<div class="ap-apostle">
+  <div class="ap-head"><span class="ap-name">Paul</span><a class="ap-ref" href="bible.html?ref=Acts%209:1" target="_blank" rel="noopener">Acts 9:1-19 &nearr;</a></div>
+  <div class="ap-body">
+    <p>Paul was not one of the Twelve, and he never pretended to be. He was a Pharisee of the tribe of Benjamin, trained at the feet of Gamaliel, zealous for the law to the point of persecuting the church&mdash;he was present at the stoning of Stephen and approved of it (Acts 8:1), and he went from house to house dragging believers off to prison (Acts 8:3). Then on the road to Damascus a light from heaven stopped him and a voice said, "Saul, Saul, why are you persecuting me?" (Acts 9:4), and he was blind for three days and then baptized, and the persecutor became the apostle. He was set apart at Antioch and sent out by the Holy Spirit on journeys that took the gospel across Asia Minor and into Greece (Acts 13:2-3). He was beaten with rods, stoned, shipwrecked three times, in danger from rivers, robbers, his own people, false brothers, and the daily pressure of the churches (2 Corinthians 11:23-28). He wrote letters that are still read aloud in churches two thousand years later. And at the end of his life, writing from a Roman prison, he said, "I have fought the good fight, I have finished the race, I have kept the faith" (2 Timothy 4:7). Scripture does not record his death&mdash;tradition says he was beheaded under Nero&mdash;but it records his confidence in the One who had called him. He called himself the chief of sinners and the least of the apostles, and he poured out his life for the church that he had once tried to destroy.</p>
+  </div>
+  <div class="ap-app"><strong>Application:</strong> No past is beyond God's reach&mdash;offer your whole life as a living sacrifice.</div>
+  <div class="ap-sup">Supporting references: Acts 13:1-3; 2 Corinthians 11:23-28; Philippians 3:4-11; 2 Timothy 4:6-8</div>
+</div>
+<!-- BSH-APOSTLES-END -->
+<footer>
+  &copy; 2026 Safari Softwares &mdash; Bible Study Helper &mdash; Apostleship<br>
+  This is a study aid, not the Bible. <a href="bible.html">Open the Bible &rarr;</a>
+</footer>
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('darkToggle');
+  if (localStorage.getItem('bsh_theme') === 'dark') root.classList.add('dark-mode');
+  if (darkBtn) darkBtn.addEventListener('click', function () {
+    root.classList.toggle('dark-mode');
+    localStorage.setItem('bsh_theme', root.classList.contains('dark-mode') ? 'dark' : 'light');
+  });
+  var size = parseInt(localStorage.getItem('bsh_fontsize') || '100', 10);
+  function applySize() {
+    root.style.fontSize = size + '%';
+    localStorage.setItem('bsh_fontsize', String(size));
+  }
+  applySize();
+  var inc = document.getElementById('fontInc');
+  var dec = document.getElementById('fontDec');
+  if (inc) inc.addEventListener('click', function () { size = Math.min(140, size + 10); applySize(); });
+  if (dec) dec.addEventListener('click', function () { size = Math.max(70, size - 10); applySize(); });
+})();
+</script>
 </body>
 </html>
