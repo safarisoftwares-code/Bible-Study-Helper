@@ -7,3 +7,8 @@ cleanup_manifest_*.txt
 
 *.pdf
 make_book.py
+
+make_book_vol1.py
+make_book_vol2.py
+Foundations_of_Faith.pdf
+Walking_in_Victory.pdf
