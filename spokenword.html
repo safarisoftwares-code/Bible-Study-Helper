@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Spoken Word — Bible Study Helper</title>
+<style>
+:root {
+  /* Main page background: Very light blue */
+  --bg: #eaf4fc; 
+  
+  /* Cell/card background: Absolute pure white */
+  --card: #ffffff;
+  
+  --text: #000000;
+  --heading: #000000;
+  --border: #e5e5e5;
+  --muted: #555555;
+  --link: #1a6e3f;
+  --gold: #b8901e;
+  --chip-bg: #f5f5f5;
+  --chip-border: #d9d9d9;
+  
+  /* Extreme white glow effect to make the cards pop like the login modal */
+  --card-shadow: 0 12px 32px rgba(255, 255, 255, 0.8), 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode {
+  /* Dark mode background: Very dark blue/black */
+  --bg: #050a12; 
+  --card: #0d0d0d;
+  --text: #ffffff;
+  --heading: #ffffff;
+  --border: #2a2a2a;
+  --muted: #b0b0b0;
+  --link: #6dcf9a;
+  --gold: #e0bc4a;
+  --chip-bg: #1a1a1a;
+  --chip-border: #333333;
+  --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding: 32px 24px;
+  line-height: 1.8;
+  font-size: 1.08rem;
+  transition: background 0.3s, color 0.3s;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.container { max-width: 760px; margin: 0 auto; }
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid var(--border);
+}
+header h1 { font-size: 1.6rem; color: var(--heading); font-weight: 800; letter-spacing: -0.01em; }
+.btn-bar { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-bar button, .btn-bar a {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text);
+  text-decoration: none;
+  font-family: inherit;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  transition: all 0.2s;
+}
+.btn-bar button:hover, .btn-bar a:hover {
+  background: var(--chip-bg);
+  border-color: var(--link);
+  color: var(--link);
+}
+h2 {
+  font-size: 1.35rem;
+  color: var(--heading);
+  font-weight: 800;
+  margin: 44px 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.intro {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 32px;
+  font-size: 1.08rem;
+  color: var(--text);
+  box-shadow: var(--card-shadow);
+}
+.bd-entry {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 26px 30px;
+  margin-bottom: 20px;
+  box-shadow: var(--card-shadow);
+}
+.bd-entry h3 {
+  color: var(--heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.bd-entry .ref {
+  display: inline-block;
+  background: var(--chip-bg);
+  color: var(--text);
+  border: 1px solid var(--chip-border);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.bd-entry .ref a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+.bd-entry .ref a:hover { color: var(--heading); }
+.bd-entry p {
+  margin-bottom: 18px;
+  font-size: 1.08rem;
+  color: var(--text);
+  line-height: 1.85;
+}
+.bd-entry p:last-child { margin-bottom: 0; }
+.app {
+  font-style: italic;
+  color: var(--muted);
+  font-size: 1.02rem;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  line-height: 1.8;
+}
+.closing {
+  background: var(--card);
+  border: 2px solid var(--gold);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin: 36px 0;
+  font-size: 1.08rem;
+  color: var(--text);
+  box-shadow: var(--card-shadow);
+}
+.closing strong { color: var(--heading); font-weight: 800; }
+.closing a { color: var(--link); text-decoration: underline; }
+.closing a:hover { color: var(--heading); }
+footer {
+  text-align: center;
+  margin-top: 44px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+footer a { color: var(--link); text-decoration: underline; }
+footer a:hover { color: var(--heading); }
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <h1>🌱 The Spoken Word</h1>
+  <div class="btn-bar">
+    <button id="darkToggle" type="button">🌙</button>
+    <button id="fontDec" type="button">A−</button>
+    <button id="fontInc" type="button">A+</button>
+    <a href="index.html">← Back</a>
+  </div>
+</header>
+
+<div class="intro">
+  When God's servant speaks in faith, something begins that they themselves could not manufacture. The prophet does not need to touch the oil — he speaks, and the oil flows. The preacher does not need to heal the sick — he speaks, and the sick rise. The servant of God is not called to <em>perform</em> the word, only to <em>speak</em> it. God honours what is spoken in faith. This page gathers the moments in Scripture where a word was spoken and something began — and it ends with the same invitation that has always been there: <strong>speak, and watch what God does.</strong>
+</div>
+
+<!-- BSH-BODY-START -->
+
+<h2>Section 1 — The Word in Creation</h2>
+
+<div class="bd-entry">
+  <h3>"Let there be light"</h3>
+  <span class="ref"><a href="bible.html?ref=Genesis%201:3" target="_blank" rel="noopener">Genesis 1:3 ↗</a></span>
+  <p>God spoke, and light existed. Not because light was waiting to be discovered, but because the word of God called it into being. Before the first human voice ever spoke, the pattern was set: God speaks, and reality responds. Everything that follows in this page is a variation on this first act.</p>
+  <p class="app">The word of God is not a description of reality — it is the thing that makes reality. Speak it, and trust it.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>"He spoke, and it came to be"</h3>
+  <span class="ref"><a href="bible.html?ref=Psalm%2033:6" target="_blank" rel="noopener">Psalm 33:6, 9 ↗</a></span>
+  <p>The psalmist looks at the heavens and names the mechanism: "By the word of the LORD the heavens were made, and by the breath of his mouth all their host… For he spoke, and it came to be; he commanded, and it stood firm." Creation is not the product of divine muscle; it is the product of divine speech.</p>
+  <p class="app">When you open your mouth to speak God's word, you are participating in the same pattern that made the universe.</p>
+</div>
+
+<h2>Section 2 — The Word on the Prophets' Lips</h2>
+
+<div class="bd-entry">
+  <h3>Elijah and the widow's oil</h3>
+  <span class="ref"><a href="bible.html?ref=1%20Kings%2017:14" target="_blank" rel="noopener">1 Kings 17:14–16 ↗</a></span>
+  <p>The drought was killing everyone. Elijah spoke to a widow with nothing left: "The jar of flour shall not be spent, and the jug of oil shall not be emptied, until the day that the LORD sends rain upon the earth." He did not fill the jar. He did not multiply the oil. He spoke. And the word held.</p>
+  <p class="app">The servant's job is to speak; God's job is to sustain. The word you speak may look impossible in the moment it leaves your mouth.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Elijah and the widow's son</h3>
+  <span class="ref"><a href="bible.html?ref=1%20Kings%2017:21" target="_blank" rel="noopener">1 Kings 17:21–23 ↗</a></span>
+  <p>The child stopped breathing. Elijah stretched himself over him and cried out: "O LORD my God, let this child's life come into him again." He did not perform CPR. He did not manipulate the body. He spoke to God, and God heard. The child's life came back into him.</p>
+  <p class="app">Death is real, but the word of God is stronger. Speak life, even where there is no sign of it.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Elisha and the widow's oil</h3>
+  <span class="ref"><a href="bible.html?ref=2%20Kings%204:3" target="_blank" rel="noopener">2 Kings 4:3–7 ↗</a></span>
+  <p>The widow's sons were about to be taken as slaves to pay her debts. Elisha did not give her money. He said: "Go outside, borrow vessels from all your neighbours, empty vessels and not too few. Then go in and shut the door behind yourself and your sons and pour into all these vessels." She poured, and the oil flowed until every vessel was full — and then it stopped. <strong>The oil filled the containers she had faith to bring.</strong></p>
+  <p class="app">The word does not stop at the limit of God's supply; it stops at the limit of our preparation. Prepare vessels.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Elisha and the Shunammite woman</h3>
+  <span class="ref"><a href="bible.html?ref=2%20Kings%204:16" target="_blank" rel="noopener">2 Kings 4:16–17 ↗</a></span>
+  <p>Elisha said to a woman whose womb had been closed: "About this time next year you shall embrace a son." She did not believe him. She said, "No, my lord, O man of God; do not lie to your servant." But the word had been spoken. At the appointed time, she conceived and bore a son — exactly as the word had said.</p>
+  <p class="app">The word of God does not require your belief to be true, but your belief to be received. The Shunammite doubted first and rejoiced later. The word held.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Elisha and Naaman</h3>
+  <span class="ref"><a href="bible.html?ref=2%20Kings%205:10" target="_blank" rel="noopener">2 Kings 5:10–14 ↗</a></span>
+  <p>Naaman was a Syrian general, a leper. He came to Elisha expecting a performance — a dramatic gesture, a wave of the hand, an incantation. Elisha did not even come out of the house. He sent a messenger: "Go and wash in the Jordan seven times, and your flesh shall be restored, and you shall be clean." Naaman raged. His servants persuaded him. He washed. He was healed.</p>
+  <p class="app">The servant of God does not owe you a performance. The word spoken in faith is enough — even if it is spoken from behind a closed door.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Elijah to Elisha</h3>
+  <span class="ref"><a href="bible.html?ref=2%20Kings%202:9" target="_blank" rel="noopener">2 Kings 2:9–10 ↗</a></span>
+  <p>Elisha asked for a hard thing: a double portion of Elijah's spirit. Elijah answered: "You have asked a hard thing; yet, if you see me as I am being taken from you, it shall be so for you, but if you do not, it shall not be so." The condition was not Elijah's power — it was Elisha's seeing. Elisha saw. He received.</p>
+  <p class="app">What you receive from God is often tied to what you are willing to see. The word is spoken; the seeing is yours.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Eli to Hannah</h3>
+  <span class="ref"><a href="bible.html?ref=1%20Samuel%201:17" target="_blank" rel="noopener">1 Samuel 1:17–20 ↗</a></span>
+  <p>Hannah was weeping in the temple, her womb closed, her rival taunting her. Eli the priest spoke a simple word: "Go in peace, and the God of Israel grant your petition that you have made to him." Hannah went home, ate, and her face was no longer sad. In due time, she bore Samuel.</p>
+  <p class="app">A word of peace can carry a woman through the years between the promise and the birth.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Isaiah's anchor</h3>
+  <span class="ref"><a href="bible.html?ref=Isaiah%2055:10" target="_blank" rel="noopener">Isaiah 55:10–11 ↗</a></span>
+  <p>"For as the rain and the snow come down from heaven and do not return there but water the earth, making it bring forth and sprout… so shall my word be that goes out from my mouth; it shall not return to me empty, but it shall accomplish that which I purpose, and shall succeed in the thing for which I sent it." This is the theological backbone of every entry above. The word is not a suggestion. It is a seed with a destination.</p>
+  <p class="app">The word you speak in faith is not wasted. It has a destination, and it will accomplish what God purposed for it.</p>
+</div>
+
+<!-- SPOKENWORD-EXPANDED-EXAMPLES-START -->
+<div class="bd-entry">
+  <h3>Elijah speaks on Mount Carmel</h3>
+  <span class="ref"><a href="bible.html?ref=1%20Kings%2018:36" target="_blank" rel="noopener">1 Kings 18:36–39 ↗</a></span>
+  <p>At the time of the evening offering, Elijah prayed openly to the LORD, asking Him to make Himself known as the God of Israel. When Elijah had finished, fire fell and consumed the offering, the wood, the stones, the dust, and the water in the trench. The answer came from God; Elijah's prayer made clear whom he trusted.</p>
+  <p class="app">Speak to God with confidence, but give Him the glory for the answer. The power belongs to the LORD, not to the servant.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Elisha and the healed waters of Jericho</h3>
+  <span class="ref"><a href="bible.html?ref=2%20Kings%202:19" target="_blank" rel="noopener">2 Kings 2:19–22 ↗</a></span>
+  <p>The people told Elisha that the city's water was harmful and the land unproductive. Elisha asked for a new bowl with salt. He went to the spring, threw the salt into it, and declared, "Thus saith the LORD, I have healed these waters." The water was made wholesome, just as the LORD had said. The account includes both the prophet's action and the word he spoke.</p>
+  <p class="app">Do not present God's word as a human formula. Follow His instruction, speak faithfully, and leave the result in His hands.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Ezekiel prophesies to the dry bones</h3>
+  <span class="ref"><a href="bible.html?ref=Ezekiel%2037:4" target="_blank" rel="noopener">Ezekiel 37:4–10 ↗</a></span>
+  <p>In a vision, God brought Ezekiel to a valley full of dry bones and told him to prophesy. Ezekiel spoke as commanded: the bones came together, sinews and flesh appeared, and breath entered them. God used the vision to show that He could restore the hopeless condition of Israel. This was a prophetic vision, not a technique for controlling events by human speech.</p>
+  <p class="app">The servant must speak what God has actually given him to speak. The authority and the fulfilment belong to God.</p>
+</div>
+<!-- SPOKENWORD-EXPANDED-EXAMPLES-END -->
+
+<h2>Section 3 — The Word on Christ's Lips and the Apostles'</h2>
+
+<div class="bd-entry">
+  <h3>"Your sins are forgiven"</h3>
+  <span class="ref"><a href="bible.html?ref=Matthew%209:1" target="_blank" rel="noopener">Matthew 9:1–8 ↗</a></span>
+  <p>The paralytic was lowered through the roof. Jesus did not heal him first. He said, "Take heart, my son; your sins are forgiven." The scribes were scandalised. Jesus healed the man's legs to prove that the word of forgiveness was real. The man rose and walked.</p>
+  <p class="app">The deeper word comes first. Healing of the body is a sign; forgiveness of sin is the reality.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>"According to your faith"</h3>
+  <span class="ref"><a href="bible.html?ref=Matthew%209:29" target="_blank" rel="noopener">Matthew 9:29 ↗</a></span>
+  <p>Two blind men followed Jesus, crying out for mercy. Jesus asked, "Do you believe that I am able to do this?" They said yes. He touched their eyes and said, "According to your faith be it done to you." Their eyes were opened.</p>
+  <p class="app">Jesus calibrates the word to the faith. Speak over yourself the words you actually believe, and let your faith grow into the words you long to hear.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>"Daughter, your faith has made you well"</h3>
+  <span class="ref"><a href="bible.html?ref=Mark%205:34" target="_blank" rel="noopener">Mark 5:34 ↗</a></span>
+  <p>The woman had bled for twelve years. She touched the hem of his garment. Jesus turned and spoke one sentence: "Daughter, your faith has made you well; go in peace, and be healed of your disease." He did not lay hands on her. He did not perform a ritual. He spoke, and the word landed.</p>
+  <p class="app">The word of Christ is personal. He calls you "daughter," "son," not "the afflicted." Speak to yourself the way He speaks to you.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>"As you have believed"</h3>
+  <span class="ref"><a href="bible.html?ref=Matthew%208:13" target="_blank" rel="noopener">Matthew 8:13 ↗</a></span>
+  <p>A centurion came asking for his servant's healing. Jesus offered to come to the house. The centurion said, "Lord, I am not worthy to have you come under my roof, but only say the word, and my servant will be healed." Jesus marvelled. He said, "Go; let it be done for you as you have believed." The servant was healed at that very hour.</p>
+  <p class="app">You do not need proximity to Christ to receive His word. The word travels.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>"Rise and go your way"</h3>
+  <span class="ref"><a href="bible.html?ref=Luke%2017:19" target="_blank" rel="noopener">Luke 17:19 ↗</a></span>
+  <p>Ten lepers were healed on the way to show themselves to the priests. Only one returned to thank Jesus — a Samaritan. Jesus said to him, "Rise and go your way; your faith has made you well." The healing became wholeness in the returning.</p>
+  <p class="app">Gratitude completes the word. The healing is not fully received until it is returned in thanks.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>"Rise up and walk"</h3>
+  <span class="ref"><a href="bible.html?ref=Acts%203:6" target="_blank" rel="noopener">Acts 3:6–8 ↗</a></span>
+  <p>Peter and John met a lame man at the temple gate. They had no silver or gold. Peter said, "In the name of Jesus Christ of Nazareth, rise up and walk." He took the man by the hand, and the man leaped up, stood, and walked — and then entered the temple walking and leaping and praising God.</p>
+  <p class="app">The name of Jesus spoken in faith does what the servant cannot do. Peter took the hand; Christ made the legs.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>"Believe in the Lord Jesus"</h3>
+  <span class="ref"><a href="bible.html?ref=Acts%2016:31" target="_blank" rel="noopener">Acts 16:31 ↗</a></span>
+  <p>The Philippian jailer fell trembling before Paul and Silas. He asked, "What must I do to be saved?" They answered, "Believe in the Lord Jesus, and you will be saved, you and your household." And he was — and his household with him.</p>
+  <p class="app">The word of salvation is one sentence long. Speak it. It has power to save a household.</p>
+</div>
+
+<!-- SPOKENWORD-EXPANDED-EXAMPLES-START -->
+<div class="bd-entry">
+  <h3>Jesus cleanses a leper</h3>
+  <span class="ref"><a href="bible.html?ref=Matthew%208:1" target="_blank" rel="noopener">Matthew 8:1–4 ↗</a></span>
+  <p>A leper came to Jesus and said that he knew Jesus could make him clean if He was willing. Jesus answered, "I will; be thou clean," and touched him. Immediately the leprosy was cleansed. Jesus' word carried authority, and the account also records His touch.</p>
+  <p class="app">Christ is willing and able to show mercy. We proclaim His compassion and power without pretending that the power is our own.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Jesus heals the official's son from a distance</h3>
+  <span class="ref"><a href="bible.html?ref=John%204:46" target="_blank" rel="noopener">John 4:46–53 ↗</a></span>
+  <p>A royal official begged Jesus to come and heal his son, who was close to death. Jesus told him, "Go thy way; thy son liveth." The man believed the word Jesus spoke and went home. On the way, his servants met him with the news that the boy had recovered at the very hour Jesus had spoken.</p>
+  <p class="app">The authority of Christ was not limited by physical distance. Trust His word rather than demanding a particular display.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Jesus stills the storm</h3>
+  <span class="ref"><a href="bible.html?ref=Mark%204:35" target="_blank" rel="noopener">Mark 4:35–41 ↗</a></span>
+  <p>As the disciples' boat was overwhelmed by a great storm, Jesus rebuked the wind and said to the sea, "Peace, be still." The wind ceased and there was a great calm. The disciples were astonished and asked who He was, because even the wind and sea obeyed Him.</p>
+  <p class="app">Creation is under the authority of Christ. In frightening circumstances, turn to Him rather than treating His words as a formula.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Jesus raises the widow's son</h3>
+  <span class="ref"><a href="bible.html?ref=Luke%207:11" target="_blank" rel="noopener">Luke 7:11–16 ↗</a></span>
+  <p>At the town of Nain, Jesus met a funeral procession for a widow's only son. He had compassion on her, touched the bier, and said, "Young man, I say unto thee, Arise." The dead man sat up and began to speak, and Jesus gave him back to his mother.</p>
+  <p class="app">The compassion of Jesus meets people in their deepest sorrow. His authority reaches even into the face of death.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Jesus raises Jairus' daughter</h3>
+  <span class="ref"><a href="bible.html?ref=Mark%205:35" target="_blank" rel="noopener">Mark 5:35–43 ↗</a></span>
+  <p>When news came that Jairus' daughter had died, Jesus told the father not to fear, but to believe. He entered the room, took the girl's hand, and said, "Talitha cumi," meaning, "Little girl, I say to you, arise." She immediately got up and walked. Jesus then instructed that she be given something to eat.</p>
+  <p class="app">The word of Christ is stronger than the report that seems final. Keep trusting Him when circumstances appear beyond help.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Jesus commands an unclean spirit</h3>
+  <span class="ref"><a href="bible.html?ref=Mark%201:23" target="_blank" rel="noopener">Mark 1:23–27 ↗</a></span>
+  <p>In the synagogue, a man with an unclean spirit cried out. Jesus rebuked the spirit, saying, "Hold thy peace, and come out of him." The spirit came out, and the people were amazed that Jesus commanded even unclean spirits with authority and they obeyed Him.</p>
+  <p class="app">The authority over evil belongs to Jesus. His servants minister under His authority, not through personal power or theatrical display.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Jesus calls Lazarus out of the tomb</h3>
+  <span class="ref"><a href="bible.html?ref=John%2011:38" target="_blank" rel="noopener">John 11:38–44 ↗</a></span>
+  <p>Lazarus had been in the tomb for four days. After praying aloud to the Father, Jesus cried with a loud voice, "Lazarus, come forth." The man who had died came out, still wrapped in grave clothes. Jesus told those present to unwrap him and let him go.</p>
+  <p class="app">Jesus is the resurrection and the life. This sign points beyond human ability to His divine authority over death.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Peter and Tabitha</h3>
+  <span class="ref"><a href="bible.html?ref=Acts%209:36" target="_blank" rel="noopener">Acts 9:36–42 ↗</a></span>
+  <p>Tabitha, a disciple known for helping the poor, became ill and died. Peter sent everyone out, knelt down and prayed, then turned to her body and said, "Tabitha, arise." She opened her eyes, saw Peter, and sat up. Peter presented her alive to the believers and widows. The passage records both prayer and the spoken command.</p>
+  <p class="app">Serve people with the compassion Tabitha showed, and depend on God in prayer. The power to give life belongs to Him.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Paul speaks to the lame man at Lystra</h3>
+  <span class="ref"><a href="bible.html?ref=Acts%2014:8" target="_blank" rel="noopener">Acts 14:8–10 ↗</a></span>
+  <p>At Lystra, Paul saw a man who had been unable to walk from birth and recognised that he had faith to be healed. Paul called out, "Stand upright on thy feet." The man sprang up and walked. The crowd then wrongly began to treat Paul and Barnabas as gods, but the apostles directed the people to the living God.</p>
+  <p class="app">When God works through a servant, the servant must not take the glory. Point people to the living God.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>Paul and Eutychus at Troas</h3>
+  <span class="ref"><a href="bible.html?ref=Acts%2020:7" target="_blank" rel="noopener">Acts 20:7–12 ↗</a></span>
+  <p>During Paul's long message at Troas, a young man named Eutychus fell asleep while sitting in a third-floor window. He fell down and was taken up dead. Paul went down, bent over him and embraced him, then said, "Trouble not yourselves; for his life is in him." Eutychus was brought up alive, and the believers were greatly comforted. The passage describes Paul's physical action as well as his reassuring words; it should not be reduced to a story of him merely shouting from the room.</p>
+  <p class="app">In a crisis, act with compassion, speak truthfully, and trust God. Do not turn a unique biblical event into a formula or claim that every outcome is controlled by our words.</p>
+</div>
+<!-- SPOKENWORD-EXPANDED-EXAMPLES-END -->
+
+<h2>Section 4 — The Pattern for the Servant Today</h2>
+
+<div class="bd-entry">
+  <h3>The parable of the sower</h3>
+  <span class="ref"><a href="bible.html?ref=Matthew%2013:18" target="_blank" rel="noopener">Matthew 13:18–23 ↗</a></span>
+  <p>Jesus explains the seed: "The seed is the word of God." The sower sows the word. Some falls on the path, some on the rock, some among thorns, some on good soil. But the sower does not decide which soil receives it. He sows. The soil is God's business; the harvest is God's gift. The sower's job is to sow.</p>
+  <p class="app">Your job is not to produce the harvest — it is to sow the word. Sow faithfully, and leave the soil to God.</p>
+</div>
+
+<div class="bd-entry">
+  <h3>"How beautiful are the feet"</h3>
+  <span class="ref"><a href="bible.html?ref=Romans%2010:14" target="_blank" rel="noopener">Romans 10:14–17 ↗</a></span>
+  <p>"How then will they call on him in whom they have not believed? And how are they to believe in him of whom they have never heard? And how are they to hear without someone preaching?… So faith comes from hearing, and hearing through the word of Christ." The chain is unbroken: no preacher, no hearing; no hearing, no faith. The servant of God is the link.</p>
+  <p class="app">You are the link between the unreached and the Christ who saves. Speak, and someone will hear.</p>
+</div>
+
+<div class="closing">
+  <p><strong>You are the servant.</strong> You do not need to manufacture the harvest. You do not need to touch the oil, raise the child, or heal the sick. You are called to speak — in faith, in the name of Jesus, in the power of the Spirit — and God will do what only God can do. The word you speak in faith is a seed. It may lie in the ground for a season. But it will not return empty.</p>
+  <p style="margin-top:12px;"><em>"He spoke, and it came to be; he commanded, and it stood firm."</em> — <a href="bible.html?ref=Psalm%2033:9" target="_blank" rel="noopener">Psalm 33:9 ↗</a></p>
+</div>
+
+<!-- BSH-BODY-END -->
+
+<footer>
+  © 2026 Safari Softwares — Bible Study Helper — The Spoken Word<br>
+  <a href="index.html">← Back to Study Helper</a>
+</footer>
+</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('darkToggle');
+  if (localStorage.getItem('bsh_theme') === 'dark') root.classList.add('dark-mode');
+  if (darkBtn) darkBtn.addEventListener('click', function(){
+    root.classList.toggle('dark-mode');
+    localStorage.setItem('bsh_theme', root.classList.contains('dark-mode') ? 'dark' : 'light');
+  });
+  var size = parseInt(localStorage.getItem('bsh_fontsize') || '100', 10);
+  function applySize(){ root.style.fontSize = size + '%'; localStorage.setItem('bsh_fontsize', String(size)); }
+  applySize();
+  document.getElementById('fontInc').addEventListener('click', function(){ size = Math.min(140, size + 10); applySize(); });
+  document.getElementById('fontDec').addEventListener('click', function(){ size = Math.max(70, size - 10); applySize(); });
+})();
+</script>
+</body>
+</html>
